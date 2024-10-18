@@ -1,6 +1,9 @@
 # Bankkonto-Verwalter - NestJS
 
-Dieses Repository enthält den Code für einen App-Server, der auf NestJS basiert und zur Verwaltung von Bankkonten dient. Es bietet eine strukturierte und sichere Möglichkeit, Kontoinformationen zu verwalten, einschließlich der Erstellung, Verwaltung und des sicheren Zugriffs.
+Dieses Repository enthält den Code für einen App-Server,
+der auf NestJS basiert und zur Verwaltung von Bankkonten dient.
+Es bietet eine strukturierte und sichere Möglichkeit, Kontoinformationen zu verwalten,
+einschließlich der Erstellung, Verwaltung und des sicheren Zugriffs.
 
 ## Funktionen
 
@@ -13,8 +16,10 @@ Dieses Repository enthält den Code für einen App-Server, der auf NestJS basier
 
 - **NestJS** - Ein progressives Node.js-Framework
 - **TypeScript** - Statische Typisierung für verbesserte Codequalität
-- **OAuth2/JWT** - Sichere Authentifizierung und Autorisierung
-- **MongoDB** - Datenbank zur Speicherung von Konten- und Transaktionsdaten
+- **Keycloak** - Sichere Authentifizierung und Autorisierung mit Keycloak
+- **PostgreSQL** - Datenbank zur Speicherung von Konten- und Transaktionsdaten
+- **GraphQL** - Flexible Abfragesprache für APIs
+- **TypeORM** - ORM für TypeScript und JavaScript
 
 ## Erste Schritte
 
@@ -57,10 +62,6 @@ $ npm run test:e2e
 # Testabdeckung
 $ npm run test:cov
 ```
-
-## Lizenz
-
-Dieses Projekt steht unter der MIT-Lizenz - siehe die [LICENSE](LICENSE) Datei für Details.
 
 ## Mitarbeitende
 
