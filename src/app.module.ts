@@ -1,5 +1,3 @@
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { type ApolloDriverConfig } from '@nestjs/apollo';
 import {
     type MiddlewareConsumer,
@@ -9,10 +7,12 @@ import {
 import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AdminModule } from './admin/admin.module.js';
-import { KontoModule } from './konto/konto.module.js';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
 import { DevModule } from './config/dev/dev.module.js';
 import { graphQlModuleOptions } from './config/graphql.js';
 import { typeOrmModuleOptions } from './config/typeormOptions.js';
+import { KontoModule } from './konto/konto.module.js';
 import { LoggerModule } from './logger/logger.module.js';
 import { RequestLoggerMiddleware } from './logger/request-logger.middleware.js';
 import { KeycloakModule } from './security/keycloak/keycloak.module.js';
@@ -26,17 +26,11 @@ import { KeycloakModule } from './security/keycloak/keycloak.module.js';
         KeycloakModule,
         TypeOrmModule.forRoot(typeOrmModuleOptions),
     ],
-  controllers: [AppController],
-  providers: [AppService],
+    controllers: [AppController],
+    providers: [AppService],
 })
 export class AppModule implements NestModule {
     configure(consumer: MiddlewareConsumer) {
-        consumer
-            .apply(RequestLoggerMiddleware)
-            .forRoutes(
-                'auth',
-                'graphql',
-            );
+        consumer.apply(RequestLoggerMiddleware).forRoutes('auth', 'graphql');
     }
 }
-
