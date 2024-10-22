@@ -7,7 +7,7 @@ import { MailService } from './mail.service.js';
  */
 
 /**
- * Die dekorierte Modul-Klasse mit den Service-Klassen.
+ * Die dekorierte Modul-Klasse mit den Service-Klassen. m
  */
 @Module({
     providers: [MailService],
