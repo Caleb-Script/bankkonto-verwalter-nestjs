@@ -1,20 +1,5 @@
 # syntax=docker/dockerfile:1.10.0
 
-# Aufruf:   docker build --tag juergenzimmermann/buch:2024.10.1-bookworm .
-#               ggf. --progress=plain
-#               ggf. --no-cache
-#           Get-Content Dockerfile | docker run --rm --interactive hadolint/hadolint:2.12.1-beta-debian
-#               Linux:   cat Dockerfile | docker run --rm --interactive hadolint/hadolint:2.12.1-beta-debian
-#           docker network ls
-
-# https://docs.docker.com/engine/reference/builder/#syntax
-# https://github.com/moby/buildkit/blob/master/frontend/dockerfile/docs/reference.md
-# https://hub.docker.com/r/docker/dockerfile
-# https://docs.docker.com/build/building/multi-stage
-# https://github.com/textbook/starter-kit/blob/main/Dockerfile
-# https://snyk.io/blog/10-best-practices-to-containerize-nodejs-web-applications-with-docker
-# https://cheatsheetseries.owasp.org/cheatsheets/NodeJS_Docker_Cheat_Sheet.html
-
 # "Build Argument"; alternativ: ENV = Umgebungsvariable im gebauten Image
 ARG NODE_VERSION=23.0.0
 
