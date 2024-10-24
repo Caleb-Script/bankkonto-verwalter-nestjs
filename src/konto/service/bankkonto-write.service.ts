@@ -13,7 +13,7 @@ import { Transaktion } from '../model/entity/transaktion.entity.js';
 import { Bankkonto } from '../model/entity/bankkonto.entity.js';
 import { BankkontoReadService } from './bankkonto-read.service.js';
 import {
-    IsbnExistsException,
+    KontoIdExistsException,
     VersionInvalidException,
     VersionOutdatedException,
 } from './exceptions.js';
@@ -64,7 +64,7 @@ export class BankkontoWriteService {
      * Ein neues Bankkonto soll angelegt werden.
      * @param bankkonto Das neu abzulegende Bankkonto
      * @returns Die ID des neu angelegten Bankkontos
-     * @throws IsbnExists falls die ISBN-Nummer bereits existiert
+     * @throws KontoIdExists falls die Konto-Id bereits existiert
      */
     async create(bankkonto: Bankkonto): Promise<number> {
         this.#logger.debug('create: bankkonto=%o', bankkonto);
@@ -153,7 +153,7 @@ export class BankkontoWriteService {
     async #validateCreate({ kontoId }: Bankkonto): Promise<undefined> {
         this.#logger.debug('#validateCreate: kontoId=%s', kontoId);
         if (await this.#repo.existsBy({ kontoId })) {
-            throw new IsbnExistsException(kontoId);
+            throw new KontoIdExistsException(kontoId);
         }
     }
 
