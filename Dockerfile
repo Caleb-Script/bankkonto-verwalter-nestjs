@@ -1,20 +1,5 @@
 # syntax=docker/dockerfile:1.10.0
 
-# Aufruf:   docker build --tag juergenzimmermann/buch:2024.10.1-bookworm .
-#               ggf. --progress=plain
-#               ggf. --no-cache
-#           Get-Content Dockerfile | docker run --rm --interactive hadolint/hadolint:2.12.1-beta-debian
-#               Linux:   cat Dockerfile | docker run --rm --interactive hadolint/hadolint:2.12.1-beta-debian
-#           docker network ls
-
-# https://docs.docker.com/engine/reference/builder/#syntax
-# https://github.com/moby/buildkit/blob/master/frontend/dockerfile/docs/reference.md
-# https://hub.docker.com/r/docker/dockerfile
-# https://docs.docker.com/build/building/multi-stage
-# https://github.com/textbook/starter-kit/blob/main/Dockerfile
-# https://snyk.io/blog/10-best-practices-to-containerize-nodejs-web-applications-with-docker
-# https://cheatsheetseries.owasp.org/cheatsheets/NodeJS_Docker_Cheat_Sheet.html
-
 # "Build Argument"; alternativ: ENV = Umgebungsvariable im gebauten Image
 ARG NODE_VERSION=23.0.0
 
@@ -105,11 +90,11 @@ FROM node:${NODE_VERSION}-bookworm-slim AS final
 # https://specs.opencontainers.org/image-spec/annotations
 # https://spdx.org/licenses
 # MAINTAINER ist deprecated https://docs.docker.com/engine/reference/builder/#maintainer-deprecated
-LABEL org.opencontainers.image.title="buch" \
-    org.opencontainers.image.description="Appserver buch mit Basis-Image Debian Bookworm" \
+LABEL org.opencontainers.image.title="bankkonto" \
+    org.opencontainers.image.description="Appserver Bankkonto mit Basis-Image Debian Bookworm" \
     org.opencontainers.image.version="2024.10.1-bookworm" \
     org.opencontainers.image.licenses="GPL-3.0-or-later" \
-    org.opencontainers.image.authors="Juergen.Zimmermann@h-ka.de"
+    org.opencontainers.image.authors="scal1084@h-ka.de"
 
 RUN <<EOF
 set -eux
