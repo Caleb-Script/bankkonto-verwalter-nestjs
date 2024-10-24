@@ -15,8 +15,7 @@ import { KeycloakModule } from '../security/keycloak/keycloak.module.js';
 @Module({
     imports: [KeycloakModule, MailModule],
     controllers: [],
-    providers: [
-    ],
+    providers: [],
     exports: [],
 })
 export class KontoModule {}

@@ -1,10 +1,10 @@
 import { type INestApplication, ValidationPipe } from '@nestjs/common';
+import { NestFactory } from '@nestjs/core';
 import {
     DocumentBuilder,
     type SwaggerCustomOptions,
     SwaggerModule,
 } from '@nestjs/swagger';
-import { NestFactory } from '@nestjs/core';
 import compression from 'compression';
 import { AppModule } from './app.module.js';
 import { corsOptions } from './config/cors.js';
@@ -16,8 +16,8 @@ const { httpsOptions, port } = nodeConfig;
 
 const setupSwagger = (app: INestApplication) => {
     const config = new DocumentBuilder()
-        .setTitle('Buch')
-        .setDescription('Beispiel für Software Engineering')
+        .setTitle('Bank-Konto')
+        .setDescription('Appserver zum verwalten von Bank Konten')
         .setVersion('2024.10.1')
         .addBearerAuth()
         .build();
