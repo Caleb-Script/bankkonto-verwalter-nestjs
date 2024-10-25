@@ -8,6 +8,7 @@ import {
     Min,
     ValidateNested,
 } from 'class-validator';
+import { KundeDTO } from './kunde.dto';
 import { TransaktionDTO } from './transaktion.dto';
 
 export class KontoDtoOhneReferenz {
@@ -35,6 +36,11 @@ export class KontoDtoOhneReferenz {
 }
 
 export class KontoDTO extends KontoDtoOhneReferenz {
+    @ValidateNested()
+    @Type(() => KundeDTO)
+    @ApiProperty({ type: KundeDTO })
+    readonly titel!: KundeDTO; // NOSONAR
+
     @IsOptional()
     @IsArray()
     @ValidateNested({ each: true })

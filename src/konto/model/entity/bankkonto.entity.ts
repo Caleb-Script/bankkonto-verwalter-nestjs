@@ -3,47 +3,50 @@ import {
     CreateDateColumn,
     Entity,
     OneToMany,
+    OneToOne,
     PrimaryGeneratedColumn,
     UpdateDateColumn,
     VersionColumn,
 } from 'typeorm';
-import { Transaktion } from './transaktion.entity';
+import { Kunde } from './kunde.entity.js';
+import { Transaktion } from './transaktion.entity.js';
 
 @Entity()
 export class Bankkonto {
-    @PrimaryGeneratedColumn('uuid')
-    kontoId: string | undefined;
+    @PrimaryGeneratedColumn()
+    bankkontoId: string | undefined;
 
     @VersionColumn()
     readonly version: number | undefined;
 
     @Column('decimal', { precision: 10, scale: 2 })
-    saldo: number | undefined;
+    readonly saldo: number | undefined;
 
-    @Column({ nullable: true })
-    transaktionsLimit: number | undefined;
+    @Column({ type: 'int', nullable: true })
+    readonly transaktionLimit: number | undefined;
 
-    @OneToMany(() => Transaktion, (transaktion) => transaktion.konto, {
+    @OneToOne(() => Kunde, (kunde: Kunde) => kunde.bankkonto, {
         cascade: ['insert', 'remove'],
     })
-    transaktionen: Transaktion[] | undefined;
+    readonly kunde: Kunde | undefined;
+
+    @OneToMany(() => Transaktion, (transaktion) => transaktion.bankkonto, {
+        cascade: ['insert', 'remove'],
+    })
+    readonly transaktionen: Transaktion[] | undefined;
 
     @CreateDateColumn({ type: 'timestamp' })
-    erstelltAm: Date | undefined;
+    readonly erstelltAm: Date | undefined;
 
     @UpdateDateColumn({ type: 'timestamp' })
-    aktualisiertAm: Date | undefined;
-
-    @Column({ nullable: true })
-    kundenId: string | undefined;
+    readonly aktualisiertAm: Date | undefined;
 
     toString = (): string =>
         JSON.stringify({
-            kontoId: this.kontoId,
+            kontoId: this.bankkontoId,
             saldo: this.saldo,
-            transaktionsLimit: this.transaktionsLimit,
+            transaktionLimit: this.transaktionLimit,
             erstelltAm: this.erstelltAm,
             aktualisiertAm: this.aktualisiertAm,
-            kundenId: this.kundenId,
         });
 }

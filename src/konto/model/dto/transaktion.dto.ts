@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsIn, IsOptional } from 'class-validator';
-import { TransaktionsTyp } from '../entity/transaktion.entity';
+import { TransaktionTyp } from '../entity/transaktion.entity';
 
 export class TransaktionDTO {
     @ApiProperty({
@@ -26,5 +26,5 @@ export class TransaktionDTO {
     })
     @IsIn(['EINZAHLUNG', 'AUSZAHLUNG', 'ÜBERWEISUNG'])
     @ApiProperty({ description: 'Art der Transaktion' })
-    readonly transaktionsTyp!: TransaktionsTyp;
+    readonly transaktionsTyp!: TransaktionTyp;
 }
