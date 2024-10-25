@@ -1,18 +1,3 @@
-// Copyright (C) 2016 - present Juergen Zimmermann, Hochschule Karlsruhe
-//
-// This program is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-//
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with this program. If not, see <https://www.gnu.org/licenses/>.
-
 /**
  * Das Modul besteht aus der Klasse {@linkcode QueryBuilder}.
  * @packageDocumentation
@@ -21,165 +6,98 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { typeOrmModuleOptions } from '../../config/typeormOptions.js';
+import { Kunde } from '../model/entity/bankkonto.entity.js';
 import { getLogger } from '../../logger/logger.js';
-import { Abbildung } from '../entity/abbildung.entity.js';
-import { Buch } from '../entity/buch.entity.js';
-import { Titel } from '../entity/titel.entity.js';
+import { Transaktion } from '../model/entity/transaktion.entity.js';
+import { Bankkonto } from '../model/entity/bankkonto.entity.js';
 import { type Suchkriterien } from './suchkriterien.js';
 
-/** Typdefinitionen für die Suche mit der Buch-ID. */
+/** Typdefinitionen für die Suche mit der Bankkonto-ID. */
 export type BuildIdParams = {
-    /** ID des gesuchten Buchs. */
+    /** ID des gesuchten Bankkontos. */
     readonly id: number;
-    /** Sollen die Transaktionen mitgeladen werden? */
-    readonly mitTransaktionen?: boolean;
 };
 /**
- * Die Klasse `QueryBuilder` implementiert das Lesen für Bücher und greift
+ * Die Klasse `QueryBuilder` implementiert das Lesen für Bankkonten und greift
  * mit _TypeORM_ auf eine relationale DB zu.
  */
 @Injectable()
 export class QueryBuilder {
-    readonly #buchAlias = `${Buch.name
+    readonly #bankkontoAlias = `${Bankkonto.name
         .charAt(0)
-        .toLowerCase()}${Buch.name.slice(1)}`;
+        .toLowerCase()}${Bankkonto.name.slice(1)}`;
+        
+    readonly #kundeAlias = `${Kunde.name
+    .charAt(0)
+    .toLowerCase()}${Kunde.name.slice(1)}`;
 
-    readonly #titelAlias = `${Titel.name
-        .charAt(0)
-        .toLowerCase()}${Titel.name.slice(1)}`;
+readonly #transaktionAlias = `${Transaktion.name
+    .charAt(0)
+    .toLowerCase()}${Transaktion.name.slice(1)}`;
 
-    readonly #abbildungAlias = `${Abbildung.name
-        .charAt(0)
-        .toLowerCase()}${Abbildung.name.slice(1)}`;
-
-    readonly #repo: Repository<Buch>;
+    readonly #repo: Repository<Bankkonto>;
 
     readonly #logger = getLogger(QueryBuilder.name);
 
-    constructor(@InjectRepository(Buch) repo: Repository<Buch>) {
+    constructor(@InjectRepository(Bankkonto) repo: Repository<Bankkonto>) {
         this.#repo = repo;
     }
 
     /**
-     * Ein Buch mit der ID suchen.
-     * @param id ID des gesuchten Buches
+     * Ein Bankkonto mit der ID suchen.
+     * @param id ID des gesuchten Bankkontos
      * @returns QueryBuilder
      */
-    buildId({ id, mitAbbildungen = false }: BuildIdParams) {
-        // QueryBuilder "buch" fuer Repository<Buch>
-        const queryBuilder = this.#repo.createQueryBuilder(this.#buchAlias);
+    buildId({ id }: BuildIdParams, mitTransaktionen: boolean = false) {
+        // QueryBuilder "bankkonto" fuer Repository<Bankkonto>
+        const queryBuilder = this.#repo.createQueryBuilder(this.#bankkontoAlias);
 
-        // Fetch-Join: aus QueryBuilder "buch" die Property "titel" ->  Tabelle "titel"
+        // Fetch-Join: aus QueryBuilder "bankkonto" die Property "kunde" ->  Tabelle "kunde"
         queryBuilder.innerJoinAndSelect(
-            `${this.#buchAlias}.titel`,
-            this.#titelAlias,
+            `${this.#bankkontoAlias}.kunde`,
+            this.#kundeAlias,
         );
 
-        if (mitAbbildungen) {
-            // Fetch-Join: aus QueryBuilder "buch" die Property "abbildungen" -> Tabelle "abbildung"
+        if (mitTransaktionen) {
+            // Fetch-Join: aus QueryBuilder "bankkonto" die Property "transaktionen" -> Tabelle "transaktion"
             queryBuilder.leftJoinAndSelect(
-                `${this.#buchAlias}.abbildungen`,
-                this.#abbildungAlias,
+                `${this.#bankkontoAlias}.transaktion`,
+                this.#transaktionAlias,
             );
         }
 
-        queryBuilder.where(`${this.#buchAlias}.id = :id`, { id: id }); // eslint-disable-line object-shorthand
+        queryBuilder.where(`${this.#bankkontoAlias}.id = :id`, { id: id }); // eslint-disable-line object-shorthand
         return queryBuilder;
     }
 
     /**
-     * Bücher asynchron suchen.
+     * Bankkonten asynchron suchen.
      * @param suchkriterien JSON-Objekt mit Suchkriterien
      * @returns QueryBuilder
      */
-    // z.B. { titel: 'a', rating: 5, javascript: true }
     // "rest properties" fuer anfaengliche WHERE-Klausel: ab ES 2018 https://github.com/tc39/proposal-object-rest-spread
     // eslint-disable-next-line max-lines-per-function, sonarjs/cognitive-complexity
-    build({
-        titel,
-        javascript,
-        typescript,
-        java,
-        python,
-        ...props
-    }: Suchkriterien) {
-        this.#logger.debug(
-            'build: titel=%s, javascript=%s, typescript=%s, java=%s, python=%s, props=%o',
-            titel,
-            javascript,
-            typescript,
-            java,
-            python,
-            props,
+    build({...props}: Suchkriterien) {
+        this.#logger.debug('build: props=%o',props
         );
 
-        let queryBuilder = this.#repo.createQueryBuilder(this.#buchAlias);
-        queryBuilder.innerJoinAndSelect(`${this.#buchAlias}.titel`, 'titel');
-
-        // z.B. { titel: 'a', rating: 5, javascript: true }
-        // "rest properties" fuer anfaengliche WHERE-Klausel: ab ES 2018 https://github.com/tc39/proposal-object-rest-spread
-        // type-coverage:ignore-next-line
-        // const { titel, javascript, typescript, ...props } = suchkriterien;
+        let queryBuilder = this.#repo.createQueryBuilder(this.#bankkontoAlias);
+        queryBuilder.innerJoinAndSelect(`${this.#bankkontoAlias}.kunde`, 'kunde');
 
         let useWhere = true;
 
-        // Titel in der Query: Teilstring des Titels und "case insensitive"
+        // Kunde in der Query: Teilstring des Kunden und "case insensitive"
         // CAVEAT: MySQL hat keinen Vergleich mit "case insensitive"
         // type-coverage:ignore-next-line
-        if (titel !== undefined && typeof titel === 'string') {
-            const ilike =
-                typeOrmModuleOptions.type === 'postgres' ? 'ilike' : 'like';
-            queryBuilder = queryBuilder.where(
-                `${this.#titelAlias}.titel ${ilike} :titel`,
-                { titel: `%${titel}%` },
-            );
-            useWhere = false;
-        }
-
-        if (javascript === 'true') {
-            queryBuilder = useWhere
-                ? queryBuilder.where(
-                      `${this.#buchAlias}.schlagwoerter like '%JAVASCRIPT%'`,
-                  )
-                : queryBuilder.andWhere(
-                      `${this.#buchAlias}.schlagwoerter like '%JAVASCRIPT%'`,
-                  );
-            useWhere = false;
-        }
-
-        if (typescript === 'true') {
-            queryBuilder = useWhere
-                ? queryBuilder.where(
-                      `${this.#buchAlias}.schlagwoerter like '%TYPESCRIPT%'`,
-                  )
-                : queryBuilder.andWhere(
-                      `${this.#buchAlias}.schlagwoerter like '%TYPESCRIPT%'`,
-                  );
-            useWhere = false;
-        }
-
-        if (java === 'true') {
-            queryBuilder = useWhere
-                ? queryBuilder.where(
-                      `${this.#buchAlias}.schlagwoerter like '%JAVA%'`,
-                  )
-                : queryBuilder.andWhere(
-                      `${this.#buchAlias}.schlagwoerter like '%JAVA%'`,
-                  );
-            useWhere = false;
-        }
-
-        if (python === 'true') {
-            queryBuilder = useWhere
-                ? queryBuilder.where(
-                      `${this.#buchAlias}.schlagwoerter like '%PYTHON%'`,
-                  )
-                : queryBuilder.andWhere(
-                      `${this.#buchAlias}.schlagwoerter like '%PYTHON%'`,
-                  );
-            useWhere = false;
-        }
+        // if (Kunde !== undefined && typeof Kunde === 'string') {
+        //     const ilike =
+        //         typeOrmModuleOptions.type === 'postgres' ? 'ilike' : 'like';
+        //     queryBuilder = queryBuilder.where(
+        //         `${this.#kundeAlias}.kunde ${ilike} :kunde`,
+        //         { kunde: `%${Kunde}%` },
+        //     );
+        //     useWhere = false;
+        // }
 
         // Restliche Properties als Key-Value-Paare: Vergleiche auf Gleichheit
         Object.keys(props).forEach((key) => {
@@ -187,11 +105,11 @@ export class QueryBuilder {
             param[key] = (props as Record<string, any>)[key]; // eslint-disable-line @typescript-eslint/no-unsafe-assignment, security/detect-object-injection
             queryBuilder = useWhere
                 ? queryBuilder.where(
-                      `${this.#buchAlias}.${key} = :${key}`,
+                      `${this.#bankkontoAlias}.${key} = :${key}`,
                       param,
                   )
                 : queryBuilder.andWhere(
-                      `${this.#buchAlias}.${key} = :${key}`,
+                      `${this.#bankkontoAlias}.${key} = :${key}`,
                       param,
                   );
             useWhere = false;

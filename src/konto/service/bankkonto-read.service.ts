@@ -1,5 +1,5 @@
 /**
- * Das Modul besteht aus der Klasse {@linkcode BuchReadService}.
+ * Das Modul besteht aus der Klasse {@linkcode BankkontoReadService}.
  * @packageDocumentation
  */
 
@@ -58,9 +58,6 @@ export class BankkontoReadService {
         if (bankkonto === null) {
             throw new NotFoundException(`Es gibt kein Bankkonto mit der ID ${id}.`);
         }
-        if (bankkonto.schlagwoerter === null) {
-            bankkonto.schlagwoerter = [];
-        }
 
         if (this.#logger.isLevelEnabled('debug')) {
             this.#logger.debug(
@@ -111,17 +108,12 @@ export class BankkontoReadService {
                 `Keine Bankkonten gefunden: ${JSON.stringify(suchkriterien)}`,
             );
         }
-        // bankkonten.forEach((bankkonto : Bankkonto): void => {
-        //     if (bankkonto.schlagwoerter === null) {
-        //      bankkonto.schlagwoerter = [];
-        //     }
-        // });
         this.#logger.debug('find: buecher=%o', bankkonten);
         return bankkonten;
     }
 
     #checkKeys(keys: string[]) {
-        // Ist jedes Suchkriterium auch eine Property von Konto oder "schlagwoerter"?
+        // Ist jedes Suchkriterium auch eine Property von Konto?
         let validKeys = true;
         keys.forEach((key) => {
             if (
