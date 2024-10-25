@@ -15,6 +15,8 @@ import { type Suchkriterien } from './suchkriterien.js';
 export type FindByIdParams = {
     /** ID des gesuchten Bankkontos */
     readonly id: number;
+    /** Sollen die Transaktionen mitgeladen werden? */
+    readonly mitTransaktionen?: boolean;
 };
 
 /**
@@ -44,14 +46,14 @@ export class BankkontoReadService {
      * @throws NotFoundException falls kein Bankkonto mit der ID existiert
      */
     // https://2ality.com/2015/01/es6-destructuring.html#simulating-named-parameters-in-javascript
-    async findById({ id }: FindByIdParams) {
+    async findById({ id, mitTransaktionen = false}: FindByIdParams) {
         this.#logger.debug('findById: id=%d', id);
 
         // https://typeorm.io/working-with-repository
         // Das Resultat ist undefined, falls kein Datensatz gefunden
         // Lesen: Keine Transaktion erforderlich
         const bankkonto = await this.#queryBuilder
-            .buildId({ id })
+            .buildId({ id, mitTransaktionen })
             .getOne();
         if (bankkonto === null) {
             throw new NotFoundException(`Es gibt kein Bankkonto mit der ID ${id}.`);
@@ -66,6 +68,12 @@ export class BankkontoReadService {
                 bankkonto.toString(),
                 bankkonto.kundenId,
             );
+            if (mitTransaktionen) {
+                this.#logger.debug(
+                    'findById: transaktionen=%o',
+                    bankkonto.transaktionen,
+                );
+            }
         }
         return bankkonto;
     }

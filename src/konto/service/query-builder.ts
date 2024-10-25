@@ -32,8 +32,8 @@ import { type Suchkriterien } from './suchkriterien.js';
 export type BuildIdParams = {
     /** ID des gesuchten Buchs. */
     readonly id: number;
-    /** Sollen die Abbildungen mitgeladen werden? */
-    readonly mitAbbildungen?: boolean;
+    /** Sollen die Transaktionen mitgeladen werden? */
+    readonly mitTransaktionen?: boolean;
 };
 /**
  * Die Klasse `QueryBuilder` implementiert das Lesen für Bücher und greift
