@@ -7,8 +7,6 @@ import {
 import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AdminModule } from './admin/admin.module.js';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { DevModule } from './config/dev/dev.module.js';
 import { graphQlModuleOptions } from './config/graphql.js';
 import { typeOrmModuleOptions } from './config/typeormOptions.js';
@@ -26,8 +24,6 @@ import { KeycloakModule } from './security/keycloak/keycloak.module.js';
         KeycloakModule,
         TypeOrmModule.forRoot(typeOrmModuleOptions),
     ],
-    controllers: [AppController],
-    providers: [AppService],
 })
 export class AppModule implements NestModule {
     configure(consumer: MiddlewareConsumer) {

@@ -1,6 +1,5 @@
-DROP TABLE IF EXISTS abbildung CASCADE;
-DROP TABLE IF EXISTS titel CASCADE;
-DROP TABLE IF EXISTS buch CASCADE;
+DROP TABLE IF EXISTS transaktion CASCADE;
+DROP TABLE IF EXISTS kunde CASCADE;
+DROP TABLE IF EXISTS bankkonto CASCADE;
 
--- https://www.postgresql.org/docs/current/sql-droptype.html
-DROP TYPE IF EXISTS buchart;
+DROP TYPE IF EXISTS transaktion_typ;

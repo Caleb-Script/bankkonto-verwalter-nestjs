@@ -2,13 +2,14 @@ import {
     Column,
     CreateDateColumn,
     Entity,
+    Index,
     JoinColumn,
     ManyToOne,
     PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Bankkonto } from './bankkonto.entity';
+import { Bankkonto } from './bankkonto.entity.js';
 
-export type TransaktionsTyp =
+export type TransaktionTyp =
     | 'EINZAHLUNG'
     | 'AUSZAHLUNG'
     | 'ÜBERWEISUNG'
@@ -16,40 +17,41 @@ export type TransaktionsTyp =
     | 'ZAHLUNG';
 
 @Entity()
+@Index(['transaktionTyp', 'transaktionDatum', 'bankkonto']) // Index für Performance
 export class Transaktion {
-    @PrimaryGeneratedColumn('uuid')
+    @PrimaryGeneratedColumn()
     transaktionId: string | undefined;
 
-    @Column()
-    transaktionsTyp: TransaktionsTyp | undefined;
+    @Column('varchar')
+    readonly transaktionTyp: TransaktionTyp | undefined;
 
     @Column('decimal', { precision: 10, scale: 2 })
-    betrag: number | undefined;
+    readonly betrag: number | undefined;
 
-    @Column({ nullable: true })
-    absender: string | undefined;
+    @Column({ type: 'varchar', nullable: true })
+    readonly absender: string | undefined;
 
-    @Column({ nullable: true })
-    empfaenger: string | undefined;
+    @Column({ type: 'varchar', nullable: true })
+    readonly empfaenger: string | undefined;
 
     @CreateDateColumn({ type: 'timestamp' })
-    transaktionsDatum: Date | undefined;
+    readonly transaktionDatum: Date | undefined;
 
     @ManyToOne(() => Bankkonto, (konto) => konto.transaktionen, {
         eager: true,
         onDelete: 'CASCADE',
     })
-    @JoinColumn({ name: 'konto_id' })
-    konto: Bankkonto | undefined;
+    @JoinColumn({ name: 'bankkonto_id' })
+    bankkonto: Bankkonto | undefined;
 
     toString = (): string =>
         JSON.stringify({
             transaktionId: this.transaktionId,
-            transaktionsTyp: this.transaktionsTyp,
+            transaktionTyp: this.transaktionTyp,
             betrag: this.betrag,
             absender: this.absender,
             empfaenger: this.empfaenger,
-            transaktionsDatum: this.transaktionsDatum,
-            kontoId: this.konto?.kontoId,
+            transaktionDatum: this.transaktionDatum,
+            bankkontoId: this.bankkonto?.bankkontoId,
         });
 }
