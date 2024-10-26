@@ -1,8 +1,8 @@
 # ==============================================================================
 # N o d e
 # ==============================================================================
-#node:
-#  port: 3000
+node:
+  port: 3000
 
 # ==============================================================================
 # D a t e n b a n k
@@ -12,17 +12,17 @@
 # "better-sqlite3" erfordert Python zum Uebersetzen, wenn das Docker-Image gebaut wird
 
 db:
-  #type: postgres
+  type: postgres
   #type: mysql
   #type: oracle
   #type: sqlite
 
   #host: localhost
 
-  #username: buch
-  #password: p
-  #passwordAdmin: p
-  #name: buch
+  username: bankkonto
+  password: p
+  passwordAdmin: p
+  name: bankkonto
   populate: true
 
 # ==============================================================================
@@ -30,10 +30,10 @@ db:
 # ==============================================================================
 # "Client Secret" muss durch die Umgebungsvariable CLIENT_SECRET gesetzt werden
 keycloak:
-  #authServerUrl: http://localhost:8880
-  #realm: nest
+  authServerUrl: http://localhost:8880
+  realm: nest
   # siehe Keycloak Menuepunkt "Clients" > Tab "Clients list" > Spalte "Client ID"
-  #clientId: nest-client
+  clientId: nest-client
   #tokenValidation: online
 
 # ==============================================================================
