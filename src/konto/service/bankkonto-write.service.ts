@@ -13,7 +13,7 @@ import { Transaktion } from '../model/entity/transaktion.entity.js';
 import { Bankkonto } from '../model/entity/bankkonto.entity.js';
 import { BankkontoReadService } from './bankkonto-read.service.js';
 import {
-    KontoIdExistsException,
+    KundenIdExistsException,
     VersionInvalidException,
     VersionOutdatedException,
 } from './exceptions.js';
@@ -64,7 +64,7 @@ export class BankkontoWriteService {
      * Ein neues Bankkonto soll angelegt werden.
      * @param bankkonto Das neu abzulegende Bankkonto
      * @returns Die ID des neu angelegten Bankkontos
-     * @throws KontoIdExists falls die Konto-Id bereits existiert
+     * @throws KundenIdExists falls die Kunden-Id bereits existiert
      */
     async create(bankkonto: Bankkonto): Promise<number> {
         this.#logger.debug('create: bankkonto=%o', bankkonto);
@@ -150,15 +150,15 @@ export class BankkontoWriteService {
         );
     }
 
-    async #validateCreate({ kontoId }: Bankkonto): Promise<undefined> {
-        this.#logger.debug('#validateCreate: kontoId=%s', kontoId);
-        if (await this.#repo.existsBy({ kontoId })) {
-            throw new KontoIdExistsException(kontoId);
+    async #validateCreate({ kundenId }: Bankkonto): Promise<undefined> {
+        this.#logger.debug('#validateCreate: kundenId=%s', kundenId);
+        if (await this.#repo.existsBy({ kundenId })) {
+            throw new KundenIdExistsException(kundenId);
         }
     }
 
     async #sendmail(bankkonto: Bankkonto) {
-        const subject = `Neues Bankkonto ${bankkonto.kontoId}`;
+        const subject = `Neues Bankkonto ${bankkonto.kundenId}`;
         const body = `Das Bankkonto ist angelegt`;
         await this.#mailService.sendmail({ subject, body });
     }
