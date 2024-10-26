@@ -24,12 +24,12 @@ import { HttpException, HttpStatus } from '@nestjs/common';
  */
 
 /**
- * Exception-Klasse für eine bereits existierende ISBN-Nummer.
+ * Exception-Klasse für eine bereits existierende Kunden-Id.
  */
-export class KontoIdExistsException extends HttpException {
-    constructor(readonly kontoId: string) {
+export class KundenIdExistsException extends HttpException {
+    constructor(readonly kundenId: string) {
         super(
-            `Die Konto-Id ${kontoId} existiert bereits.`,
+            `Die Konto-Id ${kundenId} existiert bereits.`,
             HttpStatus.UNPROCESSABLE_ENTITY,
         );
     }
