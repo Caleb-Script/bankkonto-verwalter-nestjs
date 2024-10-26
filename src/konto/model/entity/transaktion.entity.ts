@@ -20,7 +20,7 @@ export type TransaktionTyp =
 @Index(['transaktionTyp', 'transaktionDatum', 'bankkonto']) // Index für Performance
 export class Transaktion {
     @PrimaryGeneratedColumn()
-    transaktionId: string | undefined;
+    transaktionId: number | undefined;
 
     @Column('varchar')
     readonly transaktionTyp: TransaktionTyp | undefined;
@@ -29,10 +29,10 @@ export class Transaktion {
     readonly betrag: number | undefined;
 
     @Column({ type: 'varchar', nullable: true })
-    readonly absender: string | undefined;
+    readonly absender: number | undefined;
 
     @Column({ type: 'varchar', nullable: true })
-    readonly empfaenger: string | undefined;
+    readonly empfaenger: number | undefined;
 
     @CreateDateColumn({ type: 'timestamp' })
     readonly transaktionDatum: Date | undefined;

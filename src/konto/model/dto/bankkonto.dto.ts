@@ -11,7 +11,7 @@ import {
 import { KundeDTO } from './kunde.dto';
 import { TransaktionDTO } from './transaktion.dto';
 
-export class KontoDtoOhneReferenz {
+export class BankkontoDtoOhneReferenz {
     @Min(0)
     @IsInt()
     @IsOptional()
@@ -35,7 +35,7 @@ export class KontoDtoOhneReferenz {
     readonly kundenId!: string;
 }
 
-export class KontoDTO extends KontoDtoOhneReferenz {
+export class BankkontoDTO extends BankkontoDtoOhneReferenz {
     @ValidateNested()
     @Type(() => KundeDTO)
     @ApiProperty({ type: KundeDTO })

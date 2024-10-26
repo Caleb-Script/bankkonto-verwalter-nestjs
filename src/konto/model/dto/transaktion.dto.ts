@@ -11,14 +11,14 @@ export class TransaktionDTO {
 
     @IsOptional()
     @ApiProperty({ description: 'ID des Empfängers', example: '00000000' })
-    readonly empfaenger?: string;
+    readonly empfaenger?: number;
 
     @IsOptional()
     @ApiProperty({
         description: 'ID des Absenders',
         example: '00000000',
     })
-    readonly absender?: string;
+    readonly absender?: number;
 
     @ApiProperty({
         description: 'Art der Transaktion',
@@ -26,5 +26,5 @@ export class TransaktionDTO {
     })
     @IsIn(['EINZAHLUNG', 'AUSZAHLUNG', 'ÜBERWEISUNG'])
     @ApiProperty({ description: 'Art der Transaktion' })
-    readonly transaktionsTyp!: TransaktionTyp;
+    readonly transaktionTyp!: TransaktionTyp;
 }
