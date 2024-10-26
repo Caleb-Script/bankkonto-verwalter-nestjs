@@ -62,7 +62,6 @@ export class QueryBuilder {
                 this.#transaktionAlias,
             );
         }
-
         queryBuilder.where(
             `${this.#bankkontoAlias}.bankkontoId = :bankkontoId`,
             {

@@ -8,15 +8,19 @@ import { getLogger } from '../../logger/logger.js';
 import { Bankkonto } from '../model/entity/bankkonto.entity.js';
 import { QueryBuilder } from './query-builder.js';
 import { type Suchkriterien } from './suchkriterien.js';
-
 /**
  * Typdefinition für `findById`
  */
 export type FindByIdParams = {
     /** ID des gesuchten Bankkontos */
-    readonly id: number;
+    readonly bankkontoId: number;
     /** Sollen die Transaktionen mitgeladen werden? */
     readonly mitTransaktionen?: boolean;
+};
+
+export type FindParams = {
+    readonly searchCriteriaInput?: Suchkriterien;
+    readonly ignoreNull?: boolean;
 };
 
 /**
@@ -28,9 +32,7 @@ export class BankkontoReadService {
     static readonly ID_PATTERN = /^[1-9]\d{0,10}$/u;
 
     readonly #bankkontoProps: string[];
-
     readonly #queryBuilder: QueryBuilder;
-
     readonly #logger = getLogger(BankkontoReadService.name);
 
     constructor(queryBuilder: QueryBuilder) {
@@ -41,19 +43,19 @@ export class BankkontoReadService {
 
     /**
      * Ein Bankkonto asynchron anhand seiner ID suchen
-     * @param id ID des gesuchten Kontos
+     * @param bankkontoId ID des gesuchten Kontos
      * @returns Das gefundene Bankkonto in einem Promise aus ES2015.
      * @throws NotFoundException falls kein Bankkonto mit der ID existiert
      */
-    async findById({ id, mitTransaktionen = false }: FindByIdParams) {
-        this.#logger.debug('findById: id=%d', id);
+    async findById({ bankkontoId, mitTransaktionen = false }: FindByIdParams) {
+        this.#logger.debug('findById: bankkontoId=%d', bankkontoId);
 
         const bankkonto = await this.#queryBuilder
-            .buildId({ id, mitTransaktionen })
+            .buildId({ bankkontoId, mitTransaktionen })
             .getOne();
         if (bankkonto === null) {
             throw new NotFoundException(
-                `Es gibt kein Bankkonto mit der ID ${id}.`,
+                `Es gibt kein Bankkonto mit der ID ${bankkontoId}.`,
             );
         }
 
