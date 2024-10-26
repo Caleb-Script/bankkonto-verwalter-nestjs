@@ -14,13 +14,13 @@ import { Transaktion } from './transaktion.entity.js';
 @Entity()
 export class Bankkonto {
     @PrimaryGeneratedColumn()
-    bankkontoId: string | undefined;
+    bankkontoId: number | undefined;
 
     @VersionColumn()
     readonly version: number | undefined;
 
     @Column('decimal', { precision: 10, scale: 2 })
-    readonly saldo: number | undefined;
+    readonly saldo!: number;
 
     @Column({ type: 'int', nullable: true })
     readonly transaktionLimit: number | undefined;

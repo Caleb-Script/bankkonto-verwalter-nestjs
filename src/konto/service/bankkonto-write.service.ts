@@ -1,19 +1,16 @@
-/**
- * Das Modul besteht aus der Klasse {@linkcode BankkontoWriteService} für die
- * Schreiboperationen im Anwendungskern.
- * @packageDocumentation
- */
-
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { type DeleteResult, Repository } from 'typeorm';
 import { getLogger } from '../../logger/logger.js';
 import { MailService } from '../../mail/mail.service.js';
+import { TransaktionDTO } from '../model/dto/transaktion.dto.js';
 import { Bankkonto } from '../model/entity/bankkonto.entity.js';
-import { Transaktion } from '../model/entity/transaktion.entity.js';
+import {
+    Transaktion,
+    TransaktionTyp,
+} from '../model/entity/transaktion.entity.js';
 import { BankkontoReadService } from './bankkonto-read.service.js';
 import {
-    KundenIdExistsException,
     VersionInvalidException,
     VersionOutdatedException,
 } from './exceptions.js';
@@ -21,96 +18,72 @@ import {
 /** Typdefinitionen zum Aktualisieren eines Bankkontos mit `update`. */
 export type UpdateParams = {
     /** ID des zu aktualisierenden Bankkontos. */
-    readonly id: number | undefined;
+    readonly bankkontoId: number | undefined;
     /** Bankkonto-Objekt mit den aktualisierten Werten. */
     readonly bankkonto: Bankkonto;
     /** Versionsnummer für die aktualisierenden Werte. */
     readonly version: string;
 };
 
-// TODO Transaktionen, wenn mehr als 1 TypeORM-Schreibmethode involviert ist
-// https://docs.nestjs.com/techniques/database#typeorm-transactions
-// https://papooch.github.io/nestjs-cls/plugins/available-plugins/transactional
-// https://betterprogramming.pub/handling-transactions-in-typeorm-and-nest-js-with-ease-3a417e6ab5
-// https://bytesmith.dev/blog/20240320-nestjs-transactions
-
 /**
  * Die Klasse `BankkontoWriteService` implementiert den Anwendungskern für das
- * Schreiben von Bücher und greift mit _TypeORM_ auf die DB zu.
+ * Schreiben von Bankkonten und greift mit TypeORM auf die DB zu.
  */
 @Injectable()
 export class BankkontoWriteService {
     private static readonly VERSION_PATTERN = /^"\d{1,3}"/u;
 
     readonly #repo: Repository<Bankkonto>;
-
+    readonly #transaktionRepo: Repository<Transaktion>;
     readonly #readService: BankkontoReadService;
-
     readonly #mailService: MailService;
-
     readonly #logger = getLogger(BankkontoWriteService.name);
 
     constructor(
         @InjectRepository(Bankkonto) repo: Repository<Bankkonto>,
+        @InjectRepository(Transaktion) transaktionRepo: Repository<Transaktion>,
         readService: BankkontoReadService,
         mailService: MailService,
     ) {
         this.#repo = repo;
         this.#readService = readService;
         this.#mailService = mailService;
+        this.#transaktionRepo = transaktionRepo;
     }
 
-    /**
-     * Ein neues Bankkonto soll angelegt werden.
-     * @param bankkonto Das neu abzulegende Bankkonto
-     * @returns Die ID des neu angelegten Bankkontos
-     * @throws KundenIdExists falls die Kunden-Id bereits existiert
-     */
     async create(bankkonto: Bankkonto): Promise<number> {
         this.#logger.debug('create: bankkonto=%o', bankkonto);
-        await this.#validateCreate(bankkonto);
-
         const bankkontoDb = await this.#repo.save(bankkonto); // implizite Transaktion
         this.#logger.debug('create: bankkontoDb=%o', bankkontoDb);
-
         await this.#sendmail(bankkontoDb);
-
-        return bankkontoDb.id!;
+        return bankkontoDb.bankkontoId!;
     }
 
-    /**
-     * Ein vorhandenes Bankkonto soll aktualisiert werden. "Destructured" Argument
-     * mit id (ID des zu aktualisierenden Bankkontos), bankkonto (zu aktualisierendes Bankkonto)
-     * und version (Versionsnummer für optimistische Synchronisation).
-     * @returns Die neue Versionsnummer gemäß optimistischer Synchronisation
-     * @throws NotFoundException falls kein Bankkonto zur ID vorhanden ist
-     * @throws VersionInvalidException falls die Versionsnummer ungültig ist
-     * @throws VersionOutdatedException falls die Versionsnummer veraltet ist
-     */
-    // https://2ality.com/2015/01/es6-destructuring.html#simulating-named-parameters-in-javascript
-    async update({ id, bankkonto, version }: UpdateParams): Promise<number> {
+    async update({
+        bankkontoId,
+        bankkonto,
+        version,
+    }: UpdateParams): Promise<number> {
         this.#logger.debug(
-            'update: id=%d, bankkonto=%o, version=%s',
-            id,
+            'update: bankkontoId=%d, bankkonto=%o, version=%s',
+            bankkontoId,
             bankkonto,
             version,
         );
-        if (id === undefined) {
+
+        if (bankkontoId === undefined) {
             this.#logger.debug('update: Keine gueltige ID');
             throw new NotFoundException(
-                `Es gibt kein Bankkonto mit der ID ${id}.`,
+                `Es gibt kein Bankkonto mit der ID ${bankkontoId}.`,
             );
         }
 
         const validateResult = await this.#validateUpdate(
             bankkonto,
-            id,
+            bankkontoId,
             version,
         );
         this.#logger.debug('update: validateResult=%o', validateResult);
-        if (!(validateResult instanceof Bankkonto)) {
-            return validateResult;
-        }
 
         const bankkontoNeu = validateResult;
         const merged = this.#repo.merge(bankkontoNeu, bankkonto);
@@ -121,31 +94,26 @@ export class BankkontoWriteService {
         return updated.version!;
     }
 
-    /**
-     * Ein Bankkonto wird asynchron anhand seiner ID gelöscht.
-     *
-     * @param id ID des zu löschenden Bankkontos
-     * @returns true, falls das Bankkonto vorhanden war und gelöscht wurde. Sonst false.
-     */
-    async delete(id: number) {
-        this.#logger.debug('delete: id=%d', id);
+    async delete(bankkontoId: number) {
+        this.#logger.debug('delete: bankkontoId=%d', bankkontoId);
         const bankkonto = await this.#readService.findById({
-            id,
+            bankkontoId,
             mitTransaktionen: true,
         });
 
         let deleteResult: DeleteResult | undefined;
         await this.#repo.manager.transaction(async (transactionalMgr) => {
-            // Das Bankkonto zur gegebenen ID mit Transaktionen asynchron loeschen
-
-            // TODO "cascade" funktioniert nicht beim Loeschen
-            // "Nullish Coalescing" ab ES2020
             const transaktionen = bankkonto.transaktionen ?? [];
             for (const transaktion of transaktionen) {
-                await transactionalMgr.delete(Transaktion, transaktion.id);
+                await transactionalMgr.delete(
+                    Transaktion,
+                    transaktion.transaktionId,
+                );
             }
-
-            deleteResult = await transactionalMgr.delete(Bankkonto, id);
+            deleteResult = await transactionalMgr.delete(
+                Bankkonto,
+                bankkontoId,
+            );
             this.#logger.debug('delete: deleteResult=%o', deleteResult);
         });
 
@@ -156,50 +124,153 @@ export class BankkontoWriteService {
         );
     }
 
-    async #validateCreate({ kundenId }: Bankkonto): Promise<undefined> {
-        this.#logger.debug('#validateCreate: kundenId=%s', kundenId);
-        if (await this.#repo.existsBy({ kundenId })) {
-            throw new KundenIdExistsException(kundenId);
+    async createTransaktion(transaktionDTO: TransaktionDTO) {
+        this.#logger.debug('createTransaktion: %o', transaktionDTO);
+
+        const { absender, empfaenger, betrag, transaktionTyp } = transaktionDTO;
+        const bankkonto = await this.#findBankkontoByTransaktionTyp(
+            transaktionTyp,
+            absender,
+            empfaenger,
+        );
+        const { bankkontoId, version, saldo } = bankkonto;
+
+        this.#validateTransaktionLimit(bankkonto, betrag, transaktionTyp);
+
+        const updatedSaldo = this.#berechneNeuenSaldo(
+            saldo,
+            betrag,
+            transaktionTyp,
+        );
+        const updatedBankkonto = this.#bankkontoUpdateDTOToBankkonto({
+            saldo: updatedSaldo,
+        });
+
+        await this.update({
+            bankkontoId,
+            version: `"${version}"`,
+            bankkonto: updatedBankkonto,
+        });
+        const transaktion = await this.#newTransaktion(
+            transaktionDTO,
+            bankkontoId!,
+        );
+        return transaktion.transaktionId;
+    }
+
+    async #findBankkontoByTransaktionTyp(
+        transaktionTyp: TransaktionTyp,
+        absender?: number,
+        empfaenger?: number,
+    ): Promise<Bankkonto> {
+        return transaktionTyp === 'EINZAHLUNG' || transaktionTyp === 'EINKOMMEN'
+            ? this.#readService.findById({ bankkontoId: empfaenger! })
+            : this.#readService.findById({ bankkontoId: absender! });
+    }
+
+    #validateTransaktionLimit(
+        bankkonto: Bankkonto,
+        betrag: number,
+        transaktionTyp: TransaktionTyp,
+    ): void {
+        if (
+            ['ÜBERWEISUNG', 'AUSZAHLUNG', 'ZAHLUNG'].includes(transaktionTyp) &&
+            (bankkonto.saldo < betrag ||
+                (bankkonto.transaktionLimit !== undefined &&
+                    bankkonto.transaktionLimit < betrag))
+        ) {
+            throw new Error(
+                bankkonto.saldo < betrag
+                    ? 'Nicht genügend Mittel'
+                    : 'Über dem Limit!',
+            );
         }
     }
 
+    #berechneNeuenSaldo(
+        saldo: number,
+        betrag: number,
+        transaktionTyp: string,
+    ): number {
+        return transaktionTyp === 'EINZAHLUNG' || transaktionTyp === 'EINKOMMEN'
+            ? saldo + betrag
+            : saldo - betrag;
+    }
+
     async #sendmail(bankkonto: Bankkonto) {
-        const subject = `Neues Bankkonto ${bankkonto.kundenId}`;
-        const body = `Das Bankkonto ist angelegt`;
+        const subject = `Neues Bankkonto`;
+        const body = `Das Bankkonto ist angelegt für ${bankkonto.kunde?.vorname} ${bankkonto.kunde?.name}`;
         await this.#mailService.sendmail({ subject, body });
     }
 
     async #validateUpdate(
         bankkonto: Bankkonto,
-        id: number,
+        bankkontoId: number,
         versionStr: string,
     ): Promise<Bankkonto> {
         this.#logger.debug(
-            '#validateUpdate: bankkonto=%o, id=%s, versionStr=%s',
+            '#validateUpdate: bankkonto=%o, bankkontoId=%s, versionStr=%s',
             bankkonto,
-            id,
+            bankkontoId,
             versionStr,
         );
+
         if (!BankkontoWriteService.VERSION_PATTERN.test(versionStr)) {
             throw new VersionInvalidException(versionStr);
         }
 
         const version = Number.parseInt(versionStr.slice(1, -1), 10);
-        this.#logger.debug(
-            '#validateUpdate: bankkonto=%o, version=%d',
-            bankkonto,
-            version,
-        );
+        const bankkontoDb = await this.#readService.findById({ bankkontoId });
 
-        const bankkontoDb = await this.#readService.findById({ id });
-
-        // nullish coalescing
-        const versionDb = bankkontoDb.version!;
-        if (version < versionDb) {
-            this.#logger.debug('#validateUpdate: versionDb=%d', version);
+        if (version < bankkontoDb.version!) {
             throw new VersionOutdatedException(version);
         }
-        this.#logger.debug('#validateUpdate: bankkontoDb=%o', bankkontoDb);
+
         return bankkontoDb;
+    }
+
+    async #newTransaktion(
+        transaktionDTO: TransaktionDTO,
+        bankkontoId: number,
+    ): Promise<Transaktion> {
+        const { absender, empfaenger, betrag, transaktionTyp } = transaktionDTO;
+        const transaktion: Transaktion = await this.#transaktionRepo.save({
+            bankkontoId,
+            transaktionTyp,
+            betrag,
+            absender,
+            empfaenger,
+            transactionDate: new Date(),
+        });
+
+        if (transaktionTyp === 'ÜBERWEISUNG') {
+            await this.createTransaktion({
+                absender,
+                empfaenger,
+                betrag,
+                transaktionTyp: 'EINKOMMEN',
+            });
+        }
+
+        return transaktion;
+    }
+
+    #bankkontoUpdateDTOToBankkonto({
+        saldo,
+        transaktionLimit,
+    }: {
+        saldo: number;
+        transaktionLimit?: number;
+    }): Bankkonto {
+        return {
+            bankkontoId: undefined,
+            version: undefined,
+            saldo,
+            transaktionLimit,
+            kunde: undefined,
+            transaktionen: undefined,
+            erstelltAm: undefined,
+            aktualisiertAm: new Date(),
+        };
     }
 }
