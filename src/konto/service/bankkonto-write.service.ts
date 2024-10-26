@@ -9,8 +9,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { type DeleteResult, Repository } from 'typeorm';
 import { getLogger } from '../../logger/logger.js';
 import { MailService } from '../../mail/mail.service.js';
-import { Transaktion } from '../model/entity/transaktion.entity.js';
 import { Bankkonto } from '../model/entity/bankkonto.entity.js';
+import { Transaktion } from '../model/entity/transaktion.entity.js';
 import { BankkontoReadService } from './bankkonto-read.service.js';
 import {
     KontoIdExistsException,
@@ -97,10 +97,16 @@ export class BankkontoWriteService {
         );
         if (id === undefined) {
             this.#logger.debug('update: Keine gueltige ID');
-            throw new NotFoundException(`Es gibt kein Bankkonto mit der ID ${id}.`);
+            throw new NotFoundException(
+                `Es gibt kein Bankkonto mit der ID ${id}.`,
+            );
         }
 
-        const validateResult = await this.#validateUpdate(bankkonto, id, version);
+        const validateResult = await this.#validateUpdate(
+            bankkonto,
+            id,
+            version,
+        );
         this.#logger.debug('update: validateResult=%o', validateResult);
         if (!(validateResult instanceof Bankkonto)) {
             return validateResult;

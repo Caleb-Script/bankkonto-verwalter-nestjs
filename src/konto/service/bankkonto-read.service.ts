@@ -45,25 +45,23 @@ export class BankkontoReadService {
      * @returns Das gefundene Bankkonto in einem Promise aus ES2015.
      * @throws NotFoundException falls kein Bankkonto mit der ID existiert
      */
-    // https://2ality.com/2015/01/es6-destructuring.html#simulating-named-parameters-in-javascript
-    async findById({ id, mitTransaktionen = false}: FindByIdParams) {
+    async findById({ id, mitTransaktionen = false }: FindByIdParams) {
         this.#logger.debug('findById: id=%d', id);
 
-        // https://typeorm.io/working-with-repository
-        // Das Resultat ist undefined, falls kein Datensatz gefunden
-        // Lesen: Keine Transaktion erforderlich
         const bankkonto = await this.#queryBuilder
             .buildId({ id, mitTransaktionen })
             .getOne();
         if (bankkonto === null) {
-            throw new NotFoundException(`Es gibt kein Bankkonto mit der ID ${id}.`);
+            throw new NotFoundException(
+                `Es gibt kein Bankkonto mit der ID ${id}.`,
+            );
         }
 
         if (this.#logger.isLevelEnabled('debug')) {
             this.#logger.debug(
                 'findById: bankkonto=%s, kundenId=%o',
                 bankkonto.toString(),
-                bankkonto.kundenId,
+                bankkonto.kunde,
             );
             if (mitTransaktionen) {
                 this.#logger.debug(
@@ -101,7 +99,9 @@ export class BankkontoReadService {
         // QueryBuilder https://typeorm.io/select-query-builder
         // Das Resultat ist eine leere Liste, falls nichts gefunden
         // Lesen: Keine Transaktion erforderlich
-        const bankkonten = await this.#queryBuilder.build(suchkriterien).getMany();
+        const bankkonten = await this.#queryBuilder
+            .build(suchkriterien)
+            .getMany();
         if (bankkonten.length === 0) {
             this.#logger.debug('find: Keine Bankkonten gefunden');
             throw new NotFoundException(
@@ -131,5 +131,4 @@ export class BankkontoReadService {
 
         return validKeys;
     }
-
 }
