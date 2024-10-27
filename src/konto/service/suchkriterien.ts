@@ -1,40 +1,14 @@
-// Copyright (C) 2016 - present Juergen Zimmermann, Hochschule Karlsruhe
-//
-// This program is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-//
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with this program. If not, see <https://www.gnu.org/licenses/>.
+import { TransaktionTyp } from "../model/entity/transaktion.entity";
 
 /**
- * Das Modul besteht aus der Klasse {@linkcode Suchkriterien}.
- * @packageDocumentation
- */
-
-import { type BuchArt } from './../entity/buch.entity.js';
-
-/**
- * Typdefinition für `find` in `buch-read.service` und `QueryBuilder.build()`.
+ * Typdefinition für `find` in `bankkontoRead.service` und `QueryBuilder.build()`.
  */
 export type Suchkriterien = {
-    readonly isbn?: string;
-    readonly rating?: number;
-    readonly art?: BuchArt;
-    readonly preis?: number;
-    readonly rabatt?: number;
-    readonly lieferbar?: boolean;
+    readonly saldo?: string;
+    readonly transaktionsLimit?: number;
     readonly datum?: string;
-    readonly homepage?: string;
-    readonly javascript?: string;
-    readonly typescript?: string;
-    readonly java?: string;
-    readonly python?: string;
-    readonly titel?: string;
+    readonly transaktionTyp?: TransaktionTyp;
+    readonly absender?: string;
+    readonly empfaenger?: string;
+    readonly email?: string;
 };

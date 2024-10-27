@@ -39,7 +39,7 @@ export class KontoDTO extends KontoDtoOhneReferenz {
     @ValidateNested()
     @Type(() => KundeDTO)
     @ApiProperty({ type: KundeDTO })
-    readonly titel!: KundeDTO; // NOSONAR
+    readonly kunde!: KundeDTO; // NOSONAR
 
     @IsOptional()
     @IsArray()
