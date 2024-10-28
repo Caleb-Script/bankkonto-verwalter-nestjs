@@ -4,7 +4,7 @@ import { IsInt, IsNumberString, Min } from 'class-validator';
 import { AuthGuard, Roles } from 'nest-keycloak-connect';
 import { getLogger } from '../../logger/logger.js';
 import { ResponseTimeInterceptor } from '../../logger/response-time.interceptor.js';
-import { BankkontoDTO } from '../model/dto/bankkonto.dto.entity.js';
+import { KontoDTO } from '../model/dto/bankkonto.dto.js';
 import { type Transaktion } from '../model/entity/transaktion.entity.js';
 import { type Bankkonto } from '../model/entity/bankkonto.entity.js';
 import { type Kunde } from '../model/entity/kunde.entity.js';
@@ -21,17 +21,13 @@ export type UpdatePayload = {
     readonly version: number;
 };
 
-export class BankkontoUpdateDTO extends BankkontoDTO {
+export class BankkontoUpdateDTO extends KontoDTO {
     @IsNumberString()
     readonly kontoId!: string;
 
     @IsInt()
     @Min(0)
     readonly version!: number;
-    aktualisietAm: Date | undefined;
-    saldo: number | undefined;
-    transaktionLimit: number | undefined;
-    erstelltAm: Date | undefined;
 }
 @Resolver('Bankkonto')
 // alternativ: globale Aktivierung der Guards https://docs.nestjs.com/security/authorization#basic-rbac-implementation
@@ -49,7 +45,7 @@ export class BankkontoMutationResolver {
 
     @Mutation()
     @Roles({ roles: ['admin', 'user'] })
-    async create(@Args('input') bankkontoDTO: BankkontoDTO) {
+    async create(@Args('input') bankkontoDTO: KontoDTO) {
         this.#logger.debug('create: bankkontoDTO=%o', bankkontoDTO);
 
         const bankkonto = this.#bankkontoDtoToBankkonto(bankkontoDTO);
@@ -88,7 +84,7 @@ export class BankkontoMutationResolver {
         return deletePerformed;
     }
 
-    #bankkontoDtoToBankkonto(bankkontoDTO: BankkontoDTO): Bankkonto {
+    #bankkontoDtoToBankkonto(bankkontoDTO: KontoDTO): Bankkonto {
         const kundeDTO = bankkontoDTO.kunde;
         const kunde: Kunde = {
             kundeId: undefined,
@@ -114,9 +110,9 @@ export class BankkontoMutationResolver {
             bankkontoId: undefined,
             version: undefined,
             saldo: bankkontoDTO.saldo,
-            transaktionLimit: bankkontoDTO.transaktionLimit,
-            aktualisiertAm: bankkontoDTO.aktualisietAm,
-            erstelltAm: bankkontoDTO.erstelltAm,
+            transaktionLimit: bankkontoDTO.transaktionsLimit,
+            erstelltAm: undefined,
+            aktualisiertAm: undefined,
             kunde,
             transaktionen,
         };
@@ -131,9 +127,9 @@ export class BankkontoMutationResolver {
             bankkontoId: undefined,
             version: undefined,
             saldo: bankkontoDTO.saldo,
-            transaktionLimit: bankkontoDTO.transaktionLimit,
-            aktualisiertAm: bankkontoDTO.aktualisietAm,
-            erstelltAm: bankkontoDTO.erstelltAm,
+            transaktionLimit: bankkontoDTO.transaktionsLimit,
+            aktualisiertAm: undefined,
+            erstelltAm: undefined,
             kunde: undefined,
             transaktionen: undefined,
         };
