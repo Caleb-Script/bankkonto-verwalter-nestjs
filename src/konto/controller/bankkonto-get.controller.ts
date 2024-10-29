@@ -83,7 +83,7 @@ export type BankkontoModel = Omit<
 export type BankkontenModel = {
     // eslint-disable-next-line @typescript-eslint/naming-convention
     _embedded: {
-        bankkonten: BankkontenModel[];
+        bankkonten: BankkontoModel[];
     };
 };
 
