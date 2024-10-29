@@ -24,7 +24,7 @@ package bankkonto.entity {
   class Bankkonto <<entity>> <<@Entity>> {
     @Column() @PrimaryColumn() bankkontoId: number
     @Column() readonly version: number
-    @Column() readonly saldo: string
+    @Column() readonly saldo: number
     @Column() readonly transakionLimit: number
     @CreateDateColumn() readonly erstelltAm: Date
     @UpdateDateColumn() readonly aktualisiertAm: Date
@@ -41,8 +41,8 @@ package bankkonto.entity {
     @Column() @PrimaryColumn() readonly transaktionId: number
     @Column() readonly transaktionTyp: transaktionTyp
     @Column() readonly betrag: number
-    @Column() readonly absender: string
-    @Column() readonly empfaenger: string
+    @Column() readonly absender: number
+    @Column() readonly empfaenger: number
     @CreateDateColumn() readonly transaktionDatum: Date
   }
 

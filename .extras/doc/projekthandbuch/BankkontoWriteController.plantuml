@@ -1,0 +1,107 @@
+@startuml Controller-Klasse
+
+interface Promise<T>
+
+package @nestjs/common {
+  class "@Controller" as Controller
+  hide Controller circle
+
+  class "@UseGuards" as UseGuards
+  hide UseGuards circle
+
+  class "@UseInterceptors" as UseInterceptors
+  hide UseInterceptors circle
+
+  class "@Post" as Post
+  hide Post circle
+
+  class "@Put" as Put
+  hide Put circle
+
+  class "@Delete" as Delete
+  hide Delete circle
+
+  class "@Req" as Req
+  hide Req circle
+
+  class "@Res" as Res
+  hide Res circle
+
+  class "@Param" as Param
+  hide Param circle
+
+  class "@Body" as Body
+  hide Body circle
+
+  class "@Headers" as Headers
+  hide Headers circle
+
+  UseInterceptors .[hidden].> Post
+  UseInterceptors .[hidden].> Put
+  UseInterceptors .[hidden].> Delete
+
+  Post .[hidden].> Req
+  Post .[hidden].> Res
+  Post .[hidden].> Param
+  Post .[hidden].> Body
+  Post .[hidden].> Headers
+}
+
+package nest-keycloak-connect {
+  class AuthGuard
+
+  class "@Roles" as Roles
+  hide Roles circle
+}
+
+package express {
+  class Request
+  class Response
+
+  Response .right[hidden].> Controller
+}
+
+package bankkonto {
+  package entity #FFFFFF {
+    class Bankkonto <<entity>>
+
+    Bankkonto .[hidden].> Promise
+    Bankkonto .[hidden].> Request
+  }
+
+  package service {
+    class BankkontoWriteService << control >>
+    class BankkontoReadService << control >>
+  }
+
+  package rest #DDDDDD {
+    class BankkontoWriteController << control >> << @Controller() >> << @UseGuards() >> << @UseInterceptors() >> {
+      + @Post() @Roles() async post(@Body() bankkonto: Bankkonto, @Req() req: Request,  @Res() res: Response): Promise<Response>
+      + @Put() @Roles() async put(@Body() bankkonto: Bankkonto, @Param() bankkontoId: number, @Headers() version: string, @Res() res: Response): Promise<Response>
+      + @Delete() @Roles() async delete(@Param() bankkontoId: number, @Res() res: Response): Promise<Response>
+    }
+
+    BankkontoWriteController o--> "1" BankkontoWriteService : service
+    BankkontoWriteController o--> "1" BankkontoReadService : readService
+    BankkontoWriteController ..up> Bankkonto
+
+    BankkontoWriteController ..> Controller
+
+    BankkontoWriteController .up.> AuthGuard
+    BankkontoWriteController .up.> Roles
+
+    BankkontoWriteController ..> Request
+    BankkontoWriteController ..> Response
+    BankkontoWriteController ..> Promise
+
+    Bankkonto .up[hidden].> Roles
+    BankkontoWriteService .[hidden].> Request
+    BankkontoWriteService .[hidden].> Promise
+  }
+}
+
+hide empty members
+
+footer (c) Gruppe 4
+
+@enduml

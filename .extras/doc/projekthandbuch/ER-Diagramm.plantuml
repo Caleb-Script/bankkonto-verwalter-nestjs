@@ -10,7 +10,7 @@ entity "Bankkonto" {
   * bankkontoId: integer <<generated>>
   --
   * version: integer
-  * saldo: text
+  * saldo: number
   * transakionLimit: number
   * **kunde_id**: integer <<FK>>
   * erstelltAm: timestamp
@@ -30,9 +30,8 @@ entity "Transaktion" {
   --
   * transaktionTyp: text
   * betrag: number
-  * transaktionTyp: text
-  * absender: text
-  * empfaenger: text
+  * absender: integer
+  * empfaenger: integer
   * transaktionDatum: date
   * **bankkonto_id**: integer <<FK>>
 }
