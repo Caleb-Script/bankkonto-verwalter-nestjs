@@ -1,23 +1,3 @@
-// Copyright (C) 2021 - present Juergen Zimmermann, Hochschule Karlsruhe
-//
-// This program is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-//
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with this program. If not, see <https://www.gnu.org/licenses/>.
-
-/**
- * Das Modul besteht aus der Controller-Klasse für Schreiben an der REST-Schnittstelle.
- * @packageDocumentation
- */
-
 import {
     Body,
     Controller,
@@ -50,98 +30,87 @@ import { AuthGuard, Roles } from 'nest-keycloak-connect';
 import { paths } from '../../config/paths.js';
 import { getLogger } from '../../logger/logger.js';
 import { ResponseTimeInterceptor } from '../../logger/response-time.interceptor.js';
-import { type Abbildung } from '../entity/abbildung.entity.js';
-import { type Buch } from '../entity/buch.entity.js';
-import { type Titel } from '../entity/titel.entity.js';
-import { BuchWriteService } from '../service/buch-write.service.js';
-import { BuchDTO, BuchDtoOhneRef } from './buchDTO.entity.js';
+import { type Transaktion } from '../model/entity/transaktion.entity.js';
+import { type Bankkonto } from '../model/entity/bankkonto.entity.js';
+import { type Kunde } from '../model/entity/kunde.entity.js';
+import { BankkontoWriteService } from '../service/bankkonto-write.service.js';
+import { BankkontoDTO, BankkontoDtoOhneReferenz } from '../model/dto/bankkonto.dto.js';
 import { getBaseUri } from './getBaseUri.js';
 
 const MSG_FORBIDDEN = 'Kein Token mit ausreichender Berechtigung vorhanden';
 /**
- * Die Controller-Klasse für die Verwaltung von Bücher.
+ * Die Controller-Klasse für die Verwaltung von Bankkonten.
  */
 @Controller(paths.rest)
 @UseGuards(AuthGuard)
 @UseInterceptors(ResponseTimeInterceptor)
-@ApiTags('Buch REST-API')
+@ApiTags('Bankkonto REST-API')
 @ApiBearerAuth()
-export class BuchWriteController {
-    readonly #service: BuchWriteService;
+export class BankkontoWriteController {
+    readonly #service: BankkontoWriteService;
 
-    readonly #logger = getLogger(BuchWriteController.name);
+    readonly #logger = getLogger(BankkontoWriteController.name);
 
-    constructor(service: BuchWriteService) {
+    constructor(service: BankkontoWriteService) {
         this.#service = service;
     }
 
     /**
-     * Ein neues Buch wird asynchron angelegt. Das neu anzulegende Buch ist als
-     * JSON-Datensatz im Request-Objekt enthalten. Wenn es keine
+     * Ein neues Bankkonto wird asynchron angelegt. Wenn es keine
      * Verletzungen von Constraints gibt, wird der Statuscode `201` (`Created`)
      * gesetzt und im Response-Header wird `Location` auf die URI so gesetzt,
-     * dass damit das neu angelegte Buch abgerufen werden kann.
+     * dass damit das neu angelegte Bankkonto abgerufen werden kann.
      *
      * Falls Constraints verletzt sind, wird der Statuscode `400` (`Bad Request`)
-     * gesetzt und genauso auch wenn der Titel oder die ISBN-Nummer bereits
-     * existieren.
+     * gesetzt
      *
-     * @param buchDTO JSON-Daten für ein Buch im Request-Body.
+     * @param bankkontoDTO JSON-Daten für ein Bankkonto im Request-Body.
      * @param res Leeres Response-Objekt von Express.
      * @returns Leeres Promise-Objekt.
      */
     @Post()
     @Roles({ roles: ['admin', 'user'] })
-    @ApiOperation({ summary: 'Ein neues Buch anlegen' })
+    @ApiOperation({ summary: 'Ein neues Bankkonto anlegen' })
     @ApiCreatedResponse({ description: 'Erfolgreich neu angelegt' })
-    @ApiBadRequestResponse({ description: 'Fehlerhafte Buchdaten' })
+    @ApiBadRequestResponse({ description: 'Fehlerhafte Bankkontodaten' })
     @ApiForbiddenResponse({ description: MSG_FORBIDDEN })
     async post(
-        @Body() buchDTO: BuchDTO,
+        @Body() bankkontoDTO: BankkontoDTO,
         @Req() req: Request,
         @Res() res: Response,
     ): Promise<Response> {
-        this.#logger.debug('post: buchDTO=%o', buchDTO);
+        this.#logger.debug('post: bankkontoDTO=%o', bankkontoDTO);
 
-        const buch = this.#buchDtoToBuch(buchDTO);
-        const id = await this.#service.create(buch);
+        const bankkonto = this.#bankkontoDtoToBankkonto(bankkontoDTO);
+        const bankkontoId = await this.#service.create(bankkonto);
 
-        const location = `${getBaseUri(req)}/${id}`;
+        const location = `${getBaseUri(req)}/${bankkontoId}`;
         this.#logger.debug('post: location=%s', location);
         return res.location(location).send();
     }
 
     /**
-     * Ein vorhandenes Buch wird asynchron aktualisiert.
-     *
-     * Im Request-Objekt von Express muss die ID des zu aktualisierenden Buches
-     * als Pfad-Parameter enthalten sein. Außerdem muss im Rumpf das zu
-     * aktualisierende Buch als JSON-Datensatz enthalten sein. Damit die
-     * Aktualisierung überhaupt durchgeführt werden kann, muss im Header
-     * `If-Match` auf die korrekte Version für optimistische Synchronisation
-     * gesetzt sein.
-     *
+     * Ein vorhandenes Bankkonto wird asynchron aktualisiert.
      * Bei erfolgreicher Aktualisierung wird der Statuscode `204` (`No Content`)
      * gesetzt und im Header auch `ETag` mit der neuen Version mitgeliefert.
      *
      * Falls die Versionsnummer fehlt, wird der Statuscode `428` (`Precondition
      * required`) gesetzt; und falls sie nicht korrekt ist, der Statuscode `412`
      * (`Precondition failed`). Falls Constraints verletzt sind, wird der
-     * Statuscode `400` (`Bad Request`) gesetzt und genauso auch wenn der neue
-     * Titel oder die neue ISBN-Nummer bereits existieren.
+     * Statuscode `400` (`Bad Request`) gesetzt.
      *
-     * @param buchDTO Buchdaten im Body des Request-Objekts.
-     * @param id Pfad-Paramater für die ID.
+     * @param bankkontoDTO Bankkontodaten im Body des Request-Objekts.
+     * @param bankkontoId Pfad-Paramater für die Bankonto-ID.
      * @param version Versionsnummer aus dem Header _If-Match_.
      * @param res Leeres Response-Objekt von Express.
      * @returns Leeres Promise-Objekt.
      */
     // eslint-disable-next-line max-params
-    @Put(':id')
+    @Put(':bankkontoId')
     @Roles({ roles: ['admin', 'user'] })
     @HttpCode(HttpStatus.NO_CONTENT)
     @ApiOperation({
-        summary: 'Ein vorhandenes Buch aktualisieren',
+        summary: 'Ein vorhandenes Bankkonto aktualisieren',
         tags: ['Aktualisieren'],
     })
     @ApiHeader({
@@ -150,7 +119,7 @@ export class BuchWriteController {
         required: false,
     })
     @ApiNoContentResponse({ description: 'Erfolgreich aktualisiert' })
-    @ApiBadRequestResponse({ description: 'Fehlerhafte Buchdaten' })
+    @ApiBadRequestResponse({ description: 'Fehlerhafte Bankkontodaten' })
     @ApiPreconditionFailedResponse({
         description: 'Falsche Version im Header "If-Match"',
     })
@@ -160,15 +129,15 @@ export class BuchWriteController {
     })
     @ApiForbiddenResponse({ description: MSG_FORBIDDEN })
     async put(
-        @Body() buchDTO: BuchDtoOhneRef,
-        @Param('id') id: number,
+        @Body() bankkontoDTO: BankkontoDtoOhneReferenz,
+        @Param('bankkontoId') bankkontoId: number,
         @Headers('If-Match') version: string | undefined,
         @Res() res: Response,
     ): Promise<Response> {
         this.#logger.debug(
-            'put: id=%s, buchDTO=%o, version=%s',
-            id,
-            buchDTO,
+            'put: bankkontoId=%s, bankkontoDTO=%o, version=%s',
+            bankkontoId,
+            bankkontoDTO,
             version,
         );
 
@@ -181,94 +150,82 @@ export class BuchWriteController {
                 .send(msg);
         }
 
-        const buch = this.#buchDtoOhneRefToBuch(buchDTO);
-        const neueVersion = await this.#service.update({ id, buch, version });
+        const bankkonto = this.#bankkontoDtoOhneReferenzToBankkonto(bankkontoDTO);
+        const neueVersion = await this.#service.update({ bankkontoId, bankkonto, version });
         this.#logger.debug('put: version=%d', neueVersion);
         return res.header('ETag', `"${neueVersion}"`).send();
     }
 
     /**
-     * Ein Buch wird anhand seiner ID-gelöscht, die als Pfad-Parameter angegeben
+     * Ein Bankkonto wird anhand seiner Bankkonto-ID-gelöscht, die als Pfad-Parameter angegeben
      * ist. Der zurückgelieferte Statuscode ist `204` (`No Content`).
      *
-     * @param id Pfad-Paramater für die ID.
+     * @param bankkontoId Pfad-Paramater für die Bankkonto-ID.
      * @returns Leeres Promise-Objekt.
      */
-    @Delete(':id')
+    @Delete(':bankkontoId')
     @Roles({ roles: ['admin'] })
     @HttpCode(HttpStatus.NO_CONTENT)
-    @ApiOperation({ summary: 'Buch mit der ID löschen' })
+    @ApiOperation({ summary: 'Bankkonto mit der Bankkonto-ID löschen' })
     @ApiNoContentResponse({
-        description: 'Das Buch wurde gelöscht oder war nicht vorhanden',
+        description: 'Das Bankkonto wurde gelöscht oder war nicht vorhanden',
     })
     @ApiForbiddenResponse({ description: MSG_FORBIDDEN })
-    async delete(@Param('id') id: number) {
-        this.#logger.debug('delete: id=%s', id);
-        await this.#service.delete(id);
+    async delete(@Param('bankkontoId') bankkontoId: number) {
+        this.#logger.debug('delete: bankkontoId=%s', bankkontoId);
+        await this.#service.delete(bankkontoId);
     }
 
-    #buchDtoToBuch(buchDTO: BuchDTO): Buch {
-        const titelDTO = buchDTO.titel;
-        const titel: Titel = {
-            id: undefined,
-            titel: titelDTO.titel,
-            untertitel: titelDTO.untertitel,
-            buch: undefined,
+    #bankkontoDtoToBankkonto(bankkontoDTO: BankkontoDTO): Bankkonto {
+        const kundeDTO = bankkontoDTO.kunde;
+        const kunde: Kunde = {
+            kundeId: undefined,
+            name: kundeDTO.name,
+            vorname: kundeDTO.vorname,
+            email: kundeDTO.vorname,
+            bankkonto: undefined,
         };
-        const abbildungen = buchDTO.abbildungen?.map((abbildungDTO) => {
-            const abbildung: Abbildung = {
-                id: undefined,
-                beschriftung: abbildungDTO.beschriftung,
-                contentType: abbildungDTO.contentType,
-                buch: undefined,
+        const transaktionen = bankkontoDTO.transaktionen?.map((transaktionDTO) => {
+            const transaktion: Transaktion = {
+                transaktionId: undefined,
+                transaktionTyp: transaktionDTO.transaktionTyp,
+                betrag: transaktionDTO.betrag,
+                absender: transaktionDTO.absender,
+                empfaenger: transaktionDTO.empfaenger,
+                transaktionDatum: new Date(),
+                bankkonto: undefined,
             };
-            return abbildung;
+            return transaktion;
         });
-        const buch = {
-            id: undefined,
+        const bankkonto = {
+            bankkontoId: undefined,
             version: undefined,
-            isbn: buchDTO.isbn,
-            rating: buchDTO.rating,
-            art: buchDTO.art,
-            preis: buchDTO.preis,
-            rabatt: buchDTO.rabatt,
-            lieferbar: buchDTO.lieferbar,
-            datum: buchDTO.datum,
-            homepage: buchDTO.homepage,
-            schlagwoerter: buchDTO.schlagwoerter,
-            titel,
-            abbildungen,
-            file: undefined,
-            erzeugt: new Date(),
-            aktualisiert: new Date(),
+            saldo: bankkontoDTO.saldo,
+            transaktionLimit: bankkontoDTO.transaktionsLimit,
+            kunde,
+            transaktionen,
+            erstelltAm: new Date(),
+            aktualisiertAm: new Date(),
         };
 
         // Rueckwaertsverweise
-        buch.titel.buch = buch;
-        buch.abbildungen?.forEach((abbildung) => {
-            abbildung.buch = buch;
+        bankkonto.kunde.bankkonto = bankkonto;
+        bankkonto.transaktionen?.forEach((transaktion) => {
+            transaktion.bankkonto = bankkonto;
         });
-        return buch;
+        return bankkonto;
     }
 
-    #buchDtoOhneRefToBuch(buchDTO: BuchDtoOhneRef): Buch {
+    #bankkontoDtoOhneReferenzToBankkonto(bankkontoDTO: BankkontoDtoOhneReferenz): Bankkonto {
         return {
-            id: undefined,
+            bankkontoId: undefined,
             version: undefined,
-            isbn: buchDTO.isbn,
-            rating: buchDTO.rating,
-            art: buchDTO.art,
-            preis: buchDTO.preis,
-            rabatt: buchDTO.rabatt,
-            lieferbar: buchDTO.lieferbar,
-            datum: buchDTO.datum,
-            homepage: buchDTO.homepage,
-            schlagwoerter: buchDTO.schlagwoerter,
-            titel: undefined,
-            abbildungen: undefined,
-            file: undefined,
-            erzeugt: undefined,
-            aktualisiert: new Date(),
+            saldo: bankkontoDTO.saldo,
+            transaktionLimit: bankkontoDTO.transaktionsLimit,
+            kunde: undefined,
+            transaktionen: undefined,
+            erstelltAm: undefined,
+            aktualisiertAm: new Date(),
         };
     }
 }

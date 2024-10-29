@@ -43,7 +43,7 @@ export class Bankkonto {
 
     toString = (): string =>
         JSON.stringify({
-            kontoId: this.bankkontoId,
+            bankkontoId: this.bankkontoId,
             saldo: this.saldo,
             transaktionLimit: this.transaktionLimit,
             erstelltAm: this.erstelltAm,

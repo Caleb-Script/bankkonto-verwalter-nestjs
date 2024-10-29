@@ -32,11 +32,12 @@ import { Public } from 'nest-keycloak-connect';
 import { paths } from '../../config/paths.js';
 import { getLogger } from '../../logger/logger.js';
 import { ResponseTimeInterceptor } from '../../logger/response-time.interceptor.js';
-import { type Buch, type BuchArt } from '../entity/buch.entity.js';
-import { type Titel } from '../entity/titel.entity.js';
-import { BuchReadService } from '../service/buch-read.service.js';
+import { type Kunde } from '../model/entity/kunde.entity.js';
 import { type Suchkriterien } from '../service/suchkriterien.js';
 import { getBaseUri } from './getBaseUri.js';
+import { Bankkonto } from '../model/entity/bankkonto.entity';
+import { TransaktionTyp } from '../model/entity/transaktion.entity';
+import { BankkontoReadService } from '../service/bankkonto-read.service.js';
 
 /** href-Link für HATEOAS */
 export type Link = {
@@ -58,116 +59,94 @@ export type Links = {
     readonly remove?: Link;
 };
 
-/** Typedefinition für ein Titel-Objekt ohne Rückwärtsverweis zum Buch */
-export type TitelModel = Omit<Titel, 'buch' | 'id'>;
+/** Typedefinition für ein Kunde-Objekt ohne Rückwärtsverweis zum Bankkonto */
+export type KundeModel = Omit<Kunde, 'kundeId' | 'bankkonto' | 'bankkontoId'>;
 
-/** Buch-Objekt mit HATEOAS-Links */
-export type BuchModel = Omit<
-    Buch,
-    | 'abbildungen'
-    | 'file'
-    | 'aktualisiert'
-    | 'erzeugt'
-    | 'id'
-    | 'titel'
+/** Bankkonto-Objekt mit HATEOAS-Links */
+export type BankkontoModel = Omit<
+    Bankkonto,
+    | 'kunde'
+    | 'transaktionen'
+    | 'aktualisiertAm'
+    | 'erstelltAm'
+    | 'bankkontoId'
+    | 'saldo'
+    | 'transktionLimit'
     | 'version'
 > & {
-    titel: TitelModel;
+    kunde: KundeModel;
     // eslint-disable-next-line @typescript-eslint/naming-convention
     _links: Links;
 };
 
-/** Buch-Objekte mit HATEOAS-Links in einem JSON-Array. */
-export type BuecherModel = {
+/** Bankkonto-Objekte mit HATEOAS-Links in einem JSON-Array. */
+export type BankkontenModel = {
     // eslint-disable-next-line @typescript-eslint/naming-convention
     _embedded: {
-        buecher: BuchModel[];
+        bankkonten: BankkontenModel[];
     };
 };
 
 /**
- * Klasse für `BuchGetController`, um Queries in _OpenAPI_ bzw. Swagger zu
- * formulieren. `BuchController` hat dieselben Properties wie die Basisklasse
- * `Buch` - allerdings mit dem Unterschied, dass diese Properties beim Ableiten
- * so überschrieben sind, dass sie auch nicht gesetzt bzw. undefined sein
- * dürfen, damit die Queries flexibel formuliert werden können. Deshalb ist auch
- * immer der zusätzliche Typ undefined erforderlich.
- * Außerdem muss noch `string` statt `Date` verwendet werden, weil es in OpenAPI
- * den Typ Date nicht gibt.
+ * Klasse für `BankkontoGetController`, um Queries in _OpenAPI_ bzw. Swagger zu
+ * formulieren. `BankkontoController` hat dieselben Properties wie die Basisklasse
+ * `Bankkonto`
  */
-export class BuchQuery implements Suchkriterien {
+export class BankkontoQuery implements Suchkriterien {
     @ApiProperty({ required: false })
-    declare readonly isbn: string;
+    declare readonly transaktionen: string;
 
     @ApiProperty({ required: false })
-    declare readonly rating: number;
+    declare readonly kundeId: string;
 
     @ApiProperty({ required: false })
-    declare readonly art: BuchArt;
+    declare readonly transaktionTyp: TransaktionTyp;
 
     @ApiProperty({ required: false })
-    declare readonly preis: number;
+    declare readonly absender: string;
 
     @ApiProperty({ required: false })
-    declare readonly rabatt: number;
+    declare readonly empfaenger: string;
 
     @ApiProperty({ required: false })
-    declare readonly lieferbar: boolean;
-
-    @ApiProperty({ required: false })
-    declare readonly datum: string;
-
-    @ApiProperty({ required: false })
-    declare readonly homepage: string;
-
-    @ApiProperty({ required: false })
-    declare readonly javascript: string;
-
-    @ApiProperty({ required: false })
-    declare readonly typescript: string;
-
-    @ApiProperty({ required: false })
-    declare readonly titel: string;
+    declare readonly email: string;
 }
 
 const APPLICATION_HAL_JSON = 'application/hal+json';
 
 /**
- * Die Controller-Klasse für die Verwaltung von Bücher.
+ * Die Controller-Klasse für die Verwaltung von Bankkonten.
  */
-// Decorator in TypeScript, zur Standardisierung in ES vorgeschlagen (stage 3)
-// https://devblogs.microsoft.com/typescript/announcing-typescript-5-0-beta/#decorators
-// https://github.com/tc39/proposal-decorators
 @Controller(paths.rest)
 @UseInterceptors(ResponseTimeInterceptor)
-@ApiTags('Buch REST-API')
+@ApiTags('Bankkonto REST-API')
 // @ApiBearerAuth()
 // Klassen ab ES 2015
-export class BuchGetController {
+export class BankkontoGetController {
     // readonly in TypeScript, vgl. C#
     // private ab ES 2019
-    readonly #service: BuchReadService;
+    readonly #service: BankkontoReadService;
 
-    readonly #logger = getLogger(BuchGetController.name);
+    readonly #logger = getLogger(BankkontoGetController.name);
 
     // Dependency Injection (DI) bzw. Constructor Injection
-    // constructor(private readonly service: BuchReadService) {}
+    // constructor(private readonly service: BankkontoReadService) {}
     // https://github.com/tc39/proposal-type-annotations#omitted-typescript-specific-features-that-generate-code
-    constructor(service: BuchReadService) {
+    constructor(service: BankkontoReadService) {
         this.#service = service;
     }
 
     /**
-     * Ein Buch wird asynchron anhand seiner ID als Pfadparameter gesucht.
+     * Ein Bankkonto wird asynchron anhand seiner ID als Pfadparameter gesucht.
      *
-     * Falls es ein solches Buch gibt und `If-None-Match` im Request-Header
-     * auf die aktuelle Version des Buches gesetzt war, wird der Statuscode
+     * Falls es ein solches Bankkonto gibt und `If-None-Match` im Request-Header
+     * auf die aktuelle Version des Bankkontos gesetzt war, wird der Statuscode
      * `304` (`Not Modified`) zurückgeliefert. Falls `If-None-Match` nicht
      * gesetzt ist oder eine veraltete Version enthält, wird das gefundene
-     * Buch im Rumpf des Response als JSON-Datensatz mit Atom-Links für HATEOAS
+     * Bankkonto im Rumpf des Response als JSON-Datensatz mit Atom-Links für HATEOAS
      * und dem Statuscode `200` (`OK`) zurückgeliefert.
      *
-     * Falls es kein Buch zur angegebenen ID gibt, wird der Statuscode `404`
+     * Falls es kein Bankkonto zur angegebenen ID gibt, wird der Statuscode `404`
      * (`Not Found`) zurückgeliefert.
      *
      * @param idStr Pfad-Parameter `id`
@@ -178,11 +157,11 @@ export class BuchGetController {
      * @returns Leeres Promise-Objekt.
      */
     // eslint-disable-next-line max-params
-    @Get(':id')
+    @Get(':bankkontoId')
     @Public()
-    @ApiOperation({ summary: 'Suche mit der Buch-ID' })
+    @ApiOperation({ summary: 'Suche mit der Bankkonto-ID' })
     @ApiParam({
-        name: 'id',
+        name: 'bankkontoId',
         description: 'Z.B. 1',
     })
     @ApiHeader({
@@ -190,61 +169,61 @@ export class BuchGetController {
         description: 'Header für bedingte GET-Requests, z.B. "0"',
         required: false,
     })
-    @ApiOkResponse({ description: 'Das Buch wurde gefunden' })
-    @ApiNotFoundResponse({ description: 'Kein Buch zur ID gefunden' })
+    @ApiOkResponse({ description: 'Das Bankkonto wurde gefunden' })
+    @ApiNotFoundResponse({ description: 'Kein Bankkonto zur ID gefunden' })
     @ApiResponse({
         status: HttpStatus.NOT_MODIFIED,
-        description: 'Das Buch wurde bereits heruntergeladen',
+        description: 'Das Bankkonto wurde bereits angelegt',
     })
-    async getById(
-        @Param('id') idStr: string,
+    async getByBankkontoId(
+        @Param('bankkontoId') idStr: string,
         @Req() req: Request,
         @Headers('If-None-Match') version: string | undefined,
         @Res() res: Response,
-    ): Promise<Response<BuchModel | undefined>> {
-        this.#logger.debug('getById: idStr=%s, version=%s', idStr, version);
-        const id = Number(idStr);
-        if (!Number.isInteger(id)) {
-            this.#logger.debug('getById: not isInteger()');
-            throw new NotFoundException(`Die Buch-ID ${idStr} ist ungueltig.`);
+    ): Promise<Response<BankkontoModel | undefined>> {
+        this.#logger.debug('getByBankkontoId: idStr=%s, version=%s', idStr, version);
+        const bankkontoId = Number(idStr);
+        if (!Number.isInteger(bankkontoId)) {
+            this.#logger.debug('getByBankkontoId: not isInteger()');
+            throw new NotFoundException(`Die Bankkonto-ID ${idStr} ist ungueltig.`);
         }
 
         if (req.accepts([APPLICATION_HAL_JSON, 'json', 'html']) === false) {
-            this.#logger.debug('getById: accepted=%o', req.accepted);
+            this.#logger.debug('getByBankkontoId: accepted=%o', req.accepted);
             return res.sendStatus(HttpStatus.NOT_ACCEPTABLE);
         }
 
-        const buch = await this.#service.findById({ id });
+        const bankkonto = await this.#service.findByBankkontoId({ bankkontoId });
         if (this.#logger.isLevelEnabled('debug')) {
-            this.#logger.debug('getById(): buch=%s', buch.toString());
-            this.#logger.debug('getById(): titel=%o', buch.titel);
+            this.#logger.debug('getByBankkontoId(): bankkonto=%s', bankkonto.toString());
+            this.#logger.debug('getByBankkontoId(): kunde=%o', bankkonto.kunde);
         }
 
         // ETags
-        const versionDb = buch.version;
+        const versionDb = bankkonto.version;
         if (version === `"${versionDb}"`) {
-            this.#logger.debug('getById: NOT_MODIFIED');
+            this.#logger.debug('getByBankkontoId: NOT_MODIFIED');
             return res.sendStatus(HttpStatus.NOT_MODIFIED);
         }
-        this.#logger.debug('getById: versionDb=%s', versionDb);
+        this.#logger.debug('getByBankkontoId: versionDb=%s', versionDb);
         res.header('ETag', `"${versionDb}"`);
 
         // HATEOAS mit Atom Links und HAL (= Hypertext Application Language)
-        const buchModel = this.#toModel(buch, req);
-        this.#logger.debug('getById: buchModel=%o', buchModel);
-        return res.contentType(APPLICATION_HAL_JSON).json(buchModel);
+        const bankkontoModel = this.#toModel(bankkonto, req);
+        this.#logger.debug('getByBankkontoId: bankkontoModel=%o', bankkontoModel);
+        return res.contentType(APPLICATION_HAL_JSON).json(bankkontoModel);
     }
 
     /**
-     * Bücher werden mit Query-Parametern asynchron gesucht. Falls es mindestens
-     * ein solches Buch gibt, wird der Statuscode `200` (`OK`) gesetzt. Im Rumpf
-     * des Response ist das JSON-Array mit den gefundenen Büchern, die jeweils
+     * Bankkonten werden mit Query-Parametern asynchron gesucht. Falls es mindestens
+     * ein solches Bankkonto gibt, wird der Statuscode `200` (`OK`) gesetzt. Im Rumpf
+     * des Response ist das JSON-Array mit den gefundenen Bankkonten, die jeweils
      * um Atom-Links für HATEOAS ergänzt sind.
      *
-     * Falls es kein Buch zu den Suchkriterien gibt, wird der Statuscode `404`
+     * Falls es kein Bankkonto zu den Suchkriterien gibt, wird der Statuscode `404`
      * (`Not Found`) gesetzt.
      *
-     * Falls es keine Query-Parameter gibt, werden alle Bücher ermittelt.
+     * Falls es keine Query-Parameter gibt, werden alle Bankkonten ermittelt.
      *
      * @param query Query-Parameter von Express.
      * @param req Request-Objekt von Express.
@@ -254,12 +233,12 @@ export class BuchGetController {
     @Get()
     @Public()
     @ApiOperation({ summary: 'Suche mit Suchkriterien' })
-    @ApiOkResponse({ description: 'Eine evtl. leere Liste mit Büchern' })
+    @ApiOkResponse({ description: 'Eine evtl. leere Liste mit Bankkonten' })
     async get(
-        @Query() query: BuchQuery,
+        @Query() query: BankkontoQuery,
         @Req() req: Request,
         @Res() res: Response,
-    ): Promise<Response<BuecherModel | undefined>> {
+    ): Promise<Response<BankkontenModel | undefined>> {
         this.#logger.debug('get: query=%o', query);
 
         if (req.accepts([APPLICATION_HAL_JSON, 'json', 'html']) === false) {
@@ -267,54 +246,47 @@ export class BuchGetController {
             return res.sendStatus(HttpStatus.NOT_ACCEPTABLE);
         }
 
-        const buecher = await this.#service.find(query);
-        this.#logger.debug('get: %o', buecher);
+        const bankkonten = await this.#service.find(query);
+        this.#logger.debug('get: %o', bankkonten);
 
-        // HATEOAS: Atom Links je Buch
-        const buecherModel = buecher.map((buch) =>
-            this.#toModel(buch, req, false),
+        // HATEOAS: Atom Links je Bankkonto
+        const bankkontenModel = bankkonten.map((bankkonto :Bankkonto) =>
+            this.#toModel(bankkonto, req, false),
         );
-        this.#logger.debug('get: buecherModel=%o', buecherModel);
+        this.#logger.debug('get: bankkontenModel=%o', bankkontenModel);
 
-        const result: BuecherModel = { _embedded: { buecher: buecherModel } };
+        const result: BankkontenModel = { _embedded: { bankkonten: bankkontenModel } };
         return res.contentType(APPLICATION_HAL_JSON).json(result).send();
     }
 
-    #toModel(buch: Buch, req: Request, all = true) {
+    #toModel(bankkonto: Bankkonto, req: Request, all = true) {
         const baseUri = getBaseUri(req);
         this.#logger.debug('#toModel: baseUri=%s', baseUri);
-        const { id } = buch;
+        const { bankkontoId } = bankkonto;
         const links = all
             ? {
-                  self: { href: `${baseUri}/${id}` },
+                  self: { href: `${baseUri}/${bankkontoId}` },
                   list: { href: `${baseUri}` },
                   add: { href: `${baseUri}` },
-                  update: { href: `${baseUri}/${id}` },
-                  remove: { href: `${baseUri}/${id}` },
+                  update: { href: `${baseUri}/${bankkontoId}` },
+                  remove: { href: `${baseUri}/${bankkontoId}` },
               }
-            : { self: { href: `${baseUri}/${id}` } };
+            : { self: { href: `${baseUri}/${bankkontoId}` } };
 
-        this.#logger.debug('#toModel: buch=%o, links=%o', buch, links);
-        const titelModel: TitelModel = {
+        this.#logger.debug('#toModel: bankkonto=%o, links=%o', bankkonto, links);
+        const kundeModel: KundeModel = {
             // "Optional Chaining" und "Nullish Coalescing" ab ES2020
-            titel: buch.titel?.titel ?? 'N/A',
-            untertitel: buch.titel?.untertitel ?? 'N/A',
+            name: bankkonto.kunde?.name ?? 'N/A',
+            vorname: bankkonto.kunde?.vorname ?? 'N/A',
+            email: bankkonto.kunde?.email ?? 'N/A',
         };
-        const buchModel: BuchModel = {
-            isbn: buch.isbn,
-            rating: buch.rating,
-            art: buch.art,
-            preis: buch.preis,
-            rabatt: buch.rabatt,
-            lieferbar: buch.lieferbar,
-            datum: buch.datum,
-            homepage: buch.homepage,
-            schlagwoerter: buch.schlagwoerter,
-            titel: titelModel,
+        const bankkontoModel: BankkontoModel = {
+            transaktionLimit: bankkonto.transaktionLimit,
+            kunde: kundeModel,
             _links: links,
         };
 
-        return buchModel;
+        return bankkontoModel;
     }
 }
 /* eslint-enable max-lines */

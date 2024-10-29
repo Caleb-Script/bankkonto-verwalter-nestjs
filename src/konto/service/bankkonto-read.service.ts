@@ -11,7 +11,7 @@ import { type Suchkriterien } from './suchkriterien.js';
 /**
  * Typdefinition für `findById`
  */
-export type FindByIdParams = {
+export type FindByBankkontoIdParams = {
     /** ID des gesuchten Bankkontos */
     readonly bankkontoId: number;
     /** Sollen die Transaktionen mitgeladen werden? */
@@ -47,7 +47,7 @@ export class BankkontoReadService {
      * @returns Das gefundene Bankkonto in einem Promise aus ES2015.
      * @throws NotFoundException falls kein Bankkonto mit der ID existiert
      */
-    async findById({ bankkontoId, mitTransaktionen = false }: FindByIdParams) {
+    async findByBankkontoId({ bankkontoId, mitTransaktionen = false }: FindByBankkontoIdParams) {
         this.#logger.debug('findById: bankkontoId=%d', bankkontoId);
 
         const bankkonto = await this.#queryBuilder
