@@ -1,0 +1,45 @@
+@startuml ER Diagramm
+
+' hide the spot
+hide circle
+
+' evtl. Prbleme mit Kraehenfuessen vermeiden
+skinparam linetype ortho
+
+entity "Bankkonto" {
+  * bankkontoId: integer <<generated>>
+  --
+  * version: integer
+  * saldo: text
+  * transakionLimit: number
+  * **kunde_id**: integer <<FK>>
+  * erstelltAm: timestamp
+  * aktualisiertAm: timestamp
+}
+
+entity "Kunde" {
+  * kundeId: integer <<generated>>
+  --
+  * name: text
+  * vorname: text
+  * email: text
+}
+
+entity "Transaktion" {
+  * transaktionId: integer <<generated>>
+  --
+  * transaktionTyp: text
+  * betrag: number
+  * transaktionTyp: text
+  * absender: text
+  * empfaenger: text
+  * transaktionDatum: date
+  * **bankkonto_id**: integer <<FK>>
+}
+
+Bankkonto ||..|| Kunde
+Bankkonto ||..o{ Transaktion
+
+footer (c) Gruppe 4
+
+@enduml
