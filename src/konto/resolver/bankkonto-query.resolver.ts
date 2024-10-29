@@ -40,7 +40,7 @@ export class BankkontoQueryResolver {
             this.#logger.debug(
                 'findByBankkontoId: bankkonto=%s, kunde=%o',
                 bankkonto.toString(),
-                bankkonto.titel,
+                bankkonto.kunde,
             );
         }
         return bankkonto;
