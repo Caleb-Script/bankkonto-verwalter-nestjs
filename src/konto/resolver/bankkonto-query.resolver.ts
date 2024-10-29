@@ -10,7 +10,7 @@ import { type Suchkriterien } from '../service/suchkriterien.js';
 import { HttpExceptionFilter } from './http-exception.filter.js';
 
 export type IdInput = {
-    readonly kontoId: number;
+    readonly bankkontoId: number;
 };
 
 export type SuchkriterienInput = {
@@ -31,10 +31,10 @@ export class BankkontoQueryResolver {
 
     @Query('bankkonto')
     @Public()
-    async findById(@Args() { kontoId }: IdInput) {
-        this.#logger.debug('findBykontoId: kontoId=%d', kontoId);
+    async findById(@Args() { bankkontoId }: IdInput) {
+        this.#logger.debug('findBykontoId: kontoId=%d', bankkontoId);
 
-        const bankkonto = await this.#service.findById({ id });
+        const bankkonto = await this.#service.findById({ bankkontoId });
 
         if (this.#logger.isLevelEnabled('debug')) {
             this.#logger.debug(

@@ -4,7 +4,7 @@ import { IsInt, IsNumberString, Min } from 'class-validator';
 import { AuthGuard, Roles } from 'nest-keycloak-connect';
 import { getLogger } from '../../logger/logger.js';
 import { ResponseTimeInterceptor } from '../../logger/response-time.interceptor.js';
-import { KontoDTO } from '../model/dto/bankkonto.dto.js';
+import { BankkontoDTO } from '../model/dto/bankkonto.dto.js';
 import { type Transaktion } from '../model/entity/transaktion.entity.js';
 import { type Bankkonto } from '../model/entity/bankkonto.entity.js';
 import { type Kunde } from '../model/entity/kunde.entity.js';
@@ -21,7 +21,7 @@ export type UpdatePayload = {
     readonly version: number;
 };
 
-export class BankkontoUpdateDTO extends KontoDTO {
+export class BankkontoUpdateDTO extends BankkontoDTO {
     @IsNumberString()
     readonly kontoId!: string;
 
@@ -45,7 +45,7 @@ export class BankkontoMutationResolver {
 
     @Mutation()
     @Roles({ roles: ['admin', 'user'] })
-    async create(@Args('input') bankkontoDTO: KontoDTO) {
+    async create(@Args('input') bankkontoDTO: BankkontoDTO) {
         this.#logger.debug('create: bankkontoDTO=%o', bankkontoDTO);
 
         const bankkonto = this.#bankkontoDtoToBankkonto(bankkontoDTO);
@@ -64,7 +64,7 @@ export class BankkontoMutationResolver {
         const versionStr = `"${bankkontoDTO.version.toString()}"`;
 
         const versionResult = await this.#service.update({
-            id: Number.parseInt(bankkontoDTO.kontoId, 10),
+            bankkontoId: Number.parseInt(bankkontoDTO.kontoId, 10),
             bankkonto,
             version: versionStr,
         });
@@ -84,7 +84,7 @@ export class BankkontoMutationResolver {
         return deletePerformed;
     }
 
-    #bankkontoDtoToBankkonto(bankkontoDTO: KontoDTO): Bankkonto {
+    #bankkontoDtoToBankkonto(bankkontoDTO: BankkontoDTO): Bankkonto {
         const kundeDTO = bankkontoDTO.kunde;
         const kunde: Kunde = {
             kundeId: undefined,
