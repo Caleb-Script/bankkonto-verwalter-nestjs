@@ -32,13 +32,13 @@ export class BankkontoQueryResolver {
     @Query('bankkonto')
     @Public()
     async findById(@Args() { bankkontoId }: IdInput) {
-        this.#logger.debug('findBykontoId: kontoId=%d', bankkontoId);
+        this.#logger.debug('findByBankkontoId: bankkontoId=%d', bankkontoId);
 
-        const bankkonto = await this.#service.findById({ bankkontoId });
+        const bankkonto = await this.#service.findByBankkontoId({ bankkontoId });
 
         if (this.#logger.isLevelEnabled('debug')) {
             this.#logger.debug(
-                'findById: bankkonto=%s, kunde=%o',
+                'findByBankkontoId: bankkonto=%s, kunde=%o',
                 bankkonto.toString(),
                 bankkonto.titel,
             );

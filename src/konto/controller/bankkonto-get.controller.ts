@@ -103,10 +103,10 @@ export class BankkontoQuery implements Suchkriterien {
     declare readonly transaktionTyp: TransaktionTyp;
 
     @ApiProperty({ required: false })
-    declare readonly absender: string;
+    declare readonly absender: number;
 
     @ApiProperty({ required: false })
-    declare readonly empfaenger: string;
+    declare readonly empfaenger: number;
 
     @ApiProperty({ required: false })
     declare readonly email: string;

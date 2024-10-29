@@ -10,7 +10,7 @@ export class TransaktionDTO {
     readonly betrag!: number;
 
     @IsOptional()
-    readonly absender?: string;
+    readonly absender?: number;
 
     @IsOptional()
     @ApiProperty({ description: 'ID des Empfängers', example: '00000000' })

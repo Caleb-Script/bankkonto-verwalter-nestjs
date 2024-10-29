@@ -96,13 +96,13 @@ export class BankkontoWriteService {
 
     async delete(bankkontoId: number) {
         this.#logger.debug('delete: bankkontoId=%d', bankkontoId);
-        const bankkonto = await this.#readService.findById({
+        const bankkonto = await this.#readService.findByBankkontoId({
             bankkontoId,
             mitTransaktionen: true,
         });
 
         let deleteResult: DeleteResult | undefined;
-        await this.#repo.manager.transaction(async (transactionalMgr) => {
+        await this.#repo.manager.transaction(async (transactionalMgr ) => {
             const transaktionen = bankkonto.transaktionen ?? [];
             for (const transaktion of transaktionen) {
                 await transactionalMgr.delete(
@@ -164,8 +164,8 @@ export class BankkontoWriteService {
         empfaenger?: number,
     ): Promise<Bankkonto> {
         return transaktionTyp === 'EINZAHLUNG' || transaktionTyp === 'EINKOMMEN'
-            ? this.#readService.findById({ bankkontoId: empfaenger! })
-            : this.#readService.findById({ bankkontoId: absender! });
+            ? this.#readService.findByBankkontoId({ bankkontoId: absender! })
+            : this.#readService.findByBankkontoId({ bankkontoId: empfaenger! });
     }
 
     #validateTransaktionLimit(
@@ -220,7 +220,7 @@ export class BankkontoWriteService {
         }
 
         const version = Number.parseInt(versionStr.slice(1, -1), 10);
-        const bankkontoDb = await this.#readService.findById({ bankkontoId });
+        const bankkontoDb = await this.#readService.findByBankkontoId({ bankkontoId });
 
         if (version < bankkontoDb.version!) {
             throw new VersionOutdatedException(version);
