@@ -1,0 +1,148 @@
+= Projekthandbuch
+:doctype: book
+:toc: left
+:sectanchors:
+:sectlinks:
+:sectnums:
+:source-highlighter: highlight.js
+:icons: font
+// :kroki-server-url: https://kroki.io
+
+// https://github.com/asciidoctor/asciidoctorj
+// https://github.com/asciidoctor/asciidoctor-diagram
+// http://de.plantuml.com/classes.html
+// http://de.plantuml.com/component.html
+// https://github.com/odrotbohm/asciidoctor-plantuml
+
+== Der Applikationsserver
+
+=== Der Applikationsserver im Überblick
+
+Sed porttitor lectus nibh. Nulla porttitor accumsan tincidunt.
+
+.Use Cases
+[plantuml,use-cases,svg]
+----
+include::use-cases.plantuml[]
+----
+
+Quisque velit nisi, pretium ut lacinia in, elementum id enim. Nulla porttitor
+accumsan tincidunt.
+
+.Komponentendiagramm
+[plantuml,komponenten,svg]
+----
+include::komponenten.plantuml[]
+----
+
+=== Die REST-Schnittstelle
+
+Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia
+Curae; Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet
+ligula. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere
+cubilia Curae; Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit
+amet ligula.
+
+."BankkontoGetController" für Lesezugriffe an der REST-Schnittstelle
+[plantuml,BankkontoGetController,svg]
+----
+include::BankkontoGetController.plantuml[]
+----
+
+Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Donec
+sollicitudin molestie malesuada.
+
+."Sequenzdiagramm" mit den Methodenaufrufen
+[plantuml,sequenzdiagramm,svg]
+----
+include::sequenzdiagramm.plantuml[]
+----
+
+Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
+tempor invidunt ut.
+
+."BankkontoWriteController" für Schreibzugriffe an der REST-Schnittstelle
+[plantuml,BankkontoGetController,svg]
+----
+include::BankkontoWriteController.plantuml[]
+----
+
+=== Die GraphQL-Schnittstelle
+
+Donec sollicitudin molestie malesuada. Donec rutrum congue leo eget malesuada.
+
+.BankkontoQueryResolver für Lesezugriffe an der GraphQL-Schnittstelle
+[plantuml,BankkontoQueryResolver,svg]
+----
+include::BankkontoQueryResolver.plantuml[]
+----
+
+Donec sollicitudin molestie malesuada. Praesent sapien massa, convallis a
+pellentesque nec, egestas non nisi.
+
+.BankkontoMutationResolver für Schreibzugriffe an der GraphQL-Schnittstelle
+[plantuml,BankkontoMutationResolver,svg]
+----
+include::BankkontoMutationResolver.plantuml[]
+----
+
+=== Die Geschäftslogik
+
+Donec rutrum congue leo eget malesuada. Donec rutrum congue leo eget malesuada.
+
+."BankkontoReadService" von der Geschäftslogik
+[plantuml,BankkontoReadService,svg]
+----
+include::BankkontoReadService.plantuml[]
+----
+
+Pellentesque in ipsum id orci porta dapibus. Donec rutrum congue leo eget
+malesuada.
+
+."BankkontoWriteService" von der Geschäftslogik
+[plantuml,BankkontoWriteService,svg]
+----
+include::BankkontoWriteService.plantuml[]
+----
+
+=== Klasse für Entities
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur arcu erat,
+accumsan id imperdiet et, porttitor at sem.
+
+.Entity
+[plantuml,Bankkonto,svg]
+----
+include::Bankkonto.plantuml[]
+----
+
+=== ER-Diagramm
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+
+.ER-Diagramm
+[plantuml,ER-Diagramm,svg]
+----
+include::ER-Diagramm.plantuml[]
+----
+
+== Programmierrichtlinien für TypeScript und JavaScript
+
+Für die Programmierung mit *TypeScript* und *JavaScript* sind folgende
+Styleguides empfehlenswert:
+
+[horizontal]
+_E-Book zu TypeScript_:: https://github.com/gibbok/typescript-book
+_Google_:: https://google.github.io/styleguide/tsguide.html
+_Airbnb_:: https://github.com/airbnb/javascript
+_Shopify_:: https://github.com/Shopify/javascript
+_React bei Airbnb_:: https://github.com/airbnb/javascript/tree/master/react
+_Angular_:: https://angular.io/docs/ts/latest/guide/style-guide.html
+_Microsoft_:: https://github.com/Microsoft/TypeScript/wiki/Coding-guidelines
+
+Von IBM und Red Hat gibt es bei GitHub _Node.js Reference Architecture_
+https://github.com/nodeshift/nodejs-reference-architecture, wo alle möglichen
+Aspekte bei der Softwareentwicklung mit Node berücksichtigt sind und
+entsprechende Empfehlungen bzw. Best Practices beschrieben sind.
+Diese Dokumentation muss man einfach gelesen haben. Ebenfalls empfehlenswert
+ist https://github.com/goldbergyoni/nodebestpractices.

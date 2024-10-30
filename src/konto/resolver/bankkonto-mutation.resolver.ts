@@ -76,9 +76,9 @@ export class BankkontoMutationResolver {
 
     @Mutation()
     @Roles({ roles: ['admin'] })
-    async delete(@Args() kontoId: IdInput) {
-        const idStr = kontoId.kontoId;
-        this.#logger.debug('delete: kontoId=%s', idStr);
+    async delete(@Args() bankkontoId: IdInput) {
+        const idStr = bankkontoId.bankkontoId;
+        this.#logger.debug('delete: bankkontoId=%s', idStr);
         const deletePerformed = await this.#service.delete(idStr);
         this.#logger.debug('deleteBankkonto: deletePerformed=%s', deletePerformed);
         return deletePerformed;

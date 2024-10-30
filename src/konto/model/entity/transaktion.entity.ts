@@ -37,7 +37,7 @@ export class Transaktion {
     @CreateDateColumn({ type: 'timestamp' })
     readonly transaktionDatum: Date | undefined;
 
-    @ManyToOne(() => Bankkonto, (konto) => konto.transaktionen, {
+    @ManyToOne(() => Bankkonto, (bankkonto) => bankkonto.transaktionen, {
         eager: true,
         onDelete: 'CASCADE',
     })

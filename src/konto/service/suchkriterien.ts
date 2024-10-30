@@ -8,7 +8,7 @@ export type Suchkriterien = {
     readonly transaktionsLimit?: number;
     readonly datum?: string;
     readonly transaktionTyp?: TransaktionTyp;
-    readonly absender?: string;
-    readonly empfaenger?: string;
+    readonly absender?: number;
+    readonly empfaenger?: number;
     readonly email?: string;
 };

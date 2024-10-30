@@ -1,0 +1,59 @@
+@startuml Entity
+
+package typeorm {
+  class "@Entity" as Entity
+  hide Entity circle
+  class "@Column" as Column
+  hide Column circle
+  class "@PrimaryColumn" as PrimaryColumn
+  hide PrimaryColumn circle
+  class "@OneToMany" as OneToMany
+  hide OneToMany circle
+  class "@JoinColumn" as JoinColumn
+  hide JoinColumn circle
+  class "@ManyToOne" as ManyToOne
+  hide ManyToOne circle
+  class "@CreateDateColumn" as CreateDateColumn
+  hide CreateDateColumn circle
+  class "@UpdateDateColumn" as UpdateDateColumn
+  hide UpdateDateColumn circle
+}
+
+package bankkonto.entity {
+
+  class Bankkonto <<entity>> <<@Entity>> {
+    @Column() @PrimaryColumn() bankkontoId: number
+    @Column() readonly version: number
+    @Column() readonly saldo: number
+    @Column() readonly transakionLimit: number
+    @CreateDateColumn() readonly erstelltAm: Date
+    @UpdateDateColumn() readonly aktualisiertAm: Date
+  }
+
+  class Kunde <<entity>> <<@Entity>> {
+    @Column() @PrimaryColumn() readonly kundeId: number
+    @Column() readonly name: string
+    @Column() readonly vorname: string
+    @Column() readonly email: string
+  }
+
+  class Transaktion <<entity>> <<@Entity>> {
+    @Column() @PrimaryColumn() readonly transaktionId: number
+    @Column() readonly transaktionTyp: transaktionTyp
+    @Column() readonly betrag: number
+    @Column() readonly absender: number
+    @Column() readonly empfaenger: number
+    @CreateDateColumn() readonly transaktionDatum: Date
+  }
+
+  Bankkonto *--> "1" Kunde : @OneToOne() \nkunde
+  Bankkonto *--> "*" Transaktion : @OneToMany() \ntransaktionen
+
+  Bankkonto .right.> Entity
+}
+
+hide empty members
+
+footer (c) Gruppe 4
+
+@enduml
