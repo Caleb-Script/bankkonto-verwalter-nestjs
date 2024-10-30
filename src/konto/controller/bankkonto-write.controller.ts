@@ -30,11 +30,14 @@ import { AuthGuard, Roles } from 'nest-keycloak-connect';
 import { paths } from '../../config/paths.js';
 import { getLogger } from '../../logger/logger.js';
 import { ResponseTimeInterceptor } from '../../logger/response-time.interceptor.js';
-import { type Transaktion } from '../model/entity/transaktion.entity.js';
+import {
+    BankkontoDTO,
+    BankkontoDtoOhneReferenz,
+} from '../model/dto/bankkonto.dto.js';
 import { type Bankkonto } from '../model/entity/bankkonto.entity.js';
 import { type Kunde } from '../model/entity/kunde.entity.js';
+import { type Transaktion } from '../model/entity/transaktion.entity.js';
 import { BankkontoWriteService } from '../service/bankkonto-write.service.js';
-import { BankkontoDTO, BankkontoDtoOhneReferenz } from '../model/dto/bankkonto.dto.js';
 import { getBaseUri } from './getBaseUri.js';
 
 const MSG_FORBIDDEN = 'Kein Token mit ausreichender Berechtigung vorhanden';
@@ -150,8 +153,13 @@ export class BankkontoWriteController {
                 .send(msg);
         }
 
-        const bankkonto = this.#bankkontoDtoOhneReferenzToBankkonto(bankkontoDTO);
-        const neueVersion = await this.#service.update({ bankkontoId, bankkonto, version });
+        const bankkonto =
+            this.#bankkontoDtoOhneReferenzToBankkonto(bankkontoDTO);
+        const neueVersion = await this.#service.update({
+            bankkontoId,
+            bankkonto,
+            version,
+        });
         this.#logger.debug('put: version=%d', neueVersion);
         return res.header('ETag', `"${neueVersion}"`).send();
     }
@@ -185,18 +193,20 @@ export class BankkontoWriteController {
             email: kundeDTO.vorname,
             bankkonto: undefined,
         };
-        const transaktionen = bankkontoDTO.transaktionen?.map((transaktionDTO) => {
-            const transaktion: Transaktion = {
-                transaktionId: undefined,
-                transaktionTyp: transaktionDTO.transaktionTyp,
-                betrag: transaktionDTO.betrag,
-                absender: transaktionDTO.absender,
-                empfaenger: transaktionDTO.empfaenger,
-                transaktionDatum: new Date(),
-                bankkonto: undefined,
-            };
-            return transaktion;
-        });
+        const transaktionen = bankkontoDTO.transaktionen?.map(
+            (transaktionDTO) => {
+                const transaktion: Transaktion = {
+                    transaktionId: undefined,
+                    transaktionTyp: transaktionDTO.transaktionTyp,
+                    betrag: transaktionDTO.betrag,
+                    absender: transaktionDTO.absender,
+                    empfaenger: transaktionDTO.empfaenger,
+                    transaktionDatum: new Date(),
+                    bankkonto: undefined,
+                };
+                return transaktion;
+            },
+        );
         const bankkonto = {
             bankkontoId: undefined,
             version: undefined,
@@ -216,7 +226,9 @@ export class BankkontoWriteController {
         return bankkonto;
     }
 
-    #bankkontoDtoOhneReferenzToBankkonto(bankkontoDTO: BankkontoDtoOhneReferenz): Bankkonto {
+    #bankkontoDtoOhneReferenzToBankkonto(
+        bankkontoDTO: BankkontoDtoOhneReferenz,
+    ): Bankkonto {
         return {
             bankkontoId: undefined,
             version: undefined,

@@ -102,7 +102,7 @@ export class BankkontoWriteService {
         });
 
         let deleteResult: DeleteResult | undefined;
-        await this.#repo.manager.transaction(async (transactionalMgr ) => {
+        await this.#repo.manager.transaction(async (transactionalMgr) => {
             const transaktionen = bankkonto.transaktionen ?? [];
             for (const transaktion of transaktionen) {
                 await transactionalMgr.delete(
@@ -220,7 +220,9 @@ export class BankkontoWriteService {
         }
 
         const version = Number.parseInt(versionStr.slice(1, -1), 10);
-        const bankkontoDb = await this.#readService.findByBankkontoId({ bankkontoId });
+        const bankkontoDb = await this.#readService.findByBankkontoId({
+            bankkontoId,
+        });
 
         if (version < bankkontoDb.version!) {
             throw new VersionOutdatedException(version);

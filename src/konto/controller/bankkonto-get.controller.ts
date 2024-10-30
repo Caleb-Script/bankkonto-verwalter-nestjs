@@ -32,12 +32,12 @@ import { Public } from 'nest-keycloak-connect';
 import { paths } from '../../config/paths.js';
 import { getLogger } from '../../logger/logger.js';
 import { ResponseTimeInterceptor } from '../../logger/response-time.interceptor.js';
-import { type Kunde } from '../model/entity/kunde.entity.js';
-import { type Suchkriterien } from '../service/suchkriterien.js';
-import { getBaseUri } from './getBaseUri.js';
 import { Bankkonto } from '../model/entity/bankkonto.entity';
+import { type Kunde } from '../model/entity/kunde.entity.js';
 import { TransaktionTyp } from '../model/entity/transaktion.entity';
 import { BankkontoReadService } from '../service/bankkonto-read.service.js';
+import { type Suchkriterien } from '../service/suchkriterien.js';
+import { getBaseUri } from './getBaseUri.js';
 
 /** href-Link für HATEOAS */
 export type Link = {
@@ -181,11 +181,17 @@ export class BankkontoGetController {
         @Headers('If-None-Match') version: string | undefined,
         @Res() res: Response,
     ): Promise<Response<BankkontoModel | undefined>> {
-        this.#logger.debug('getByBankkontoId: idStr=%s, version=%s', idStr, version);
+        this.#logger.debug(
+            'getByBankkontoId: idStr=%s, version=%s',
+            idStr,
+            version,
+        );
         const bankkontoId = Number(idStr);
         if (!Number.isInteger(bankkontoId)) {
             this.#logger.debug('getByBankkontoId: not isInteger()');
-            throw new NotFoundException(`Die Bankkonto-ID ${idStr} ist ungueltig.`);
+            throw new NotFoundException(
+                `Die Bankkonto-ID ${idStr} ist ungueltig.`,
+            );
         }
 
         if (req.accepts([APPLICATION_HAL_JSON, 'json', 'html']) === false) {
@@ -193,9 +199,14 @@ export class BankkontoGetController {
             return res.sendStatus(HttpStatus.NOT_ACCEPTABLE);
         }
 
-        const bankkonto = await this.#service.findByBankkontoId({ bankkontoId });
+        const bankkonto = await this.#service.findByBankkontoId({
+            bankkontoId,
+        });
         if (this.#logger.isLevelEnabled('debug')) {
-            this.#logger.debug('getByBankkontoId(): bankkonto=%s', bankkonto.toString());
+            this.#logger.debug(
+                'getByBankkontoId(): bankkonto=%s',
+                bankkonto.toString(),
+            );
             this.#logger.debug('getByBankkontoId(): kunde=%o', bankkonto.kunde);
         }
 
@@ -210,7 +221,10 @@ export class BankkontoGetController {
 
         // HATEOAS mit Atom Links und HAL (= Hypertext Application Language)
         const bankkontoModel = this.#toModel(bankkonto, req);
-        this.#logger.debug('getByBankkontoId: bankkontoModel=%o', bankkontoModel);
+        this.#logger.debug(
+            'getByBankkontoId: bankkontoModel=%o',
+            bankkontoModel,
+        );
         return res.contentType(APPLICATION_HAL_JSON).json(bankkontoModel);
     }
 
@@ -250,12 +264,14 @@ export class BankkontoGetController {
         this.#logger.debug('get: %o', bankkonten);
 
         // HATEOAS: Atom Links je Bankkonto
-        const bankkontenModel = bankkonten.map((bankkonto :Bankkonto) =>
+        const bankkontenModel = bankkonten.map((bankkonto: Bankkonto) =>
             this.#toModel(bankkonto, req, false),
         );
         this.#logger.debug('get: bankkontenModel=%o', bankkontenModel);
 
-        const result: BankkontenModel = { _embedded: { bankkonten: bankkontenModel } };
+        const result: BankkontenModel = {
+            _embedded: { bankkonten: bankkontenModel },
+        };
         return res.contentType(APPLICATION_HAL_JSON).json(result).send();
     }
 
@@ -273,7 +289,11 @@ export class BankkontoGetController {
               }
             : { self: { href: `${baseUri}/${bankkontoId}` } };
 
-        this.#logger.debug('#toModel: bankkonto=%o, links=%o', bankkonto, links);
+        this.#logger.debug(
+            '#toModel: bankkonto=%o, links=%o',
+            bankkonto,
+            links,
+        );
         const kundeModel: KundeModel = {
             // "Optional Chaining" und "Nullish Coalescing" ab ES2020
             name: bankkonto.kunde?.name ?? 'N/A',

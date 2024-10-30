@@ -1,4 +1,3 @@
-
 import { UseFilters, UseInterceptors } from '@nestjs/common';
 import { Args, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
 import { Public } from 'nest-keycloak-connect';
@@ -34,7 +33,9 @@ export class BankkontoQueryResolver {
     async findById(@Args() { bankkontoId }: IdInput) {
         this.#logger.debug('findByBankkontoId: bankkontoId=%d', bankkontoId);
 
-        const bankkonto = await this.#service.findByBankkontoId({ bankkontoId });
+        const bankkonto = await this.#service.findByBankkontoId({
+            bankkontoId,
+        });
 
         if (this.#logger.isLevelEnabled('debug')) {
             this.#logger.debug(
@@ -57,19 +58,19 @@ export class BankkontoQueryResolver {
 
     @ResolveField('saldo')
     saldo(@Parent() bankkonto: Bankkonto, waehrung: boolean | undefined) {
-    if (this.#logger.isLevelEnabled('debug')) {
-        this.#logger.debug(
-            'saldo: bankkonto=%s, waehrung=%s',
-            bankkonto.toString(),
-            waehrung,
-        );
-    }
-    
-    // Standardwert für den Saldo, falls nicht definiert
-    const saldo = bankkonto.saldo ?? 0;
-    const unit = waehrung === false ? '' : '€';
+        if (this.#logger.isLevelEnabled('debug')) {
+            this.#logger.debug(
+                'saldo: bankkonto=%s, waehrung=%s',
+                bankkonto.toString(),
+                waehrung,
+            );
+        }
 
-    // Formatierter Saldo als String mit Währungseinheit, falls angegeben
-    return `${saldo.toFixed(2)} ${unit}`.trim();
+        // Standardwert für den Saldo, falls nicht definiert
+        const saldo = bankkonto.saldo ?? 0;
+        const unit = waehrung === false ? '' : '€';
+
+        // Formatierter Saldo als String mit Währungseinheit, falls angegeben
+        return `${saldo.toFixed(2)} ${unit}`.trim();
     }
 }

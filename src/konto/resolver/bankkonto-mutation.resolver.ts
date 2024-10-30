@@ -5,13 +5,13 @@ import { AuthGuard, Roles } from 'nest-keycloak-connect';
 import { getLogger } from '../../logger/logger.js';
 import { ResponseTimeInterceptor } from '../../logger/response-time.interceptor.js';
 import { BankkontoDTO } from '../model/dto/bankkonto.dto.js';
-import { type Transaktion } from '../model/entity/transaktion.entity.js';
+import { TransaktionDTO } from '../model/dto/transaktion.dto.js';
 import { type Bankkonto } from '../model/entity/bankkonto.entity.js';
 import { type Kunde } from '../model/entity/kunde.entity.js';
+import { type Transaktion } from '../model/entity/transaktion.entity.js';
 import { BankkontoWriteService } from '../service/bankkonto-write.service.js';
 import { type IdInput } from './bankkonto-query.resolver.js';
 import { HttpExceptionFilter } from './http-exception.filter.js';
-import { TransaktionDTO } from '../model/dto/transaktion.dto.js';
 
 export type CreatePayload = {
     readonly kontoId: number;
@@ -80,7 +80,10 @@ export class BankkontoMutationResolver {
         const idStr = bankkontoId.bankkontoId;
         this.#logger.debug('delete: bankkontoId=%s', idStr);
         const deletePerformed = await this.#service.delete(idStr);
-        this.#logger.debug('deleteBankkonto: deletePerformed=%s', deletePerformed);
+        this.#logger.debug(
+            'deleteBankkonto: deletePerformed=%s',
+            deletePerformed,
+        );
         return deletePerformed;
     }
 
@@ -94,18 +97,20 @@ export class BankkontoMutationResolver {
             bankkonto: undefined,
         };
         // "Optional Chaining" ab ES2020
-        const transaktionen = bankkontoDTO.transaktionen?.map((transaktionDTO: TransaktionDTO) => {
-            const transaktion: Transaktion = {
-                transaktionId: undefined,
-                transaktionDatum: undefined,
-                betrag: transaktionDTO.betrag,
-                empfaenger: transaktionDTO.empfaenger,
-                absender: transaktionDTO.absender,
-                transaktionTyp: undefined,
-                bankkonto: undefined,
-            };
-            return transaktion;
-        });
+        const transaktionen = bankkontoDTO.transaktionen?.map(
+            (transaktionDTO: TransaktionDTO) => {
+                const transaktion: Transaktion = {
+                    transaktionId: undefined,
+                    transaktionDatum: undefined,
+                    betrag: transaktionDTO.betrag,
+                    empfaenger: transaktionDTO.empfaenger,
+                    absender: transaktionDTO.absender,
+                    transaktionTyp: undefined,
+                    bankkonto: undefined,
+                };
+                return transaktion;
+            },
+        );
         const bankkonto: Bankkonto = {
             bankkontoId: undefined,
             version: undefined,

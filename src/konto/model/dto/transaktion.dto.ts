@@ -21,7 +21,6 @@ export class TransaktionDTO {
         description: 'ID des Absenders',
         example: '00000000',
     })
-
     @ApiProperty({
         description: 'Art der Transaktion',
         example: 'ZAHLUNG',

@@ -1,4 +1,4 @@
-import { TransaktionTyp } from "../model/entity/transaktion.entity";
+import { TransaktionTyp } from '../model/entity/transaktion.entity';
 
 /**
  * Typdefinition für `find` in `bankkontoRead.service` und `QueryBuilder.build()`.

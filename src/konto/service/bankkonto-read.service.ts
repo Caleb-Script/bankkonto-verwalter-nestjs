@@ -47,7 +47,10 @@ export class BankkontoReadService {
      * @returns Das gefundene Bankkonto in einem Promise aus ES2015.
      * @throws NotFoundException falls kein Bankkonto mit der ID existiert
      */
-    async findByBankkontoId({ bankkontoId, mitTransaktionen = false }: FindByBankkontoIdParams) {
+    async findByBankkontoId({
+        bankkontoId,
+        mitTransaktionen = false,
+    }: FindByBankkontoIdParams) {
         this.#logger.debug('findByBankkontoId: bankkontoId=%d', bankkontoId);
 
         const bankkonto = await this.#queryBuilder
