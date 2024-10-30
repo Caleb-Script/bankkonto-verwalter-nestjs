@@ -7,11 +7,11 @@
   "license": "GPL-3.0",
   "exports": "./dist/src/main.js",
   "type": "module",
-   "engines": {
+  "engines": {
     "node": ">=20.11.1",
     "npm": ">=10.3.0"
   },
-    "scripts": {
+  "scripts": {
     "prebuild": "npm run clean",
     "build": "nest build",
     "start": "node dist/src/main.js",
@@ -69,7 +69,7 @@
     "Jest",
     "ts-jest"
   ],
-   "dependencies": {
+  "dependencies": {
     "@apollo/server": "4.11.0",
     "@js-temporal/polyfill": "0.4.4",
     "@nestjs/apollo": "12.2.0",
@@ -170,7 +170,7 @@
     "remark-preset-lint-markdown-style-guide": "6.0.0",
     "remark-preset-lint-recommended": "7.0.0",
     "remark-rehype": "11.1.1",
-    "rimraf": "6.0.1",
+    "rimraf": "^6.0.1",
     "shelljs": "0.8.5",
     "sonarqube-scanner": "4.2.3",
     "ts-jest": "29.2.5",
