@@ -27,7 +27,7 @@ jobs:
           cache: 'npm'  # Cache für schnelleres Build
 
       - name: Install dependencies
-        run: npm ci
+        run: npm i
 
       - name: Cleanup previous builds
         run: |
