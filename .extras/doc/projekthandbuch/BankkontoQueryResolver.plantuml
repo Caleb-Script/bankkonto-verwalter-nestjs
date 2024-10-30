@@ -1,0 +1,58 @@
+@startuml Controller-Klasse
+
+package @nestjs/graphql {
+  class "@Resolver" as Resolver
+  hide Resolver circle
+
+  class "@Query" as Query
+  hide Query circle
+
+  class "@Args" as Args
+  hide Args circle
+
+  Resolver .left[hidden].> Promise
+}
+
+package bankkonto {
+  package entity {
+    class Bankkonto <<entity>>
+  }
+
+  package service {
+    class BankkontoReadService << control >>
+  }
+
+  package graphql #AA55AA {
+    class "type BankkontoDTO = Omit<Bankkonto, 'transaktion' | 'aktualisiert' | 'erzeugt'" as BankkontoDTO
+    hide BankkontoDTO circle
+
+    interface IdInput {
+        id: number
+    }
+
+    class BankkontoQueryResolver << control >> << @Resolver() >> << @UseInterceptors() >> {
+      + @Query() async bankkonto(@Args() id: IdInput): Promise<BankkontoDTO>
+      + @Query() async bankkonten(@Args() kunde: string | undefined): Promise<BankkontoDTO[]>
+    }
+
+    BankkontoQueryResolver o-up-> "1" BankkontoReadService : service
+    BankkontoQueryResolver ..> BankkontoDTO
+    BankkontoQueryResolver ..> IdInput
+    BankkontoDTO ..> Bankkonto
+    BankkontoQueryResolver ..> Resolver
+
+    BankkontoQueryResolver ..> Promise
+
+    BankkontoDTO .[hidden].> Bankkonto
+    Bankkonto .[hidden].> Promise
+    BankkontoReadService .[hidden].> Promise
+    Bankkonto .[hidden].> Resolver
+    BankkontoReadService .[hidden].> Resolver
+  }
+}
+
+hide empty members
+
+footer (c) Gruppe 4
+
+@enduml

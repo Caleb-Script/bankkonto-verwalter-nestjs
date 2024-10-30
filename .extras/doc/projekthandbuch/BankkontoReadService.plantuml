@@ -1,0 +1,48 @@
+@startuml Anwendungskern
+
+package @nestjs/common {
+  class "@Injectable" as Injectable
+  hide Injectable circle
+}
+
+package typeorm {
+  class Repository<T>
+}
+
+package @nestjs/typeorm {
+  class "@InjectRepository" as InjectRepository
+  hide InjectRepository circle
+}
+
+package bankkonto {
+  package entity {
+    class Bankkonto
+  }
+
+  package service #AA55AA {
+    class QueryBuilder
+
+    class BankkontoReadService << control >> <<@Injectable()>> {
+      + async findById(id: number): Promise<Bankkonto | undefined>
+      + async find(suchkriterien?: Record<string, any>): Promise<Bankkonto[]>
+    }
+
+    BankkontoReadService o--> "1" QueryBuilder: queryBuilder
+    BankkontoReadService o--> "1" Repository: @InjectRepository repo
+
+    BankkontoReadService .up.> Injectable
+    BankkontoReadService .up.> InjectRepository
+
+    BankkontoReadService .up.> Promise
+    BankkontoReadService ..> Buch
+
+    QueryBuilder .[hidden].> Repository
+    QueryBuilder .[hidden].> Bankkonto
+  }
+}
+
+hide empty members
+
+footer (c) Gruppe 4
+
+@enduml

@@ -1,0 +1,69 @@
+@startuml Anwendungskern
+
+package @nestjs/common {
+  class "@Injectable" as Injectable
+  hide Injectable circle
+}
+
+package typeorm {
+  class Repository<T>
+}
+
+package @nestjs/typeorm {
+  class "@InjectRepository" as InjectRepository
+  hide InjectRepository circle
+}
+
+package mail {
+  class MailService
+}
+
+package bankkonto {
+  package entity {
+    class Bankkonto
+  }
+
+  package service #AA55AA {
+    class BankkontoInvalid
+    class KundeExists
+    class NameExists
+    class VersionInvalid
+    class VersionOutdated
+
+    class BuchWriteService << control >> <<@Injectable()>> {
+      + async create(bankkonto: Bankkonto): Promise<string|BankkontoInvalid|KundeExists|NameExists>
+      + async update(id: number, bankkonto: Bankkonto, version: string): Promise<number|BuchInvalid|KundeExists|NameExists|VersionInvalid|VersionOutdated>
+      + async delete(id: number): Promise<boolean>
+    }
+
+    BankkontoWriteService o--> "1" BankkontoValidationService: validationService
+    BankkontoWriteService o--> "1" BankkontoReadService: readService
+    BankkontoWriteService o--> "1" Repository: @InjectRepository repo
+    BankkontoWriteService o--> "1" MailService: mailService
+
+    BankkontoWriteService .up.> Injectable
+    BankkontoWriteService .up.> InjectRepository
+
+    BankkontoWriteService .up.> Promise
+    BankkontoWriteService ..> Bankkonto
+    BankkontoWriteService .up.> BankkontoInvalid
+    BankkontoWriteService .up.> KundeExists
+    BankkontoWriteService .up.> NameExists
+    BankkontoWriteService .up.> VersionInvalid
+    BankkontoWriteService .up.> VersionOutdated
+
+    BankkontoInvalid .up[hidden].> Bankkonto
+    Bankkonto .up[hidden].> Promise
+    Bankkonto .up[hidden].> Injectable
+    Bankkonto .up[hidden].> InjectRepository
+    KundeExists .up[hidden].> Bankkonto
+    BankkontoValidationService .[hidden].> Repository
+    BankkontoValidationService .[hidden].> MailService
+  }
+}
+
+hide empty members
+
+footer (c) Gruppe 4
+
+@enduml
