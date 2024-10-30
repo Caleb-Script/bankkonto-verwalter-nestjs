@@ -29,7 +29,7 @@ export class Transaktion {
     readonly betrag: number | undefined;
 
     @Column({ type: 'varchar', nullable: true })
-    readonly absender: string | undefined;
+    readonly absender: number | undefined;
 
     @Column({ type: 'varchar', nullable: true })
     readonly empfaenger: number | undefined;
@@ -52,6 +52,6 @@ export class Transaktion {
             absender: this.absender,
             empfaenger: this.empfaenger,
             transaktionDatum: this.transaktionDatum,
-            bankkontoId: this.bankkonto?.bankkontoId,
+            bankkonto: this.bankkonto,
         });
 }

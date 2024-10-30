@@ -1,7 +1,7 @@
 import { UseInterceptors } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { Public } from 'nest-keycloak-connect';
-import { BadUserInputError } from '../../konto/resolver/errors.js';
+import { BadUserInputError } from '../../bankkonto/resolver/errors.js';
 import { getLogger } from '../../logger/logger.js';
 import { ResponseTimeInterceptor } from '../../logger/response-time.interceptor.js';
 import { KeycloakService } from './keycloak.service.js';

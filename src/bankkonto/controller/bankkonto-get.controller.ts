@@ -35,8 +35,8 @@ import { ResponseTimeInterceptor } from '../../logger/response-time.interceptor.
 import { type Kunde } from '../model/entity/kunde.entity.js';
 import { type Suchkriterien } from '../service/suchkriterien.js';
 import { getBaseUri } from './getBaseUri.js';
-import { Bankkonto } from '../model/entity/bankkonto.entity';
-import { TransaktionTyp } from '../model/entity/transaktion.entity';
+import { Bankkonto } from '../model/entity/bankkonto.entity.js';
+import { TransaktionTyp } from '../model/entity/transaktion.entity.js';
 import { BankkontoReadService } from '../service/bankkonto-read.service.js';
 
 /** href-Link für HATEOAS */
