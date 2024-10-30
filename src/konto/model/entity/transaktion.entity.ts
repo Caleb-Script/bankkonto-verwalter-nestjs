@@ -29,7 +29,7 @@ export class Transaktion {
     readonly betrag: number | undefined;
 
     @Column({ type: 'varchar', nullable: true })
-    readonly absender: number | undefined;
+    readonly absender: string | undefined;
 
     @Column({ type: 'varchar', nullable: true })
     readonly empfaenger: number | undefined;
