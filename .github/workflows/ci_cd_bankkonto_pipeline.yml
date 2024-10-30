@@ -27,7 +27,10 @@ jobs:
           cache: 'npm'  # Cache für schnelleres Build
 
       - name: Install dependencies
-        run: npm i
+        run: npm ci
+      
+      - name: Install rimraf (if not already installed)
+        run: npm install rimraf --save-dev
 
       - name: Cleanup previous builds
         run: |
