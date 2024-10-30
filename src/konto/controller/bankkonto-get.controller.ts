@@ -103,10 +103,10 @@ export class BankkontoQuery implements Suchkriterien {
     declare readonly transaktionTyp: TransaktionTyp;
 
     @ApiProperty({ required: false })
-    declare readonly absender: number;
+    declare readonly absender: string;
 
     @ApiProperty({ required: false })
-    declare readonly empfaenger: number;
+    declare readonly empfaenger: string;
 
     @ApiProperty({ required: false })
     declare readonly email: string;
@@ -156,7 +156,7 @@ export class BankkontoGetController {
      * @param res Leeres Response-Objekt von Express.
      * @returns Leeres Promise-Objekt.
      */
-    // eslint-disable-next-line max-params
+    // eslint-disable-next-line max-params, max-lines-per-function
     @Get(':bankkontoId')
     @Public()
     @ApiOperation({ summary: 'Suche mit der Bankkonto-ID' })
