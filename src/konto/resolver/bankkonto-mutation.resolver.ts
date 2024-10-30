@@ -1,10 +1,10 @@
 import { UseFilters, UseGuards, UseInterceptors } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { IsInt, IsNumberString, Min } from 'class-validator';
 import { AuthGuard, Roles } from 'nest-keycloak-connect';
 import { getLogger } from '../../logger/logger.js';
 import { ResponseTimeInterceptor } from '../../logger/response-time.interceptor.js';
 import { BankkontoDTO } from '../model/dto/bankkonto.dto.js';
+import { BankkontoUpdateDTO } from '../model/dto/bankkonto-update.dto.js';
 import { type Transaktion } from '../model/entity/transaktion.entity.js';
 import { type Bankkonto } from '../model/entity/bankkonto.entity.js';
 import { type Kunde } from '../model/entity/kunde.entity.js';
@@ -21,14 +21,6 @@ export type UpdatePayload = {
     readonly version: number;
 };
 
-export class BankkontoUpdateDTO extends BankkontoDTO {
-    @IsNumberString()
-    readonly kontoId!: string;
-
-    @IsInt()
-    @Min(0)
-    readonly version!: number;
-}
 @Resolver('Bankkonto')
 // alternativ: globale Aktivierung der Guards https://docs.nestjs.com/security/authorization#basic-rbac-implementation
 @UseGuards(AuthGuard)
@@ -64,12 +56,12 @@ export class BankkontoMutationResolver {
         const versionStr = `"${bankkontoDTO.version.toString()}"`;
 
         const versionResult = await this.#service.update({
-            bankkontoId: Number.parseInt(bankkontoDTO.kontoId, 10),
+            bankkontoId: Number.parseInt(bankkontoDTO.bankkontoId, 10),
             bankkonto,
             version: versionStr,
         });
         // TODO BadUserInputError
-        this.#logger.debug('updateBuch: versionResult=%d', versionResult);
+        this.#logger.debug('updateKonto: versionResult=%d', versionResult);
         const payload: UpdatePayload = { version: versionResult };
         return payload;
     }
