@@ -9,7 +9,7 @@ import { Bankkonto } from '../model/entity/bankkonto.entity.js';
 import { QueryBuilder } from './query-builder.js';
 import { type Suchkriterien } from './suchkriterien.js';
 /**
- * Typdefinition für `findById`
+ * Typdefinition für `findByBankkontoId`
  */
 export type FindByBankkontoIdParams = {
     /** ID des gesuchten Bankkontos */
@@ -48,7 +48,7 @@ export class BankkontoReadService {
      * @throws NotFoundException falls kein Bankkonto mit der ID existiert
      */
     async findByBankkontoId({ bankkontoId, mitTransaktionen = false }: FindByBankkontoIdParams) {
-        this.#logger.debug('findById: bankkontoId=%d', bankkontoId);
+        this.#logger.debug('findByBankkontoId: bankkontoId=%d', bankkontoId);
 
         const bankkonto = await this.#queryBuilder
             .buildId({ bankkontoId, mitTransaktionen })
@@ -61,13 +61,13 @@ export class BankkontoReadService {
 
         if (this.#logger.isLevelEnabled('debug')) {
             this.#logger.debug(
-                'findById: bankkonto=%s, kundenId=%o',
+                'findByBankkontoId: bankkonto=%s, kundenId=%o',
                 bankkonto.toString(),
                 bankkonto.kunde,
             );
             if (mitTransaktionen) {
                 this.#logger.debug(
-                    'findById: transaktionen=%o',
+                    'findByBankkontoId: transaktionen=%o',
                     bankkonto.transaktionen,
                 );
             }
@@ -110,7 +110,7 @@ export class BankkontoReadService {
                 `Keine Bankkonten gefunden: ${JSON.stringify(suchkriterien)}`,
             );
         }
-        this.#logger.debug('find: buecher=%o', bankkonten);
+        this.#logger.debug('find: bankkonten=%o', bankkonten);
         return bankkonten;
     }
 

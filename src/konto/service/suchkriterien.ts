@@ -1,18 +1,14 @@
-/**
- * Das Modul besteht aus der Klasse {@linkcode Suchkriterien}.
- * @packageDocumentation
- */
-
-import { type TransaktionTyp } from '../model/entity/transaktion.entity.js';
+import { TransaktionTyp } from "../model/entity/transaktion.entity";
 
 /**
- * Typdefinition für `find` in `buch-read.service` und `QueryBuilder.build()`.
+ * Typdefinition für `find` in `bankkontoRead.service` und `QueryBuilder.build()`.
  */
 export type Suchkriterien = {
-    readonly transaktionen?: string;
-    readonly kundeId?: string;
+    readonly saldo?: string;
+    readonly transaktionsLimit?: number;
+    readonly datum?: string;
     readonly transaktionTyp?: TransaktionTyp;
-    readonly absender?: string;
-    readonly empfaenger?: string;
+    readonly absender?: number;
+    readonly empfaenger?: number;
     readonly email?: string;
 };
