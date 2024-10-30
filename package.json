@@ -26,7 +26,7 @@
     "test:dbserver": "set LOG_LEVEL=info&& set START_DB_SERVER=true&&jest --runInBand",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "asciidoctor": "node scripts/asciidoctor",
-    "clean": "rimraf dist log/server.log",
+    "clean": "rm -rf dist log/server.log",
     "copy-resources": "node scripts/copy-resources",
     "depcheck": "depcheck",
     "eslint": "eslint src __tests__",
