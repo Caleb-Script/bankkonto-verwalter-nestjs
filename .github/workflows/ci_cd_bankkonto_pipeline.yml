@@ -67,8 +67,8 @@ jobs:
       - name: Generate slides (reveal.js)
         run: npm run revealjs
 
-      - name: Compile AsciiDoc
-        run: npm run asciidoctor
+      # - name: Compile AsciiDoc
+      #   run: npm run asciidoctor
 
   package:
     runs-on: ubuntu-latest

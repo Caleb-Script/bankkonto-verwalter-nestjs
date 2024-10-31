@@ -39,6 +39,7 @@ export class BankkontoWriteService {
     readonly #mailService: MailService;
     readonly #logger = getLogger(BankkontoWriteService.name);
 
+    // eslint-disable-next-line max-params
     constructor(
         @InjectRepository(Bankkonto) repo: Repository<Bankkonto>,
         @InjectRepository(Transaktion) transaktionRepo: Repository<Transaktion>,
