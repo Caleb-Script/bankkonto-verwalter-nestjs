@@ -5,8 +5,8 @@
 import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import { type DataSourceOptions } from 'typeorm';
-import { Bankkonto } from '../konto/model/entity/bankkonto.entity.js';
-import { entities } from '../konto/model/entity/entities.entity.js';
+import { Bankkonto } from '../bankkonto/model/entity/bankkonto.entity.js';
+import { entities } from '../bankkonto/model/entity/entities.entity.js';
 import { BASEDIR, config } from './app.js';
 import { dbType } from './db.js';
 import { logLevel } from './logger.js';

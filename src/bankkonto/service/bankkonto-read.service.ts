@@ -61,6 +61,9 @@ export class BankkontoReadService {
                 `Es gibt kein Bankkonto mit der ID ${bankkontoId}.`,
             );
         }
+        if (bankkonto.waehrungen === null) {
+            bankkonto.waehrungen = [];
+        }
 
         if (this.#logger.isLevelEnabled('debug')) {
             this.#logger.debug(
@@ -91,6 +94,7 @@ export class BankkontoReadService {
         if (suchkriterien === undefined) {
             return this.#queryBuilder.build({}).getMany();
         }
+
         const keys = Object.keys(suchkriterien);
         if (keys.length === 0) {
             return this.#queryBuilder.build(suchkriterien).getMany();
@@ -101,39 +105,60 @@ export class BankkontoReadService {
             throw new NotFoundException('Ungueltige Suchkriterien');
         }
 
-        // QueryBuilder https://typeorm.io/select-query-builder
-        // Das Resultat ist eine leere Liste, falls nichts gefunden
-        // Lesen: Keine Transaktion erforderlich
+        // Hier kannst du die Währungen spezifisch behandeln
+        if (
+            suchkriterien.waehrungen &&
+            typeof suchkriterien.waehrungen === 'object'
+        ) {
+            const waehrungenArray = Object.keys(
+                suchkriterien.waehrungen,
+            ).filter(
+                (key) =>
+                    Array.isArray(suchkriterien.waehrungen) &&
+                    suchkriterien.waehrungen.includes(key),
+            );
+
+            // Füge eine Bedingung für die Währungen hinzu, z. B.
+            if (waehrungenArray.length > 0) {
+                // Hier kannst du die Logik für die Währungsabfrage hinzufügen
+                // z.B.: queryBuilder = queryBuilder.andWhere(...)
+            }
+        }
+
+        // QueryBuilder
         const bankkonten = await this.#queryBuilder
             .build(suchkriterien)
             .getMany();
+
         if (bankkonten.length === 0) {
             this.#logger.debug('find: Keine Bankkonten gefunden');
             throw new NotFoundException(
                 `Keine Bankkonten gefunden: ${JSON.stringify(suchkriterien)}`,
             );
         }
+
+        bankkonten.forEach((bankkonto) => {
+            if (bankkonto.waehrungen === null) {
+                bankkonto.waehrungen = [];
+            }
+        });
         this.#logger.debug('find: bankkonten=%o', bankkonten);
         return bankkonten;
     }
 
     #checkKeys(keys: string[]) {
         // Ist jedes Suchkriterium auch eine Property von Konto?
-        let validKeys = true;
-        keys.forEach((key) => {
-            if (
-                !this.#bankkontoProps.includes(key) &&
-                key !== 'javascript' &&
-                key !== 'typescript'
-            ) {
+        return keys.every((key) => {
+            const isValidKey =
+                this.#bankkontoProps.includes(key) || key === 'waehrungen'; // Nur die Währungen akzeptieren
+
+            if (!isValidKey) {
                 this.#logger.debug(
                     '#checkKeys: ungueltiges Suchkriterium "%s"',
                     key,
                 );
-                validKeys = false;
             }
+            return isValidKey;
         });
-
-        return validKeys;
     }
 }

@@ -10,5 +10,6 @@ export type Suchkriterien = {
     readonly transaktionTyp?: TransaktionTyp;
     readonly absender?: string;
     readonly empfaenger?: string;
+    readonly waehrungen?: string[];
     readonly email?: string;
 };
