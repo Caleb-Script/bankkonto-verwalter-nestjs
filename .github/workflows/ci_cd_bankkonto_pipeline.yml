@@ -29,9 +29,9 @@ jobs:
       - name: Verify dist directory
         run: ls -la
 
-      - name: Cleanup previous builds
-        run: |
-          rm -rf node_modules dist .extras/doc/api .extras/doc/folien/folien.html .extras/doc/projekthandbuch/html
+      # - name: Cleanup previous builds
+      #   run: |
+      #     rm -rf node_modules dist .extras/doc/api .extras/doc/folien/folien.html .extras/doc/projekthandbuch/html
 
       - name: Install dependencies
         run: npm ci
@@ -45,11 +45,11 @@ jobs:
       - name: Verify dist directory
         run: ls -l
 
-      # - name: Upload dist folder
-      #   uses: actions/upload-artifact@v3
-      #   with:
-      #     name: dist
-      #     path: dist
+      - name: Upload dist folder
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist
+          path: dist
 
   analyze:
     runs-on: ubuntu-latest
