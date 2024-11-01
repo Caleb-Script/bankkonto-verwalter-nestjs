@@ -104,9 +104,6 @@ jobs:
           name: dist
           path: dist2
 
-      - name: build Project
-        run: npm run build
-
       - name: Verify dist directory
         run: ls -l
 
