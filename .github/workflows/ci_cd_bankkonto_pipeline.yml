@@ -39,6 +39,9 @@ jobs:
       - name: Print current directory
         run: pwd
 
+      - name: zeige den ordner
+        run: ls -al
+
       - name: Compile TypeScript
         run: npx tsc -p tsconfig.build.json
 
