@@ -28,7 +28,7 @@ jobs:
 
       - name: Cleanup previous builds
         run: |
-          rm -rf src __tests__ node_modules dist .extras/doc/api .extras/doc/folien/folien.html .extras/doc/projekthandbuch/html
+          rm -rf __tests__ node_modules dist .extras/doc/api .extras/doc/folien/folien.html .extras/doc/projekthandbuch/html
 
       - name: Install dependencies
         run: npm ci --include=dev
@@ -43,7 +43,7 @@ jobs:
         run: ls -al
 
       - name: Compile TypeScript
-        run: npx tsc
+        run: npx tsc -p tsconfig.json
 
   analyze:
     runs-on: ubuntu-latest
