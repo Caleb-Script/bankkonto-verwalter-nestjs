@@ -43,7 +43,7 @@ jobs:
         run: ls -al
 
       - name: Compile TypeScript
-        run: npx tsc -p tsconfig.build.json
+        run: npx tsc
 
   analyze:
     runs-on: ubuntu-latest
