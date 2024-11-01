@@ -8,7 +8,6 @@ import { type Suchkriterien } from '../service/suchkriterien.js';
 import { HttpExceptionFilter } from './http-exception.filter.js';
 
 export type IdInput = {
-    kontoId: any;
     readonly bankkontoId: number;
 };
 

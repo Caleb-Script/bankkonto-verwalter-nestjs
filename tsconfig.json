@@ -5,10 +5,10 @@
   // NICHT "strictest" wegen "experimentalDecorators"
   // Node 20 statt 22 wegen Jenkinsfile
   // "extends": ["@tsconfig/strictest/tsconfig", "@tsconfig/node20/tsconfig"],
-  "extends": ["@tsconfig/node20/tsconfig"],
+  "extends": ["@tsconfig/node22/tsconfig"],
   "ts-node": {
     "esm": true,
-    "module": "es2022",
+    "module": "es2022"
     // "experimentalSpecifierResolution": "node"
     // "transpileOnly": true,
     // "files": true,

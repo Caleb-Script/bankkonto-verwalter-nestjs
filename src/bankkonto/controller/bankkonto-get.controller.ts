@@ -32,9 +32,9 @@ import { Public } from 'nest-keycloak-connect';
 import { paths } from '../../config/paths.js';
 import { getLogger } from '../../logger/logger.js';
 import { ResponseTimeInterceptor } from '../../logger/response-time.interceptor.js';
-import { Bankkonto } from '../model/entity/bankkonto.entity';
+import { Bankkonto } from '../model/entity/bankkonto.entity.js';
 import { type Kunde } from '../model/entity/kunde.entity.js';
-import { TransaktionTyp } from '../model/entity/transaktion.entity';
+import { TransaktionTyp } from '../model/entity/transaktion.entity.js';
 import { BankkontoReadService } from '../service/bankkonto-read.service.js';
 import { type Suchkriterien } from '../service/suchkriterien.js';
 import { getBaseUri } from './getBaseUri.js';
@@ -67,10 +67,8 @@ export type BankkontoModel = Omit<
     Bankkonto,
     | 'kunde'
     | 'transaktionen'
-    | 'aktualisiertAm'
-    | 'erstelltAm'
+    | 'dokumente'
     | 'bankkontoId'
-    | 'saldo'
     | 'transktionLimit'
     | 'version'
 > & {
@@ -110,6 +108,9 @@ export class BankkontoQuery implements Suchkriterien {
 
     @ApiProperty({ required: false })
     declare readonly email: string;
+
+    @ApiProperty({ required: false })
+    declare readonly waehrung: string;
 }
 
 const APPLICATION_HAL_JSON = 'application/hal+json';
@@ -301,7 +302,11 @@ export class BankkontoGetController {
             email: bankkonto.kunde?.email ?? 'N/A',
         };
         const bankkontoModel: BankkontoModel = {
+            saldo: bankkonto.saldo,
             transaktionLimit: bankkonto.transaktionLimit,
+            waehrungen: bankkonto.waehrungen,
+            erstelltAm: bankkonto.erstelltAm,
+            aktualisiertAm: bankkonto.aktualisiertAm,
             kunde: kundeModel,
             _links: links,
         };

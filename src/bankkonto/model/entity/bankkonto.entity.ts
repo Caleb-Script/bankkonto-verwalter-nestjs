@@ -8,6 +8,7 @@ import {
     UpdateDateColumn,
     VersionColumn,
 } from 'typeorm';
+import { BankkontoDokument } from './bankkonto-dokument.entity.js';
 import { Kunde } from './kunde.entity.js';
 import { Transaktion } from './transaktion.entity.js';
 
@@ -34,6 +35,14 @@ export class Bankkonto {
         cascade: ['insert', 'remove'],
     })
     readonly transaktionen: Transaktion[] | undefined;
+
+    @Column('simple-array')
+    waehrungen: string[] | null | undefined;
+
+    @OneToMany(() => BankkontoDokument, (dokument) => dokument.bankkonto, {
+        cascade: ['insert', 'remove'],
+    })
+    readonly dokumente: BankkontoDokument[] | undefined;
 
     @CreateDateColumn({ type: 'timestamp' })
     readonly erstelltAm: Date | undefined;

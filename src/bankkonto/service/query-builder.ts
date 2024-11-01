@@ -83,14 +83,16 @@ export class QueryBuilder {
         absender,
         empfaenger,
         email,
+        waehrungen,
         ...props
     }: Suchkriterien) {
         this.#logger.debug(
-            'build: transaktionTyp=%s, absender=%s, empfaenger=%s, email=%s props=%s,',
+            'build: transaktionTyp=%s, absender=%s, empfaenger=%s, email=%s waehrungen=%s props=%s',
             transaktionTyp,
             absender,
             empfaenger,
             email,
+            waehrungen,
             props,
         );
 
@@ -107,6 +109,7 @@ export class QueryBuilder {
 
         let useWhere = true;
 
+        // Bedingung für transaktionTyp
         if (
             transaktionTyp !== undefined &&
             typeof transaktionTyp === 'string'
@@ -120,6 +123,7 @@ export class QueryBuilder {
             useWhere = false;
         }
 
+        // Bedingung für absender
         if (absender !== undefined && typeof absender === 'string') {
             queryBuilder = queryBuilder.where(
                 `${this.#transaktionAlias}.absender = :absender`,
@@ -130,6 +134,7 @@ export class QueryBuilder {
             useWhere = false;
         }
 
+        // Bedingung für empfaenger
         if (empfaenger !== undefined && typeof empfaenger === 'string') {
             queryBuilder = queryBuilder.where(
                 `${this.#transaktionAlias}.empfaenger = :empfaenger`,
@@ -140,15 +145,22 @@ export class QueryBuilder {
             useWhere = false;
         }
 
-        // Kunde in der Query: Teilstring des Kunden und "case insensitive"
-        // CAVEAT: MySQL hat keinen Vergleich mit "case insensitive"
-        // type-coverage:ignore-next-line
+        // Bedingung für email
         if (email !== undefined && typeof email === 'string') {
             const ilike =
                 typeOrmModuleOptions.type === 'postgres' ? 'ilike' : 'like';
             queryBuilder = queryBuilder.where(
                 `${this.#kundeAlias}.email ${ilike} :email`,
                 { email: `%${email}%` },
+            );
+            useWhere = false;
+        }
+
+        // Bedingung für waehrungen
+        if (waehrungen !== undefined && Array.isArray(waehrungen)) {
+            queryBuilder = queryBuilder.andWhere(
+                `${this.#bankkontoAlias}.waehrungen && :waehrungen`,
+                { waehrungen },
             );
             useWhere = false;
         }

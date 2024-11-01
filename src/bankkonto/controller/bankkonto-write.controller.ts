@@ -84,7 +84,7 @@ export class BankkontoWriteController {
     ): Promise<Response> {
         this.#logger.debug('post: bankkontoDTO=%o', bankkontoDTO);
 
-        const bankkonto = this.#bankkontoDtoToBankkonto(bankkontoDTO);
+        const bankkonto = this.#bankkontoDTOToBankkonto(bankkontoDTO);
         const bankkontoId = await this.#service.create(bankkonto);
 
         const location = `${getBaseUri(req)}/${bankkontoId}`;
@@ -184,7 +184,7 @@ export class BankkontoWriteController {
         await this.#service.delete(bankkontoId);
     }
 
-    #bankkontoDtoToBankkonto(bankkontoDTO: BankkontoDTO): Bankkonto {
+    #bankkontoDTOToBankkonto(bankkontoDTO: BankkontoDTO): Bankkonto {
         const kundeDTO = bankkontoDTO.kunde;
         const kunde: Kunde = {
             kundeId: undefined,
@@ -193,7 +193,7 @@ export class BankkontoWriteController {
             email: kundeDTO.vorname,
             bankkonto: undefined,
         };
-        const transaktionen = bankkontoDTO.transaktionen?.map(
+        const transaktionen = bankkontoDTO.transaktionen.map(
             (transaktionDTO) => {
                 const transaktion: Transaktion = {
                     transaktionId: undefined,
@@ -214,13 +214,15 @@ export class BankkontoWriteController {
             transaktionLimit: bankkontoDTO.transaktionsLimit,
             kunde,
             transaktionen,
+            waehrungen: bankkontoDTO.waehrungen,
+            dokumente: undefined,
             erstelltAm: new Date(),
             aktualisiertAm: new Date(),
         };
 
         // Rueckwaertsverweise
         bankkonto.kunde.bankkonto = bankkonto;
-        bankkonto.transaktionen?.forEach((transaktion) => {
+        bankkonto.transaktionen.forEach((transaktion) => {
             transaktion.bankkonto = bankkonto;
         });
         return bankkonto;
@@ -236,6 +238,8 @@ export class BankkontoWriteController {
             transaktionLimit: bankkontoDTO.transaktionsLimit,
             kunde: undefined,
             transaktionen: undefined,
+            dokumente: undefined,
+            waehrungen: undefined,
             erstelltAm: undefined,
             aktualisiertAm: new Date(),
         };

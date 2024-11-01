@@ -2,6 +2,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import {
+    ArrayUnique,
     IsArray,
     IsInt,
     IsOptional,
@@ -20,6 +21,11 @@ export class BankkontoDtoOhneReferenz {
     @ApiProperty({ example: 100, description: 'Tägliches Transaktionslimit' })
     @IsOptional()
     readonly transaktionsLimit!: number;
+
+    @IsOptional()
+    @ArrayUnique()
+    @ApiProperty({ example: ['EUR', 'GBP', 'USD', 'JPY', 'CHE'] })
+    readonly waehrungen: string[] | undefined;
 }
 export class BankkontoDTO extends BankkontoDtoOhneReferenz {
     @ValidateNested()

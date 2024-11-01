@@ -5,7 +5,7 @@ import { BankkontoDTO } from './bankkonto.dto';
 
 export class BankkontoUpdateDTO extends BankkontoDTO {
     @IsNumberString()
-    readonly bankkontoId!: string;
+    readonly bankkontoId!: number;
 
     @IsInt()
     @Min(0)

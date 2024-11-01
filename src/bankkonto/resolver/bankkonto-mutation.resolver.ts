@@ -3,18 +3,18 @@ import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { AuthGuard, Roles } from 'nest-keycloak-connect';
 import { getLogger } from '../../logger/logger.js';
 import { ResponseTimeInterceptor } from '../../logger/response-time.interceptor.js';
-import { BankkontoDTO } from '../model/dto/bankkonto.dto.js';
 import { BankkontoUpdateDTO } from '../model/dto/bankkonto-update.dto.js';
-import { type Transaktion } from '../model/entity/transaktion.entity.js';
+import { BankkontoDTO } from '../model/dto/bankkonto.dto.js';
+import { TransaktionDTO } from '../model/dto/transaktion.dto.js';
 import { type Bankkonto } from '../model/entity/bankkonto.entity.js';
 import { type Kunde } from '../model/entity/kunde.entity.js';
+import { type Transaktion } from '../model/entity/transaktion.entity.js';
 import { BankkontoWriteService } from '../service/bankkonto-write.service.js';
 import { type IdInput } from './bankkonto-query.resolver.js';
 import { HttpExceptionFilter } from './http-exception.filter.js';
-import { TransaktionDTO } from '../model/dto/transaktion.dto.js';
 
 export type CreatePayload = {
-    readonly kontoId: number;
+    readonly bankkontoId: number;
 };
 
 export type UpdatePayload = {
@@ -29,7 +29,7 @@ export type UpdatePayload = {
 export class BankkontoMutationResolver {
     readonly #service: BankkontoWriteService;
 
-    readonly #logger= getLogger(BankkontoMutationResolver.name);
+    readonly #logger = getLogger(BankkontoMutationResolver.name);
 
     constructor(service: BankkontoWriteService) {
         this.#service = service;
@@ -41,9 +41,9 @@ export class BankkontoMutationResolver {
         this.#logger.debug('create: bankkontoDTO=%o', bankkontoDTO);
 
         const bankkonto = this.#bankkontoDtoToBankkonto(bankkontoDTO);
-        const kontoId = await this.#service.create(bankkonto);
-        this.#logger.debug('createBankkonto: kontoId=%d', kontoId);
-        const payload: CreatePayload = { kontoId };
+        const bankkontoId = await this.#service.create(bankkonto);
+        this.#logger.debug('createBankkonto: kontoId=%d', bankkontoId);
+        const payload: CreatePayload = { bankkontoId };
         return payload;
     }
 
@@ -56,7 +56,7 @@ export class BankkontoMutationResolver {
         const versionStr = `"${bankkontoDTO.version.toString()}"`;
 
         const versionResult = await this.#service.update({
-            bankkontoId: Number.parseInt(bankkontoDTO.bankkontoId, 10),
+            bankkontoId: bankkontoDTO.bankkontoId,
             bankkonto,
             version: versionStr,
         });
@@ -68,11 +68,14 @@ export class BankkontoMutationResolver {
 
     @Mutation()
     @Roles({ roles: ['admin'] })
-    async delete(@Args() kontoId: IdInput) {
-        const idStr = kontoId.kontoId;
+    async delete(@Args() bankkontoId: IdInput) {
+        const idStr = bankkontoId.bankkontoId;
         this.#logger.debug('delete: kontoId=%s', idStr);
         const deletePerformed = await this.#service.delete(idStr);
-        this.#logger.debug('deleteBankkonto: deletePerformed=%s', deletePerformed);
+        this.#logger.debug(
+            'deleteBankkonto: deletePerformed=%s',
+            deletePerformed,
+        );
         return deletePerformed;
     }
 
@@ -86,27 +89,31 @@ export class BankkontoMutationResolver {
             bankkonto: undefined,
         };
         // "Optional Chaining" ab ES2020
-        const transaktionen = bankkontoDTO.transaktionen?.map((transaktionDTO: TransaktionDTO) => {
-            const transaktion: Transaktion = {
-                transaktionId: undefined,
-                transaktionDatum: undefined,
-                betrag: transaktionDTO.betrag,
-                empfaenger: transaktionDTO.empfaenger,
-                absender: transaktionDTO.absender,
-                transaktionTyp: undefined,
-                bankkonto: undefined,
-            };
-            return transaktion;
-        });
+        const transaktionen = bankkontoDTO.transaktionen.map(
+            (transaktionDTO: TransaktionDTO) => {
+                const transaktion: Transaktion = {
+                    transaktionId: undefined,
+                    transaktionDatum: undefined,
+                    betrag: transaktionDTO.betrag,
+                    empfaenger: transaktionDTO.empfaenger,
+                    absender: transaktionDTO.absender,
+                    transaktionTyp: undefined,
+                    bankkonto: undefined,
+                };
+                return transaktion;
+            },
+        );
         const bankkonto: Bankkonto = {
             bankkontoId: undefined,
             version: undefined,
             saldo: bankkontoDTO.saldo,
             transaktionLimit: bankkontoDTO.transaktionsLimit,
+            waehrungen: bankkontoDTO.waehrungen,
             erstelltAm: undefined,
             aktualisiertAm: undefined,
             kunde,
             transaktionen,
+            dokumente: undefined,
         };
 
         // Rueckwaertsverweis
@@ -124,6 +131,8 @@ export class BankkontoMutationResolver {
             erstelltAm: undefined,
             kunde: undefined,
             transaktionen: undefined,
+            waehrungen: bankkontoDTO.waehrungen,
+            dokumente: undefined,
         };
     }
 

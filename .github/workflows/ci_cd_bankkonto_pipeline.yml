@@ -28,13 +28,19 @@ jobs:
 
       - name: Cleanup previous builds
         run: |
-          rm -rf src __tests__ node_modules dist .extras/doc/api .extras/doc/folien/folien.html .extras/doc/projekthandbuch/html
+          rm -rf node_modules dist .extras/doc/api .extras/doc/folien/folien.html .extras/doc/projekthandbuch/html
 
       - name: Install dependencies
         run: npm ci --include=dev
 
       - name: Build project
         run: npm run build
+
+      - name: Print current directory
+        run: pwd
+
+      - name: zeige den ordner
+        run: ls -al
 
       - name: Compile TypeScript
         run: npx tsc
@@ -64,11 +70,11 @@ jobs:
       - name: Generate documentation (TypeDoc)
         run: npm run typedoc
 
-      - name: Generate slides (reveal.js)
-        run: npm run revealjs
+      # - name: Generate slides (reveal.js)
+      #   run: npm run revealjs
 
-      - name: Compile AsciiDoc
-        run: npm run asciidoctor
+      # - name: Compile AsciiDoc
+      #   run: npm run asciidoctor
 
   package:
     runs-on: ubuntu-latest
@@ -77,6 +83,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Verify dist directory
+        run: ls -l
+        
       - name: Package distribution
         run: zip -r dist.zip dist
 

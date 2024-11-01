@@ -39,6 +39,7 @@ export class BankkontoWriteService {
     readonly #mailService: MailService;
     readonly #logger = getLogger(BankkontoWriteService.name);
 
+    // eslint-disable-next-line max-params
     constructor(
         @InjectRepository(Bankkonto) repo: Repository<Bankkonto>,
         @InjectRepository(Transaktion) transaktionRepo: Repository<Transaktion>,
@@ -133,7 +134,7 @@ export class BankkontoWriteService {
             absender,
             empfaenger,
         );
-        const { bankkontoId, version, saldo } = bankkonto;
+        const { bankkontoId, version, saldo, waehrungen } = bankkonto;
 
         this.#validateTransaktionLimit(bankkonto, betrag, transaktionTyp);
 
@@ -142,8 +143,11 @@ export class BankkontoWriteService {
             betrag,
             transaktionTyp,
         );
+        // Convert DTO to Bankkonto format
         const updatedBankkonto = this.#bankkontoUpdateDTOToBankkonto({
-            saldo: updatedSaldo,
+            updatedSaldo,
+            transaktionLimit: 0,
+            waehrungen: waehrungen!,
         });
 
         await this.update({
@@ -258,21 +262,25 @@ export class BankkontoWriteService {
     }
 
     #bankkontoUpdateDTOToBankkonto({
-        saldo,
+        updatedSaldo,
         transaktionLimit,
+        waehrungen,
     }: {
-        saldo: number;
-        transaktionLimit?: number;
+        updatedSaldo: number;
+        transaktionLimit: number;
+        waehrungen: string[];
     }): Bankkonto {
         return {
             bankkontoId: undefined,
             version: undefined,
-            saldo,
+            saldo: updatedSaldo,
             transaktionLimit,
             kunde: undefined,
             transaktionen: undefined,
             erstelltAm: undefined,
             aktualisiertAm: new Date(),
+            dokumente: undefined,
+            waehrungen,
         };
     }
 }
