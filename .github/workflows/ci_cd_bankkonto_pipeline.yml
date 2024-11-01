@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [22.x]  # Node.js-Versionen
+        node-version: [20.x, 22.x, 23.x]
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -26,27 +26,30 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'  # Cache für schnelleres Build
 
-      - name: Cleanup previous builds
-        run: |
-          rm -rf node_modules dist .extras/doc/api .extras/doc/folien/folien.html .extras/doc/projekthandbuch/html
+      # - name: Cleanup previous builds
+      #   run: |
+      #     rm -rf node_modules dist .extras/doc/api .extras/doc/folien/folien.html .extras/doc/projekthandbuch/html
 
       - name: Install dependencies
-        run: npm ci --include=dev
+        run: npm ci
 
       - name: Build project
         run: npm run build
 
-      - name: Print current directory
-        run: pwd
-
-      - name: zeige den ordner
-        run: ls -al
-
       - name: Compile TypeScript
         run: npx tsc
 
+      - name: Upload dist folder
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist-${{ matrix.node-version }}
+          path: dist
+
   analyze:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [20.x, 22.x, 23.x]
     needs: build
     steps:
       - name: Checkout code
@@ -79,20 +82,26 @@ jobs:
   package:
     runs-on: ubuntu-latest
     needs: [build, analyze]
+    strategy:
+      matrix:
+        node-version: [20.x, 22.x, 23.x]
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Verify dist directory
-        run: ls -l
-        
+      - name: Download dist folder
+        uses: actions/download-artifact@v4
+        with:
+          name: dist-${{ matrix.node-version }}
+          path: dist
+
       - name: Package distribution
         run: zip -r dist.zip dist
 
       - name: Upload package
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          name: dist-package
+          name: dist-package-${{ matrix.node-version }}
           path: dist.zip
 
   docker:
