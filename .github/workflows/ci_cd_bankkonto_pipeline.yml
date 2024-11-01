@@ -36,14 +36,11 @@ jobs:
       - name: Build project
         run: npm run build
 
-      - name: Print current directory
-        run: pwd
-
-      - name: zeige den ordner
-        run: ls -al
-
       - name: Compile TypeScript
         run: npx tsc
+
+      - name: Verify dist directory
+        run: ls -l
 
   analyze:
     runs-on: ubuntu-latest
@@ -75,6 +72,8 @@ jobs:
 
       # - name: Compile AsciiDoc
       #   run: npm run asciidoctor
+      - name: Verify dist directory
+        run: ls -l
 
   package:
     runs-on: ubuntu-latest
@@ -85,7 +84,7 @@ jobs:
 
       - name: Verify dist directory
         run: ls -l
-        
+
       - name: Package distribution
         run: zip -r dist.zip dist
 
