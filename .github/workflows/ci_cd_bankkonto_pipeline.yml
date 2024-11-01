@@ -83,6 +83,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Verify dist directory
+        run: ls -l
+        
       - name: Package distribution
         run: zip -r dist.zip dist
 
