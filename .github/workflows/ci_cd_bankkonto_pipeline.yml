@@ -70,8 +70,8 @@ jobs:
       - name: Generate documentation (TypeDoc)
         run: npm run typedoc
 
-      - name: Generate slides (reveal.js)
-        run: npm run revealjs
+      # - name: Generate slides (reveal.js)
+      #   run: npm run revealjs
 
       # - name: Compile AsciiDoc
       #   run: npm run asciidoctor
