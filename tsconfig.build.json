@@ -7,5 +7,6 @@
     "dist",
     "**/*spec.ts",
     "**/*.test.ts"
-  ]
+  ],
+  "include": ["src/**/*.ts"],
 }
