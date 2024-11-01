@@ -101,7 +101,7 @@ jobs:
       - name: Upload package
         uses: actions/upload-artifact@v4
         with:
-          name: dist-package
+          name: dist-package-${{ matrix.node-version }}
           path: dist.zip
 
   docker:
