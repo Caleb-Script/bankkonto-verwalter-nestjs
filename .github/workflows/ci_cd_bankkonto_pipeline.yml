@@ -50,11 +50,11 @@ jobs:
         with:
           name: dist
           path: dist
-      - name: Upload node_modules
-        uses: actions/upload-artifact@v3
-        with:
-          name: node_modules
-          path: node_modules
+      # - name: Upload node_modules
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: node_modules
+      #     path: node_modules
 
   analyze:
     runs-on: ubuntu-latest
@@ -72,14 +72,14 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
 
-      - name: Download node_modules
-        uses: actions/download-artifact@v3
-        with:
-          name: node_modules
-          path: node_modules
+      # - name: Download node_modules
+      #   uses: actions/download-artifact@v3
+      #   with:
+      #     name: node_modules
+      #     path: node_modules
 
-      # - name: Install dependencies
-      #   run: npm ci
+      - name: Install dependencies
+        run: npm ci
 
       - name: Lint code
         run: npm run eslint
