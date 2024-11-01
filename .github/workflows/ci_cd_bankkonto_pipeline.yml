@@ -27,14 +27,14 @@ jobs:
           cache: 'npm'  # Cache für schnelleres Build
 
       - name: Verify dist directory
-        run: ls -l
+        run: ls -la
 
       - name: Cleanup previous builds
         run: |
           rm -rf node_modules dist .extras/doc/api .extras/doc/folien/folien.html .extras/doc/projekthandbuch/html
 
       - name: Install dependencies
-        run: npm ci --include=dev
+        run: npm ci
 
       - name: Build project
         run: npm run build
@@ -45,11 +45,11 @@ jobs:
       - name: Verify dist directory
         run: ls -l
 
-      - name: Upload dist folder
-        uses: actions/upload-artifact@v3
-        with:
-          name: dist
-          path: dist
+      # - name: Upload dist folder
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: dist
+      #     path: dist
 
   analyze:
     runs-on: ubuntu-latest
@@ -84,6 +84,7 @@ jobs:
 
       # - name: Compile AsciiDoc
       #   run: npm run asciidoctor
+
       - name: Verify dist directory
         run: ls -l
 
@@ -93,11 +94,18 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        
+
+      - name: Create Dist2
+        run: mkdir dist2
+
       - name: Download dist folder
         uses: actions/download-artifact@v3
         with:
           name: dist
+          path: dist2
+
+      - name: build Project
+        run: npm run build
 
       - name: Verify dist directory
         run: ls -l
