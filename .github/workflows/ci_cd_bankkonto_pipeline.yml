@@ -10,15 +10,12 @@ on:
     branches:
       - main
 
-env:
-  node-versions: [20.x, 22.x, 23.x]  # Node.js-Versionen für alle relevanten Jobs
-
 jobs:
   build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: ${{ fromJson(env.node-versions) }}
+        node-versions: [20.x, 22.x, 23.x]
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -63,7 +60,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: ${{ fromJson(env.node-versions) }} # Wiederverwendung der Node.js-Version vom build-Job
+        node-versions: [20.x, 22.x, 23.x]
     needs: build
     steps:
       - name: Checkout code
