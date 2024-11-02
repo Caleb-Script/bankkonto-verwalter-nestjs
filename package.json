@@ -1,7 +1,7 @@
 {
   "name": "bankkonto-verwalter-nestjs",
   "version": "2024.10.1",
-  "description": "Appserver für das verwalten von bankkontos",
+  "description": "Appserver für das verwalten von bankkonten",
   "author": "Gruppe 4",
   "private": true,
   "license": "GPL-3.0",
