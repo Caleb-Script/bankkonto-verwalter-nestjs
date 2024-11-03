@@ -18,8 +18,8 @@ import { type ErrorResponse } from './error-response.js';
 // -----------------------------------------------------------------------------
 const emailVorhanden = 'a';
 const emailNichtVorhanden = 'xx';
-const schlagwortVorhanden = 'EUR';
-const schlagwortNichtVorhanden = 'EUS';
+const waehrungenVorhanden = 'EUR';
+const waehrungenNichtVorhanden = 'EUS';
 
 // -----------------------------------------------------------------------------
 // T e s t s
@@ -66,7 +66,7 @@ describe('GET /rest', () => {
             });
     });
 
-    test('Bankkonten mit einem Teil-Titel suchen', async () => {
+    test('Bankkonten mit einer Teil-Email suchen', async () => {
         // given
         const params = { email: emailVorhanden };
 
@@ -91,7 +91,7 @@ describe('GET /rest', () => {
             );
     });
 
-    test('Bankkonten zu einem nicht vorhandenen Teil-Titel suchen', async () => {
+    test('Bankkonten zu einem nicht vorhandenen Teil-Email suchen', async () => {
         // given
         const params = { email: emailNichtVorhanden };
 
@@ -110,9 +110,9 @@ describe('GET /rest', () => {
         expect(statusCode).toBe(HttpStatus.NOT_FOUND);
     });
 
-    test('Mind. 1 Bankkonto mit vorhandenem Schlagwort', async () => {
+    test('Mind. 1 Bankkonto mit vorhandenem Währung', async () => {
         // given
-        const params = { [schlagwortVorhanden]: 'true' };
+        const params = { waehrungen: waehrungenVorhanden };
 
         // when
         const { status, headers, data }: AxiosResponse<BankkontenModel> =
@@ -131,14 +131,14 @@ describe('GET /rest', () => {
             .map((bankkonto) => bankkonto.waehrungen)
             .forEach((schlagwoerter) =>
                 expect(schlagwoerter).toEqual(
-                    expect.arrayContaining([schlagwortVorhanden.toUpperCase()]),
+                    expect.arrayContaining([waehrungenVorhanden.toUpperCase()]),
                 ),
             );
     });
 
     test('Keine Bankkonten zu einem nicht vorhandenen Schlagwort', async () => {
         // given
-        const params = { [schlagwortNichtVorhanden]: 'true' };
+        const params = { [waehrungenNichtVorhanden]: 'true' };
 
         // when
         const { status, data }: AxiosResponse<ErrorResponse> = await client.get(

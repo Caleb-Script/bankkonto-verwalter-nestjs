@@ -150,7 +150,9 @@ export class BankkontoReadService {
         // Ist jedes Suchkriterium auch eine Property von Konto?
         return keys.every((key) => {
             const isValidKey =
-                this.#bankkontoProps.includes(key) || key === 'waehrungen'; // Nur die Währungen akzeptieren
+                this.#bankkontoProps.includes(key) ||
+                key === 'waehrungen' || // Nur die Währungen akzeptieren
+                key === 'email';
 
             if (!isValidKey) {
                 this.#logger.debug(

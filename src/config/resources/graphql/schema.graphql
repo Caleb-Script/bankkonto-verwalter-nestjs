@@ -95,7 +95,7 @@ type CreatePayload {
 }
 
 
-input UpdateBankkontoInput {
+input bankkontoUpdateInput {
   saldo: Float
   transaktionLimit: Int
   waehrungen: [String]
