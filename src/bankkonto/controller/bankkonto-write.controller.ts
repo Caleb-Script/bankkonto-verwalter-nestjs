@@ -36,7 +36,6 @@ import {
 } from '../model/dto/bankkonto.dto.js';
 import { type Bankkonto } from '../model/entity/bankkonto.entity.js';
 import { type Kunde } from '../model/entity/kunde.entity.js';
-import { type Transaktion } from '../model/entity/transaktion.entity.js';
 import { BankkontoWriteService } from '../service/bankkonto-write.service.js';
 import { getBaseUri } from './getBaseUri.js';
 
@@ -184,6 +183,26 @@ export class BankkontoWriteController {
         await this.#service.delete(bankkontoId);
     }
 
+    // #transaktionDTOToTransaktion(transaktionDTO: TransaktionDTO): TransaktionDTO {
+    //     const transaktionen = bankkontoDTO.transaktionen.map(
+    //         (transaktionDTO) => {
+    //             const transaktion: Transaktion = {
+    //                 transaktionId: undefined,
+    //                 transaktionTyp: transaktionDTO.transaktionTyp,
+    //                 betrag: transaktionDTO.betrag,
+    //                 absender: transaktionDTO.absender,
+    //                 empfaenger: transaktionDTO.empfaenger,
+    //                 transaktionDatum: new Date(),
+    //                 bankkonto: undefined,
+    //             };
+    //             return transaktion;
+    //         },
+    //     );
+    //     bankkonto.transaktionen.forEach((transaktion) => {
+    //         transaktion.bankkonto = bankkonto;
+    //     });
+    // }
+
     #bankkontoDTOToBankkonto(bankkontoDTO: BankkontoDTO): Bankkonto {
         const kundeDTO = bankkontoDTO.kunde;
         const kunde: Kunde = {
@@ -193,27 +212,13 @@ export class BankkontoWriteController {
             email: kundeDTO.vorname,
             bankkonto: undefined,
         };
-        const transaktionen = bankkontoDTO.transaktionen.map(
-            (transaktionDTO) => {
-                const transaktion: Transaktion = {
-                    transaktionId: undefined,
-                    transaktionTyp: transaktionDTO.transaktionTyp,
-                    betrag: transaktionDTO.betrag,
-                    absender: transaktionDTO.absender,
-                    empfaenger: transaktionDTO.empfaenger,
-                    transaktionDatum: new Date(),
-                    bankkonto: undefined,
-                };
-                return transaktion;
-            },
-        );
         const bankkonto = {
             bankkontoId: undefined,
             version: undefined,
-            saldo: bankkontoDTO.saldo,
+            saldo: 0,
             transaktionLimit: bankkontoDTO.transaktionsLimit,
             kunde,
-            transaktionen,
+            transaktionen: undefined,
             waehrungen: bankkontoDTO.waehrungen,
             dokumente: undefined,
             erstelltAm: new Date(),
@@ -222,9 +227,6 @@ export class BankkontoWriteController {
 
         // Rueckwaertsverweise
         bankkonto.kunde.bankkonto = bankkonto;
-        bankkonto.transaktionen.forEach((transaktion) => {
-            transaktion.bankkonto = bankkonto;
-        });
         return bankkonto;
     }
 
@@ -234,7 +236,7 @@ export class BankkontoWriteController {
         return {
             bankkontoId: undefined,
             version: undefined,
-            saldo: bankkontoDTO.saldo,
+            saldo: 0,
             transaktionLimit: bankkontoDTO.transaktionsLimit,
             kunde: undefined,
             transaktionen: undefined,

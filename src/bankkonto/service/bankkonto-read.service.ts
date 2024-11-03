@@ -105,11 +105,7 @@ export class BankkontoReadService {
             throw new NotFoundException('Ungueltige Suchkriterien');
         }
 
-        // Hier kannst du die Währungen spezifisch behandeln
-        if (
-            suchkriterien.waehrungen &&
-            typeof suchkriterien.waehrungen === 'object'
-        ) {
+        if (typeof suchkriterien.waehrungen === 'object') {
             const waehrungenArray = Object.keys(
                 suchkriterien.waehrungen,
             ).filter(

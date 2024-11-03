@@ -5,6 +5,7 @@ import { getLogger } from '../../logger/logger.js';
 import { MailService } from '../../mail/mail.service.js';
 import { TransaktionDTO } from '../model/dto/transaktion.dto.js';
 import { Bankkonto } from '../model/entity/bankkonto.entity.js';
+import { Kunde } from '../model/entity/kunde.entity.js';
 import {
     Transaktion,
     TransaktionTyp,
@@ -104,6 +105,11 @@ export class BankkontoWriteService {
 
         let deleteResult: DeleteResult | undefined;
         await this.#repo.manager.transaction(async (transactionalMgr) => {
+            const kundeId = bankkonto.kunde?.kundeId;
+            if (kundeId !== undefined) {
+                await transactionalMgr.delete(Kunde, kundeId);
+            }
+
             const transaktionen = bankkonto.transaktionen ?? [];
             for (const transaktion of transaktionen) {
                 await transactionalMgr.delete(

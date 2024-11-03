@@ -59,9 +59,14 @@ export class QueryBuilder {
             this.#bankkontoAlias,
         );
 
+        queryBuilder.innerJoinAndSelect(
+            `${this.#bankkontoAlias}.kunde`,
+            this.#kundeAlias,
+        );
+
         if (mitTransaktionen) {
             queryBuilder.leftJoinAndSelect(
-                `${this.#bankkontoAlias}.transactions`,
+                `${this.#bankkontoAlias}.transaktionen`,
                 this.#transaktionAlias,
             );
         }
