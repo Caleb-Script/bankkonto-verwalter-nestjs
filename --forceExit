@@ -9,36 +9,6 @@
       at Object.<anonymous> (src/config/logger.ts:44:9)
 
   console.debug
-    mailConfig = {
-      activated: true,
-      options: {
-        host: 'localhost',
-        port: 8025,
-        secure: false,
-        priority: 'normal',
-        logger: false
-      }
-    }
-
-      at Object.<anonymous> (src/config/mail.ts:47:13)
-
-  console.debug
-    tlsDir = /Users/gentlebookpro/Projekte/UNI/SWE/bankkonto-verwalter-nestjs/src/config/resources/tls
-
-      at Object.<anonymous> (src/config/https.ts:16:9)
-
-  console.debug
-    keycloakConnectOptions = {
-      authServerUrl: 'http://localhost:8880',
-      realm: 'nest',
-      clientId: 'nest-client',
-      policyEnforcement: 'permissive',
-      tokenValidation: 'online'
-    }
-
-      at Object.<anonymous> (src/config/keycloak.ts:43:13)
-
-  console.debug
     dbConfig: {
       type: 'postgres',
       username: 'bankkonto',
@@ -49,6 +19,11 @@
     }
 
       at Object.<anonymous> (src/config/db.ts:9:9)
+
+  console.debug
+    tlsDir = /Users/gentlebookpro/Projekte/UNI/SWE/bankkonto-verwalter-nestjs/src/config/resources/tls
+
+      at Object.<anonymous> (src/config/https.ts:16:9)
 
   console.debug
     dbResourcesDir = /Users/gentlebookpro/Projekte/UNI/SWE/bankkonto-verwalter-nestjs/src/config/resources/db/postgres
@@ -99,23 +74,48 @@
       at Object.<anonymous> (src/config/typeormOptions.ts:145:13)
 
   console.debug
+    mailConfig = {
+      activated: true,
+      options: {
+        host: 'localhost',
+        port: 8025,
+        secure: false,
+        priority: 'normal',
+        logger: false
+      }
+    }
+
+      at Object.<anonymous> (src/config/mail.ts:47:13)
+
+  console.debug
+    keycloakConnectOptions = {
+      authServerUrl: 'http://localhost:8880',
+      realm: 'nest',
+      clientId: 'nest-client',
+      policyEnforcement: 'permissive',
+      tokenValidation: 'online'
+    }
+
+      at Object.<anonymous> (src/config/keycloak.ts:43:13)
+
+  console.debug
     schemaGraphQL = src/config/resources/graphql/schema.graphql
 
       at Object.<anonymous> (src/config/graphql.ts:12:9)
 
-[32m[Nest] 67797  - [39m03.11.2024, 20:05:28 [32m    LOG[39m [38;5;3m[NestFactory] [39m[32mStarting Nest application...[39m
-[32m[Nest] 67797  - [39m03.11.2024, 20:05:28 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAppModule dependencies initialized[39m[38;5;3m +21ms[39m
-[32m[Nest] 67797  - [39m03.11.2024, 20:05:28 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConfigModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 67797  - [39m03.11.2024, 20:05:28 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mMailModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 67797  - [39m03.11.2024, 20:05:28 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mLoggerModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 67797  - [39m03.11.2024, 20:05:28 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 67797  - [39m03.11.2024, 20:05:28 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mHttpModule dependencies initialized[39m[38;5;3m +2ms[39m
-[32m[Nest] 67797  - [39m03.11.2024, 20:05:28 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTerminusModule dependencies initialized[39m[38;5;3m +1ms[39m
-[32m[Nest] 67797  - [39m03.11.2024, 20:05:28 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mKeycloakConnectModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 67797  - [39m03.11.2024, 20:05:28 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAdminModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 67797  - [39m03.11.2024, 20:05:28 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mGraphQLSchemaBuilderModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 67797  - [39m03.11.2024, 20:05:28 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mKeycloakModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 67797  - [39m03.11.2024, 20:05:28 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mGraphQLModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 72260  - [39m03.11.2024, 21:11:45 [32m    LOG[39m [38;5;3m[NestFactory] [39m[32mStarting Nest application...[39m
+[32m[Nest] 72260  - [39m03.11.2024, 21:11:45 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAppModule dependencies initialized[39m[38;5;3m +31ms[39m
+[32m[Nest] 72260  - [39m03.11.2024, 21:11:45 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConfigModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 72260  - [39m03.11.2024, 21:11:45 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mMailModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 72260  - [39m03.11.2024, 21:11:45 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mLoggerModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 72260  - [39m03.11.2024, 21:11:45 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 72260  - [39m03.11.2024, 21:11:45 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mHttpModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 72260  - [39m03.11.2024, 21:11:45 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTerminusModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 72260  - [39m03.11.2024, 21:11:45 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mKeycloakConnectModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 72260  - [39m03.11.2024, 21:11:45 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAdminModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 72260  - [39m03.11.2024, 21:11:45 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mGraphQLSchemaBuilderModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 72260  - [39m03.11.2024, 21:11:45 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mKeycloakModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 72260  - [39m03.11.2024, 21:11:45 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mGraphQLModule dependencies initialized[39m[38;5;3m +0ms[39m
   console.log
     query: SELECT * FROM current_schema()
 
@@ -126,29 +126,29 @@
 
       at Function.logInfo (src/platform/PlatformTools.ts:235:17)
 
-[32m[Nest] 67797  - [39m03.11.2024, 20:05:28 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmCoreModule dependencies initialized[39m[38;5;3m +51ms[39m
-[32m[Nest] 67797  - [39m03.11.2024, 20:05:28 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 67797  - [39m03.11.2024, 20:05:28 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 67797  - [39m03.11.2024, 20:05:28 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mDevModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 67797  - [39m03.11.2024, 20:05:28 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mBankkontoModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 67797  - [39m03.11.2024, 20:05:28 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mHealthController {/health}:[39m[38;5;3m +4ms[39m
-[32m[Nest] 67797  - [39m03.11.2024, 20:05:28 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/health/liveness, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 67797  - [39m03.11.2024, 20:05:28 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/health/readiness, GET} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 67797  - [39m03.11.2024, 20:05:28 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mPrometheusController {/metrics}:[39m[38;5;3m +0ms[39m
-[32m[Nest] 67797  - [39m03.11.2024, 20:05:28 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/metrics, GET} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 67797  - [39m03.11.2024, 20:05:28 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mBankkontoGetController {/rest}:[39m[38;5;3m +0ms[39m
-[32m[Nest] 67797  - [39m03.11.2024, 20:05:28 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/rest/:bankkontoId, GET} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 67797  - [39m03.11.2024, 20:05:28 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/rest, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 67797  - [39m03.11.2024, 20:05:28 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mBankkontoWriteController {/rest}:[39m[38;5;3m +0ms[39m
-[32m[Nest] 67797  - [39m03.11.2024, 20:05:28 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/rest, POST} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 67797  - [39m03.11.2024, 20:05:28 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/rest/:bankkontoId, PUT} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 67797  - [39m03.11.2024, 20:05:28 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/rest/:bankkontoId, DELETE} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 67797  - [39m03.11.2024, 20:05:28 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mTokenController {/auth}:[39m[38;5;3m +0ms[39m
-[32m[Nest] 67797  - [39m03.11.2024, 20:05:28 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/auth/token, POST} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 67797  - [39m03.11.2024, 20:05:28 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/auth/refresh, POST} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 67797  - [39m03.11.2024, 20:05:28 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mDevController {/dev}:[39m[38;5;3m +0ms[39m
-[32m[Nest] 67797  - [39m03.11.2024, 20:05:28 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/dev/db_populate, POST} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 67797  - [39m03.11.2024, 20:05:28 [32m    LOG[39m [38;5;3m[GraphQLModule] [39m[32mMapped {/graphql, POST} route[39m[38;5;3m +29ms[39m
+[32m[Nest] 72260  - [39m03.11.2024, 21:11:45 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmCoreModule dependencies initialized[39m[38;5;3m +68ms[39m
+[32m[Nest] 72260  - [39m03.11.2024, 21:11:45 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 72260  - [39m03.11.2024, 21:11:45 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 72260  - [39m03.11.2024, 21:11:45 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mDevModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 72260  - [39m03.11.2024, 21:11:45 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mBankkontoModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 72260  - [39m03.11.2024, 21:11:45 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mHealthController {/health}:[39m[38;5;3m +5ms[39m
+[32m[Nest] 72260  - [39m03.11.2024, 21:11:45 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/health/liveness, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 72260  - [39m03.11.2024, 21:11:45 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/health/readiness, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 72260  - [39m03.11.2024, 21:11:45 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mPrometheusController {/metrics}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 72260  - [39m03.11.2024, 21:11:45 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/metrics, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 72260  - [39m03.11.2024, 21:11:45 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mBankkontoGetController {/rest}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 72260  - [39m03.11.2024, 21:11:45 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/rest/:bankkontoId, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 72260  - [39m03.11.2024, 21:11:45 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/rest, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 72260  - [39m03.11.2024, 21:11:45 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mBankkontoWriteController {/rest}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 72260  - [39m03.11.2024, 21:11:45 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/rest, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 72260  - [39m03.11.2024, 21:11:45 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/rest/:bankkontoId, PUT} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 72260  - [39m03.11.2024, 21:11:45 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/rest/:bankkontoId, DELETE} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 72260  - [39m03.11.2024, 21:11:45 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mTokenController {/auth}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 72260  - [39m03.11.2024, 21:11:45 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/auth/token, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 72260  - [39m03.11.2024, 21:11:45 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/auth/refresh, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 72260  - [39m03.11.2024, 21:11:45 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mDevController {/dev}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 72260  - [39m03.11.2024, 21:11:45 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/dev/db_populate, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 72260  - [39m03.11.2024, 21:11:45 [32m    LOG[39m [38;5;3m[GraphQLModule] [39m[32mMapped {/graphql, POST} route[39m[38;5;3m +37ms[39m
   console.log
     query: DROP TABLE IF EXISTS transaktion CASCADE;
     DROP TABLE IF EXISTS kunde CASCADE;
@@ -216,11 +216,6 @@
       at Function.logInfo (src/platform/PlatformTools.ts:235:17)
           at async Promise.all (index 0)
 
-[2024-11-03 20:05:28.168 +0100] [34mDEBUG[39m: [36mkeycloakClient={"transitional":{"silentJSONParsing":true,"forcedJSONParsing":true,"clarifyTimeoutError":false},"adapter":["xhr","http","fetch"],"transformRequest":[null],"transformResponse":[null],"timeout":0,"xsrfCookieName":"XSRF-TOKEN","xsrfHeaderName":"X-XSRF-TOKEN","maxContentLength":-1,"maxBodyLength":-1,"env":{},"headers":{"common":{"Accept":"application/json, text/plain, */*"},"delete":{},"get":{},"head":{},"post":{},"put":{},"patch":{}},"baseURL":"http://localhost:8880"}[39m [90m{"class":"KeycloakService"}[39m
-[2024-11-03 20:05:28.168 +0100] [34mDEBUG[39m: [36mkeycloakClient={"transitional":{"silentJSONParsing":true,"forcedJSONParsing":true,"clarifyTimeoutError":false},"adapter":["xhr","http","fetch"],"transformRequest":[null],"transformResponse":[null],"timeout":0,"xsrfCookieName":"XSRF-TOKEN","xsrfHeaderName":"X-XSRF-TOKEN","maxContentLength":-1,"maxBodyLength":-1,"env":{},"headers":{"common":{"Accept":"application/json, text/plain, */*"},"delete":{},"get":{},"head":{},"post":{},"put":{},"patch":{}},"baseURL":"http://localhost:8880"}[39m [90m{"class":"KeycloakService"}[39m
-[2024-11-03 20:05:28.263 +0100] [33mWARN[39m: [36mpostgres: DB wird neu geladen[39m [90m{"class":"DbPopulateService"}[39m
-[2024-11-03 20:05:28.263 +0100] [34mDEBUG[39m: [36mdropScript = /Users/gentlebookpro/Projekte/UNI/SWE/bankkonto-verwalter-nestjs/src/config/resources/db/postgres/drop.sql[39m [90m{"class":"DbPopulateService"}[39m
-[2024-11-03 20:05:28.278 +0100] [34mDEBUG[39m: [36mcreateScript = /Users/gentlebookpro/Projekte/UNI/SWE/bankkonto-verwalter-nestjs/src/config/resources/db/postgres/create.sql[39m [90m{"class":"DbPopulateService"}[39m
   console.log
     query: SELECT * FROM current_schema()
 
@@ -257,16 +252,7 @@
       at Function.logInfo (src/platform/PlatformTools.ts:235:17)
           at async Promise.all (index 0)
 
-[32m[Nest] 67797  - [39m03.11.2024, 20:05:28 [32m    LOG[39m [38;5;3m[NestApplication] [39m[32mNest application successfully started[39m[38;5;3m +57ms[39m
-[2024-11-03 20:05:28.318 +0100] [33mWARN[39m: [36mDB wurde neu geladen[39m [90m{"class":"DbPopulateService"}[39m
-[2024-11-03 20:05:28.318 +0100] [32mINFO[39m: [36mNode: v23.1.0[39m [90m{"class":"BannerService"}[39m
-[2024-11-03 20:05:28.318 +0100] [32mINFO[39m: [36mNODE_ENV: test[39m [90m{"class":"BannerService"}[39m
-[2024-11-03 20:05:28.318 +0100] [32mINFO[39m: [36mRechnername: Mac.fritz.box[39m [90m{"class":"BannerService"}[39m
-[2024-11-03 20:05:28.318 +0100] [32mINFO[39m: [36mPort: 3000[39m [90m{"class":"BannerService"}[39m
-[2024-11-03 20:05:28.318 +0100] [32mINFO[39m: [36mDB-System: postgres[39m [90m{"class":"BannerService"}[39m
-[2024-11-03 20:05:28.318 +0100] [32mINFO[39m: [36mBetriebssystem: Darwin (24.0.0)[39m [90m{"class":"BannerService"}[39m
-[2024-11-03 20:05:28.319 +0100] [32mINFO[39m: [36mUsername: gentlebookpro[39m [90m{"class":"BannerService"}[39m
-[2024-11-03 20:05:28.319 +0100] [32mINFO[39m: [36mSwagger UI: /swagger[39m [90m{"class":"BannerService"}[39m
+[32m[Nest] 72260  - [39m03.11.2024, 21:11:45 [32m    LOG[39m [38;5;3m[NestApplication] [39m[32mNest application successfully started[39m[38;5;3m +68ms[39m
   console.info
       _                 _    _               _        
      | |__   __ _ _ __ | | _| | _____  _ __ | |_ ___  
@@ -276,967 +262,3 @@
 
       at src/logger/banner.service.ts:26:50
 
-[2024-11-03 20:05:28.343 +0100] [34mDEBUG[39m: [36mmethod=POST, url=/auth/token, header={"accept":"application/json, text/plain, */*","content-type":"application/x-www-form-urlencoded","user-agent":"axios/1.7.7","content-length":"25","accept-encoding":"gzip, compress, deflate, br","host":"mac.fritz.box:3000","connection":"close"}[39m [90m{"class":"RequestLoggerMiddleware"}[39m
-[2024-11-03 20:05:28.346 +0100] [34mDEBUG[39m: [36mtoken: username=admin[39m [90m{"class":"TokenController"}[39m
-[2024-11-03 20:05:28.346 +0100] [34mDEBUG[39m: [36mtoken: username=admin[39m [90m{"class":"KeycloakService"}[39m
-[2024-11-03 20:05:28.381 +0100] [34mDEBUG[39m: [36m#logPayload: exp=1730662528[39m [90m{"class":"KeycloakService"}[39m
-[2024-11-03 20:05:28.381 +0100] [34mDEBUG[39m: [36m#logPayload: roles=["admin"][39m [90m{"class":"KeycloakService"}[39m
-[2024-11-03 20:05:28.381 +0100] [34mDEBUG[39m: [36mtoken: response.data={"access_token":"eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI4cDd2RzRseEdOSkM1eHFsN1FPRW9qYnRXZi16dXRXeXVPZ1IxSmRmdk04In0.eyJleHAiOjE3MzA2NjI1MjgsImlhdCI6MTczMDY2MDcyOCwianRpIjoiNzM4MDk0MmYtZjkxYi00OGIxLTgxZWUtN2VkYzhjZDI0ZDExIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4ODgwL3JlYWxtcy9uZXN0IiwiYXVkIjoiYWNjb3VudCIsInN1YiI6IjdjNDE0MGFlLTBjM2UtNDg0Zi1hMzc0LTZlMGVlN2VmNmIyOCIsInR5cCI6IkJlYXJlciIsImF6cCI6Im5lc3QtY2xpZW50Iiwic2lkIjoiYzNhZDdkNTgtM2U0MS00ZjQzLWIwYTItMzhkMTEzNDViOGVhIiwiYWNyIjoiMSIsImFsbG93ZWQtb3JpZ2lucyI6WyJodHRwczovL2xvY2FsaG9zdDozMDAwIiwiaHR0cHM6Ly9vYXV0aC5wc3Rtbi5pbyIsImh0dHBzOi8vYnVjaDozMDAwIl0sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJvZmZsaW5lX2FjY2VzcyIsInVtYV9hdXRob3JpemF0aW9uIiwiZGVmYXVsdC1yb2xlcy1uZXN0Il19LCJyZXNvdXJjZV9hY2Nlc3MiOnsibmVzdC1jbGllbnQiOnsicm9sZXMiOlsiYWRtaW4iXX0sImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoiZW1haWwgcHJvZmlsZSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwibmFtZSI6Ik5lc3QgQWRtaW4iLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJhZG1pbiIsImdpdmVuX25hbWUiOiJOZXN0IiwiZmFtaWx5X25hbWUiOiJBZG1pbiIsImVtYWlsIjoiYWRtaW5AYWNtZS5jb20ifQ.YdUt8XwncLTzuSfPLiFijigpMP3e6K5jjFwqIR0Wudb10smyqxeQzuGd3KQxSmYD8VusgprndjY2sdXf5E4td6NniDn-ro3ZGBIL-cIw9J5IBB3HV_EVVdPbnWdfCfaOhEVmdKLSyXPJqqBYd8S8Q79AJ6LYbu6VrTyqPB5BV_6rdK0eqOrRKL3SzujVxvcA0YAy9xoedIdvvOZOYyUxnDQl-IPKHS-XVaQEs1fgQ1xyYDtW6Nu-ELN8hp4RueXwPfp7S6OhpPTo_3gfzLOBwXcNNKUq5TxUG6aKsVVowXkMbJU9Mu3B0MK1LnuRSUGTYpRSfrW-dtM9-GpRJpC8sw","expires_in":1800,"refresh_expires_in":3600,"refresh_token":"eyJhbGciOiJIUzUxMiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJiYWQxN2U1ZS0zY2ZjLTQ3MzAtYTUzOS1mN2FiNzIzMTE0OWIifQ.eyJleHAiOjE3MzA2NjQzMjgsImlhdCI6MTczMDY2MDcyOCwianRpIjoiZTZlZjQ0YmMtYzQ4My00MTA1LThmNTYtNWI1NjI4YmFmYzk1IiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4ODgwL3JlYWxtcy9uZXN0IiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdDo4ODgwL3JlYWxtcy9uZXN0Iiwic3ViIjoiN2M0MTQwYWUtMGMzZS00ODRmLWEzNzQtNmUwZWU3ZWY2YjI4IiwidHlwIjoiUmVmcmVzaCIsImF6cCI6Im5lc3QtY2xpZW50Iiwic2lkIjoiYzNhZDdkNTgtM2U0MS00ZjQzLWIwYTItMzhkMTEzNDViOGVhIiwic2NvcGUiOiJ3ZWItb3JpZ2lucyBiYXNpYyBlbWFpbCBhY3Igcm9sZXMgcHJvZmlsZSJ9.KMAze4mROvS8LLIrtF0fTPZsSPSdkxyHuxDkANKg0biLGA66o9LrUvQONemwSd7lYFXOFHRJEgqjIBUY94rxag","token_type":"Bearer","not-before-policy":0,"session_state":"c3ad7d58-3e41-4f43-b0a2-38d11345b8ea","scope":"email profile"}[39m [90m{"class":"KeycloakService"}[39m
-[2024-11-03 20:05:28.382 +0100] [34mDEBUG[39m: [36mResponse time: 38 ms, 200 OK[39m [90m{"class":"ResponseTimeInterceptor"}[39m
-[2024-11-03 20:05:28.389 +0100] [34mDEBUG[39m: [36mmethod=DELETE, url=/rest/50, header={"accept":"application/json, text/plain, */*","authorization":"Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI4cDd2RzRseEdOSkM1eHFsN1FPRW9qYnRXZi16dXRXeXVPZ1IxSmRmdk04In0.eyJleHAiOjE3MzA2NjI1MjgsImlhdCI6MTczMDY2MDcyOCwianRpIjoiNzM4MDk0MmYtZjkxYi00OGIxLTgxZWUtN2VkYzhjZDI0ZDExIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4ODgwL3JlYWxtcy9uZXN0IiwiYXVkIjoiYWNjb3VudCIsInN1YiI6IjdjNDE0MGFlLTBjM2UtNDg0Zi1hMzc0LTZlMGVlN2VmNmIyOCIsInR5cCI6IkJlYXJlciIsImF6cCI6Im5lc3QtY2xpZW50Iiwic2lkIjoiYzNhZDdkNTgtM2U0MS00ZjQzLWIwYTItMzhkMTEzNDViOGVhIiwiYWNyIjoiMSIsImFsbG93ZWQtb3JpZ2lucyI6WyJodHRwczovL2xvY2FsaG9zdDozMDAwIiwiaHR0cHM6Ly9vYXV0aC5wc3Rtbi5pbyIsImh0dHBzOi8vYnVjaDozMDAwIl0sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJvZmZsaW5lX2FjY2VzcyIsInVtYV9hdXRob3JpemF0aW9uIiwiZGVmYXVsdC1yb2xlcy1uZXN0Il19LCJyZXNvdXJjZV9hY2Nlc3MiOnsibmVzdC1jbGllbnQiOnsicm9sZXMiOlsiYWRtaW4iXX0sImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoiZW1haWwgcHJvZmlsZSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwibmFtZSI6Ik5lc3QgQWRtaW4iLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJhZG1pbiIsImdpdmVuX25hbWUiOiJOZXN0IiwiZmFtaWx5X25hbWUiOiJBZG1pbiIsImVtYWlsIjoiYWRtaW5AYWNtZS5jb20ifQ.YdUt8XwncLTzuSfPLiFijigpMP3e6K5jjFwqIR0Wudb10smyqxeQzuGd3KQxSmYD8VusgprndjY2sdXf5E4td6NniDn-ro3ZGBIL-cIw9J5IBB3HV_EVVdPbnWdfCfaOhEVmdKLSyXPJqqBYd8S8Q79AJ6LYbu6VrTyqPB5BV_6rdK0eqOrRKL3SzujVxvcA0YAy9xoedIdvvOZOYyUxnDQl-IPKHS-XVaQEs1fgQ1xyYDtW6Nu-ELN8hp4RueXwPfp7S6OhpPTo_3gfzLOBwXcNNKUq5TxUG6aKsVVowXkMbJU9Mu3B0MK1LnuRSUGTYpRSfrW-dtM9-GpRJpC8sw","user-agent":"axios/1.7.7","accept-encoding":"gzip, compress, deflate, br","host":"mac.fritz.box:3000","connection":"close"}[39m [90m{"class":"RequestLoggerMiddleware"}[39m
-[2024-11-03 20:05:28.402 +0100] [34mDEBUG[39m: [36mdelete: bankkontoId=50[39m [90m{"class":"BankkontoWriteController"}[39m
-[2024-11-03 20:05:28.402 +0100] [34mDEBUG[39m: [36mdelete: bankkontoId=50[39m [90m{"class":"BankkontoWriteService"}[39m
-[2024-11-03 20:05:28.402 +0100] [34mDEBUG[39m: [36mfindByBankkontoId: bankkontoId=50[39m [90m{"class":"BankkontoReadService"}[39m
-[2024-11-03 20:05:28.403 +0100] [34mDEBUG[39m: [36mResponse time: 1 ms[39m [90m{"class":"ResponseTimeInterceptor"}[39m
-[33m[Nest] 67797  - [39m03.11.2024, 20:05:28 [33m   WARN[39m [38;5;3m[Keycloak] [39m[33mCannot validate access token: Error: Grant validation failed. Reason: invalid token (expired)[39m
-[2024-11-03 20:05:28.447 +0100] [34mDEBUG[39m: [36mmethod=DELETE, url=/rest/50, header={"accept":"application/json, text/plain, */*","user-agent":"axios/1.7.7","accept-encoding":"gzip, compress, deflate, br","host":"mac.fritz.box:3000","connection":"close"}[39m [90m{"class":"RequestLoggerMiddleware"}[39m
-[2024-11-03 20:05:28.455 +0100] [34mDEBUG[39m: [36mmethod=DELETE, url=/rest/50, header={"accept":"application/json, text/plain, */*","authorization":"Bearer FALSCH","user-agent":"axios/1.7.7","accept-encoding":"gzip, compress, deflate, br","host":"mac.fritz.box:3000","connection":"close"}[39m [90m{"class":"RequestLoggerMiddleware"}[39m
-[2024-11-03 20:05:28.459 +0100] [34mDEBUG[39m: [36mmethod=POST, url=/auth/token, header={"accept":"application/json, text/plain, */*","content-type":"application/x-www-form-urlencoded","user-agent":"axios/1.7.7","content-length":"24","accept-encoding":"gzip, compress, deflate, br","host":"mac.fritz.box:3000","connection":"close"}[39m [90m{"class":"RequestLoggerMiddleware"}[39m
-[2024-11-03 20:05:28.459 +0100] [34mDEBUG[39m: [36mtoken: username=user[39m [90m{"class":"TokenController"}[39m
-[2024-11-03 20:05:28.459 +0100] [34mDEBUG[39m: [36mtoken: username=user[39m [90m{"class":"KeycloakService"}[39m
-[2024-11-03 20:05:28.484 +0100] [34mDEBUG[39m: [36m#logPayload: exp=1730662528[39m [90m{"class":"KeycloakService"}[39m
-[2024-11-03 20:05:28.484 +0100] [34mDEBUG[39m: [36m#logPayload: roles=["user"][39m [90m{"class":"KeycloakService"}[39m
-[2024-11-03 20:05:28.484 +0100] [34mDEBUG[39m: [36mtoken: response.data={"access_token":"eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI4cDd2RzRseEdOSkM1eHFsN1FPRW9qYnRXZi16dXRXeXVPZ1IxSmRmdk04In0.eyJleHAiOjE3MzA2NjI1MjgsImlhdCI6MTczMDY2MDcyOCwianRpIjoiNjRlYWE2OTAtNmIwNi00Zjg0LTk0ZmMtYWY3OTY4Njc5NGNlIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4ODgwL3JlYWxtcy9uZXN0IiwiYXVkIjoiYWNjb3VudCIsInN1YiI6IjQ1NGY0Njc5LWQ4YjgtNDA5Mi04MDhlLWM1MDI5YTcxMjU2MyIsInR5cCI6IkJlYXJlciIsImF6cCI6Im5lc3QtY2xpZW50Iiwic2lkIjoiNjg4N2RkMWItMzE0Yy00MTZhLTkwNzYtYWU0Njc3ZWIzYmZlIiwiYWNyIjoiMSIsImFsbG93ZWQtb3JpZ2lucyI6WyJodHRwczovL2xvY2FsaG9zdDozMDAwIiwiaHR0cHM6Ly9vYXV0aC5wc3Rtbi5pbyIsImh0dHBzOi8vYnVjaDozMDAwIl0sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJvZmZsaW5lX2FjY2VzcyIsInVtYV9hdXRob3JpemF0aW9uIiwiZGVmYXVsdC1yb2xlcy1uZXN0Il19LCJyZXNvdXJjZV9hY2Nlc3MiOnsibmVzdC1jbGllbnQiOnsicm9sZXMiOlsidXNlciJdfSwiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJlbWFpbCBwcm9maWxlIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJuYW1lIjoiTmVzdCBVc2VyIiwicHJlZmVycmVkX3VzZXJuYW1lIjoidXNlciIsImdpdmVuX25hbWUiOiJOZXN0IiwiZmFtaWx5X25hbWUiOiJVc2VyIiwiZW1haWwiOiJ1c2VyQGFjbWUuY29tIn0.WJYksviPc3pevJDj6HWOIi37nqfCH34EGvQeRJzQIbCU2xEElo596WSxVaZ79_k46GDKpauPn2lvUaOo93wzfXgUfi2RVY8AgYgKnWlXtibXDbk_FTJCHdTNZtWQXQFCXMxHfH9olYU-6n9bfzAk99SdroS7RmpeWeUv0bhITzLGlo0YdZqa5FyKZVlsZg826MZ3PyvMWDcxrobsS9yWVbDwWYkdl0mnA_41-5DzQL1oaaU03em6IGGdo0ZLToLIAL7C_aVb8YCXKwpCQFgO7zpBw-IZKaKWhVGlJ_hXusc4nnNUnm9EarSJVnxrmRQuGjJgEgZzOjZyEyRXY7VVqQ","expires_in":1800,"refresh_expires_in":3600,"refresh_token":"eyJhbGciOiJIUzUxMiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJiYWQxN2U1ZS0zY2ZjLTQ3MzAtYTUzOS1mN2FiNzIzMTE0OWIifQ.eyJleHAiOjE3MzA2NjQzMjgsImlhdCI6MTczMDY2MDcyOCwianRpIjoiODY1OWQzNzAtZmM5Yy00ODFhLWI5ODgtNWU1OTM5ZTRiYWQ0IiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4ODgwL3JlYWxtcy9uZXN0IiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdDo4ODgwL3JlYWxtcy9uZXN0Iiwic3ViIjoiNDU0ZjQ2NzktZDhiOC00MDkyLTgwOGUtYzUwMjlhNzEyNTYzIiwidHlwIjoiUmVmcmVzaCIsImF6cCI6Im5lc3QtY2xpZW50Iiwic2lkIjoiNjg4N2RkMWItMzE0Yy00MTZhLTkwNzYtYWU0Njc3ZWIzYmZlIiwic2NvcGUiOiJ3ZWItb3JpZ2lucyBiYXNpYyBlbWFpbCBhY3Igcm9sZXMgcHJvZmlsZSJ9.Bp0rqpGQQopv1MGnSWRqQ1Yat-IwpezPYAaHNOgrkTTYh4iPU4hG1p9EcKrYCR2BWWaERGy5YTLs5rdQ5sy1bg","token_type":"Bearer","not-before-policy":0,"session_state":"6887dd1b-314c-416a-9076-ae4677eb3bfe","scope":"email profile"}[39m [90m{"class":"KeycloakService"}[39m
-[2024-11-03 20:05:28.484 +0100] [34mDEBUG[39m: [36mResponse time: 25 ms, 200 OK[39m [90m{"class":"ResponseTimeInterceptor"}[39m
-[2024-11-03 20:05:28.493 +0100] [34mDEBUG[39m: [36mmethod=DELETE, url=/rest/60, header={"accept":"application/json, text/plain, */*","authorization":"Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI4cDd2RzRseEdOSkM1eHFsN1FPRW9qYnRXZi16dXRXeXVPZ1IxSmRmdk04In0.eyJleHAiOjE3MzA2NjI1MjgsImlhdCI6MTczMDY2MDcyOCwianRpIjoiNjRlYWE2OTAtNmIwNi00Zjg0LTk0ZmMtYWY3OTY4Njc5NGNlIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4ODgwL3JlYWxtcy9uZXN0IiwiYXVkIjoiYWNjb3VudCIsInN1YiI6IjQ1NGY0Njc5LWQ4YjgtNDA5Mi04MDhlLWM1MDI5YTcxMjU2MyIsInR5cCI6IkJlYXJlciIsImF6cCI6Im5lc3QtY2xpZW50Iiwic2lkIjoiNjg4N2RkMWItMzE0Yy00MTZhLTkwNzYtYWU0Njc3ZWIzYmZlIiwiYWNyIjoiMSIsImFsbG93ZWQtb3JpZ2lucyI6WyJodHRwczovL2xvY2FsaG9zdDozMDAwIiwiaHR0cHM6Ly9vYXV0aC5wc3Rtbi5pbyIsImh0dHBzOi8vYnVjaDozMDAwIl0sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJvZmZsaW5lX2FjY2VzcyIsInVtYV9hdXRob3JpemF0aW9uIiwiZGVmYXVsdC1yb2xlcy1uZXN0Il19LCJyZXNvdXJjZV9hY2Nlc3MiOnsibmVzdC1jbGllbnQiOnsicm9sZXMiOlsidXNlciJdfSwiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJlbWFpbCBwcm9maWxlIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJuYW1lIjoiTmVzdCBVc2VyIiwicHJlZmVycmVkX3VzZXJuYW1lIjoidXNlciIsImdpdmVuX25hbWUiOiJOZXN0IiwiZmFtaWx5X25hbWUiOiJVc2VyIiwiZW1haWwiOiJ1c2VyQGFjbWUuY29tIn0.WJYksviPc3pevJDj6HWOIi37nqfCH34EGvQeRJzQIbCU2xEElo596WSxVaZ79_k46GDKpauPn2lvUaOo93wzfXgUfi2RVY8AgYgKnWlXtibXDbk_FTJCHdTNZtWQXQFCXMxHfH9olYU-6n9bfzAk99SdroS7RmpeWeUv0bhITzLGlo0YdZqa5FyKZVlsZg826MZ3PyvMWDcxrobsS9yWVbDwWYkdl0mnA_41-5DzQL1oaaU03em6IGGdo0ZLToLIAL7C_aVb8YCXKwpCQFgO7zpBw-IZKaKWhVGlJ_hXusc4nnNUnm9EarSJVnxrmRQuGjJgEgZzOjZyEyRXY7VVqQ","user-agent":"axios/1.7.7","accept-encoding":"gzip, compress, deflate, br","host":"mac.fritz.box:3000","connection":"close"}[39m [90m{"class":"RequestLoggerMiddleware"}[39m
-  console.debug
-    NODE_ENV = test
-
-      at Object.<anonymous> (src/config/env.ts:35:9)
-
-  console.debug
-    logger config: logLevel=debug, logFile=/Users/gentlebookpro/Projekte/UNI/SWE/bankkonto-verwalter-nestjs/log/server.log, pretty=true
-
-      at Object.<anonymous> (src/config/logger.ts:44:9)
-
-  console.debug
-    mailConfig = {
-      activated: true,
-      options: {
-        host: 'localhost',
-        port: 8025,
-        secure: false,
-        priority: 'normal',
-        logger: false
-      }
-    }
-
-      at Object.<anonymous> (src/config/mail.ts:47:13)
-
-  console.debug
-    tlsDir = /Users/gentlebookpro/Projekte/UNI/SWE/bankkonto-verwalter-nestjs/src/config/resources/tls
-
-      at Object.<anonymous> (src/config/https.ts:16:9)
-
-  console.debug
-    keycloakConnectOptions = {
-      authServerUrl: 'http://localhost:8880',
-      realm: 'nest',
-      clientId: 'nest-client',
-      policyEnforcement: 'permissive',
-      tokenValidation: 'online'
-    }
-
-      at Object.<anonymous> (src/config/keycloak.ts:43:13)
-
-  console.debug
-    dbConfig: {
-      type: 'postgres',
-      username: 'bankkonto',
-      password: 'p',
-      passwordAdmin: 'p',
-      name: 'bankkonto',
-      populate: true
-    }
-
-      at Object.<anonymous> (src/config/db.ts:9:9)
-
-  console.debug
-    dbResourcesDir = /Users/gentlebookpro/Projekte/UNI/SWE/bankkonto-verwalter-nestjs/src/config/resources/db/postgres
-
-      at Object.<anonymous> (src/config/typeormOptions.ts:46:9)
-
-  console.debug
-    typeOrmModuleOptions = {
-      type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'bankkonto',
-      database: 'bankkonto',
-      schema: 'bankkonto',
-      poolSize: 10,
-      entities: [
-        <ref *1> [class Bankkonto] {
-          [length]: 0,
-          [name]: 'Bankkonto',
-          [prototype]: { [constructor]: [Circular *1] }
-        },
-        <ref *2> [class Transaktion] {
-          [length]: 0,
-          [name]: 'Transaktion',
-          [prototype]: { [constructor]: [Circular *2] }
-        },
-        <ref *3> [class Kunde] {
-          [length]: 0,
-          [name]: 'Kunde',
-          [prototype]: { [constructor]: [Circular *3] }
-        },
-        <ref *4> [class BankkontoDokument] {
-          [length]: 0,
-          [name]: 'BankkontoDokument',
-          [prototype]: { [constructor]: [Circular *4] }
-        },
-        [length]: 4
-      ],
-      namingStrategy: SnakeNamingStrategy {
-        nestedSetColumnNames: { left: 'nsleft', right: 'nsright' },
-        materializedPathColumnName: 'mpath'
-      },
-      logging: true,
-      logger: 'advanced-console',
-      extra: { ssl: { rejectUnauthorized: false } }
-    }
-
-      at Object.<anonymous> (src/config/typeormOptions.ts:145:13)
-
-  console.debug
-    schemaGraphQL = src/config/resources/graphql/schema.graphql
-
-      at Object.<anonymous> (src/config/graphql.ts:12:9)
-
-[32m[Nest] 67843  - [39m03.11.2024, 20:05:34 [32m    LOG[39m [38;5;3m[NestFactory] [39m[32mStarting Nest application...[39m
-[32m[Nest] 67843  - [39m03.11.2024, 20:05:34 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAppModule dependencies initialized[39m[38;5;3m +21ms[39m
-[32m[Nest] 67843  - [39m03.11.2024, 20:05:34 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConfigModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 67843  - [39m03.11.2024, 20:05:34 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mMailModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 67843  - [39m03.11.2024, 20:05:34 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mLoggerModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 67843  - [39m03.11.2024, 20:05:34 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 67843  - [39m03.11.2024, 20:05:34 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mHttpModule dependencies initialized[39m[38;5;3m +2ms[39m
-[32m[Nest] 67843  - [39m03.11.2024, 20:05:34 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTerminusModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 67843  - [39m03.11.2024, 20:05:34 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mKeycloakConnectModule dependencies initialized[39m[38;5;3m +1ms[39m
-[32m[Nest] 67843  - [39m03.11.2024, 20:05:34 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAdminModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 67843  - [39m03.11.2024, 20:05:34 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mGraphQLSchemaBuilderModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 67843  - [39m03.11.2024, 20:05:34 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mKeycloakModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 67843  - [39m03.11.2024, 20:05:34 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mGraphQLModule dependencies initialized[39m[38;5;3m +0ms[39m
-  console.log
-    query: SELECT * FROM current_schema()
-
-      at Function.logInfo (src/platform/PlatformTools.ts:235:17)
-
-  console.log
-    query: SELECT version();
-
-      at Function.logInfo (src/platform/PlatformTools.ts:235:17)
-
-[32m[Nest] 67843  - [39m03.11.2024, 20:05:34 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmCoreModule dependencies initialized[39m[38;5;3m +57ms[39m
-[32m[Nest] 67843  - [39m03.11.2024, 20:05:34 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 67843  - [39m03.11.2024, 20:05:34 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 67843  - [39m03.11.2024, 20:05:34 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mDevModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 67843  - [39m03.11.2024, 20:05:34 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mBankkontoModule dependencies initialized[39m[38;5;3m +1ms[39m
-[32m[Nest] 67843  - [39m03.11.2024, 20:05:34 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mHealthController {/health}:[39m[38;5;3m +3ms[39m
-[32m[Nest] 67843  - [39m03.11.2024, 20:05:34 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/health/liveness, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 67843  - [39m03.11.2024, 20:05:34 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/health/readiness, GET} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 67843  - [39m03.11.2024, 20:05:34 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mPrometheusController {/metrics}:[39m[38;5;3m +0ms[39m
-[32m[Nest] 67843  - [39m03.11.2024, 20:05:34 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/metrics, GET} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 67843  - [39m03.11.2024, 20:05:34 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mBankkontoGetController {/rest}:[39m[38;5;3m +0ms[39m
-[32m[Nest] 67843  - [39m03.11.2024, 20:05:34 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/rest/:bankkontoId, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 67843  - [39m03.11.2024, 20:05:34 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/rest, GET} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 67843  - [39m03.11.2024, 20:05:34 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mBankkontoWriteController {/rest}:[39m[38;5;3m +0ms[39m
-[32m[Nest] 67843  - [39m03.11.2024, 20:05:34 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/rest, POST} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 67843  - [39m03.11.2024, 20:05:34 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/rest/:bankkontoId, PUT} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 67843  - [39m03.11.2024, 20:05:34 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/rest/:bankkontoId, DELETE} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 67843  - [39m03.11.2024, 20:05:34 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mTokenController {/auth}:[39m[38;5;3m +0ms[39m
-[32m[Nest] 67843  - [39m03.11.2024, 20:05:34 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/auth/token, POST} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 67843  - [39m03.11.2024, 20:05:34 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/auth/refresh, POST} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 67843  - [39m03.11.2024, 20:05:34 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mDevController {/dev}:[39m[38;5;3m +0ms[39m
-[32m[Nest] 67843  - [39m03.11.2024, 20:05:34 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/dev/db_populate, POST} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 67843  - [39m03.11.2024, 20:05:34 [32m    LOG[39m [38;5;3m[GraphQLModule] [39m[32mMapped {/graphql, POST} route[39m[38;5;3m +31ms[39m
-  console.log
-    query: DROP TABLE IF EXISTS transaktion CASCADE;
-    DROP TABLE IF EXISTS kunde CASCADE;
-    DROP TABLE IF EXISTS bankkonto CASCADE;
-    DROP TABLE IF EXISTS bankkonto_dokument CASCADE;
-    
-    DROP TYPE IF EXISTS transaktion_typ;
-    DROP TYPE IF EXISTS dokument_typ;
-
-      at Function.logInfo (src/platform/PlatformTools.ts:235:17)
-          at async Promise.all (index 0)
-
-[2024-11-03 20:05:34.333 +0100] [34mDEBUG[39m: [36mkeycloakClient={"transitional":{"silentJSONParsing":true,"forcedJSONParsing":true,"clarifyTimeoutError":false},"adapter":["xhr","http","fetch"],"transformRequest":[null],"transformResponse":[null],"timeout":0,"xsrfCookieName":"XSRF-TOKEN","xsrfHeaderName":"X-XSRF-TOKEN","maxContentLength":-1,"maxBodyLength":-1,"env":{},"headers":{"common":{"Accept":"application/json, text/plain, */*"},"delete":{},"get":{},"head":{},"post":{},"put":{},"patch":{}},"baseURL":"http://localhost:8880"}[39m [90m{"class":"KeycloakService"}[39m
-[2024-11-03 20:05:34.333 +0100] [34mDEBUG[39m: [36mkeycloakClient={"transitional":{"silentJSONParsing":true,"forcedJSONParsing":true,"clarifyTimeoutError":false},"adapter":["xhr","http","fetch"],"transformRequest":[null],"transformResponse":[null],"timeout":0,"xsrfCookieName":"XSRF-TOKEN","xsrfHeaderName":"X-XSRF-TOKEN","maxContentLength":-1,"maxBodyLength":-1,"env":{},"headers":{"common":{"Accept":"application/json, text/plain, */*"},"delete":{},"get":{},"head":{},"post":{},"put":{},"patch":{}},"baseURL":"http://localhost:8880"}[39m [90m{"class":"KeycloakService"}[39m
-[2024-11-03 20:05:34.436 +0100] [33mWARN[39m: [36mpostgres: DB wird neu geladen[39m [90m{"class":"DbPopulateService"}[39m
-[2024-11-03 20:05:34.436 +0100] [34mDEBUG[39m: [36mdropScript = /Users/gentlebookpro/Projekte/UNI/SWE/bankkonto-verwalter-nestjs/src/config/resources/db/postgres/drop.sql[39m [90m{"class":"DbPopulateService"}[39m
-  console.log
-    query: -- Schema für Bankkonto und Transaktion erstellen
-    CREATE SCHEMA IF NOT EXISTS AUTHORIZATION bankkonto;
-    
-    ALTER ROLE bankkonto SET search_path = 'bankkonto';
-    
-    -- Enum für Transaktionstypen erstellen
-    CREATE TYPE transaktion_typ AS ENUM ('EINZAHLUNG', 'AUSZAHLUNG', 'ÜBERWEISUNG', 'EINKOMMEN', 'ZAHLUNG');
-    CREATE TYPE dokument_typ AS ENUM ('VERTRAG', 'RECHNUNG');
-    
-    -- Tabelle für Bankkonto
-    CREATE TABLE IF NOT EXISTS bankkonto (
-        bankkonto_id       integer GENERATED ALWAYS AS IDENTITY(START WITH 1000) PRIMARY KEY USING INDEX TABLESPACE bankkontospace,
-        version            INTEGER NOT NULL DEFAULT 0,
-        saldo              DECIMAL(10, 2) NOT NULL CHECK (saldo >= 0),
-        transaktion_limit  DECIMAL(10, 2),
-        waehrungen         text,
-        erstellt_am        TIMESTAMP NOT NULL DEFAULT NOW(),
-        aktualisiert_am    TIMESTAMP NOT NULL DEFAULT NOW()
-    );
-    
-    CREATE TABLE IF NOT EXISTS kunde (
-        kunde_id    integer GENERATED ALWAYS AS IDENTITY(START WITH 1000) PRIMARY KEY USING INDEX TABLESPACE bankkontospace,
-        name         VARCHAR(50) NOT NULL,
-        vorname      VARCHAR(50) NOT NULL,
-        email        VARCHAR(100) UNIQUE NOT NULL,
-        bankkonto_id integer NOT NULL UNIQUE USING INDEX TABLESPACE bankkontospace REFERENCES bankkonto
-    ) TABLESPACE bankkontospace;
-    
-    -- Tabelle für Transaktion
-    CREATE TABLE IF NOT EXISTS transaktion (
-        transaktion_id    integer GENERATED ALWAYS AS IDENTITY(START WITH 1000) PRIMARY KEY USING INDEX TABLESPACE bankkontospace,
-        transaktion_typ   transaktion_typ NOT NULL,
-        betrag            DECIMAL(10, 2) NOT NULL CHECK (betrag > 0),
-        absender          integer,
-        empfaenger        integer,
-        transaktion_datum TIMESTAMP NOT NULL DEFAULT NOW(),
-        bankkonto_id      integer NOT NULL REFERENCES bankkonto
-    );
-    
-    -- Index für schnellere Abfragen auf der Transaktion-Tabelle
-    CREATE INDEX IF NOT EXISTS idx_transaktion_typ_datum_konto ON transaktion (transaktion_typ, transaktion_datum, bankkonto_id);
-    
-    CREATE TABLE IF NOT EXISTS bankkonto_dokument (
-        dokument_id     integer GENERATED ALWAYS AS IDENTITY(START WITH 1000) PRIMARY KEY USING INDEX TABLESPACE bankkontospace,
-        data            bytea NOT NULL,
-        filename        text NOT NULL,
-        dokument_typ    dokument_typ NOT NULL,
-        bankkonto_id    integer NOT NULL REFERENCES bankkonto
-    ) TABLESPACE bankkontospace;
-    CREATE INDEX IF NOT EXISTS bankkonto_dokument_bankkonto_id_idx ON bankkonto_dokument(bankkonto_id) TABLESPACE bankkontospace;
-
-      at Function.logInfo (src/platform/PlatformTools.ts:235:17)
-          at async Promise.all (index 0)
-
-[2024-11-03 20:05:34.461 +0100] [34mDEBUG[39m: [36mcreateScript = /Users/gentlebookpro/Projekte/UNI/SWE/bankkonto-verwalter-nestjs/src/config/resources/db/postgres/create.sql[39m [90m{"class":"DbPopulateService"}[39m
-  console.log
-    query: SELECT * FROM current_schema()
-
-      at Function.logInfo (src/platform/PlatformTools.ts:235:17)
-          at async Promise.all (index 0)
-
-  console.log
-    query: SELECT version();
-
-      at Function.logInfo (src/platform/PlatformTools.ts:235:17)
-          at async Promise.all (index 0)
-
-  console.log
-    query: SET search_path TO bankkonto;
-
-      at Function.logInfo (src/platform/PlatformTools.ts:235:17)
-          at async Promise.all (index 0)
-
-  console.log
-    query: COPY bankkonto FROM '/csv/bankkonto/bankkonto.csv' (FORMAT csv, DELIMITER ';', HEADER true);
-
-      at Function.logInfo (src/platform/PlatformTools.ts:235:17)
-          at async Promise.all (index 0)
-
-  console.log
-    query: COPY kunde FROM '/csv/bankkonto/kunde.csv' (FORMAT csv, DELIMITER ';', HEADER true);
-
-      at Function.logInfo (src/platform/PlatformTools.ts:235:17)
-          at async Promise.all (index 0)
-
-  console.log
-    query: COPY transaktion FROM '/csv/bankkonto/transaktion.csv' (FORMAT csv, DELIMITER ';', HEADER true);
-
-      at Function.logInfo (src/platform/PlatformTools.ts:235:17)
-          at async Promise.all (index 0)
-
-[32m[Nest] 67843  - [39m03.11.2024, 20:05:34 [32m    LOG[39m [38;5;3m[NestApplication] [39m[32mNest application successfully started[39m[38;5;3m +71ms[39m
-  console.info
-      _                 _    _               _        
-     | |__   __ _ _ __ | | _| | _____  _ __ | |_ ___  
-     | '_ \ / _` | '_ \| |/ / |/ / _ \| '_ \| __/ _ \ 
-     | |_) | (_| | | | |   <|   < (_) | | | | || (_) |
-     |_.__/ \__,_|_| |_|_|\_\_|\_\___/|_| |_|\__\___/
-
-      at src/logger/banner.service.ts:26:50
-
-[2024-11-03 20:05:34.504 +0100] [33mWARN[39m: [36mDB wurde neu geladen[39m [90m{"class":"DbPopulateService"}[39m
-[2024-11-03 20:05:34.505 +0100] [32mINFO[39m: [36mNode: v23.1.0[39m [90m{"class":"BannerService"}[39m
-[2024-11-03 20:05:34.505 +0100] [32mINFO[39m: [36mNODE_ENV: test[39m [90m{"class":"BannerService"}[39m
-[2024-11-03 20:05:34.505 +0100] [32mINFO[39m: [36mRechnername: Mac.fritz.box[39m [90m{"class":"BannerService"}[39m
-[2024-11-03 20:05:34.505 +0100] [32mINFO[39m: [36mPort: 3000[39m [90m{"class":"BannerService"}[39m
-[2024-11-03 20:05:34.505 +0100] [32mINFO[39m: [36mDB-System: postgres[39m [90m{"class":"BannerService"}[39m
-[2024-11-03 20:05:34.505 +0100] [32mINFO[39m: [36mBetriebssystem: Darwin (24.0.0)[39m [90m{"class":"BannerService"}[39m
-[2024-11-03 20:05:34.506 +0100] [32mINFO[39m: [36mUsername: gentlebookpro[39m [90m{"class":"BannerService"}[39m
-[2024-11-03 20:05:34.506 +0100] [32mINFO[39m: [36mSwagger UI: /swagger[39m [90m{"class":"BannerService"}[39m
-[2024-11-03 20:05:34.529 +0100] [34mDEBUG[39m: [36mmethod=POST, url=/auth/token, header={"accept":"application/json, text/plain, */*","content-type":"application/x-www-form-urlencoded","user-agent":"axios/1.7.7","content-length":"25","accept-encoding":"gzip, compress, deflate, br","host":"mac.fritz.box:3000","connection":"close"}[39m [90m{"class":"RequestLoggerMiddleware"}[39m
-[2024-11-03 20:05:34.531 +0100] [34mDEBUG[39m: [36mtoken: username=admin[39m [90m{"class":"TokenController"}[39m
-[2024-11-03 20:05:34.531 +0100] [34mDEBUG[39m: [36mtoken: username=admin[39m [90m{"class":"KeycloakService"}[39m
-[2024-11-03 20:05:34.574 +0100] [34mDEBUG[39m: [36m#logPayload: exp=1730662534[39m [90m{"class":"KeycloakService"}[39m
-[2024-11-03 20:05:34.574 +0100] [34mDEBUG[39m: [36m#logPayload: roles=["admin"][39m [90m{"class":"KeycloakService"}[39m
-[2024-11-03 20:05:34.574 +0100] [34mDEBUG[39m: [36mtoken: response.data={"access_token":"eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI4cDd2RzRseEdOSkM1eHFsN1FPRW9qYnRXZi16dXRXeXVPZ1IxSmRmdk04In0.eyJleHAiOjE3MzA2NjI1MzQsImlhdCI6MTczMDY2MDczNCwianRpIjoiN2MyYzFjMDMtNjJlNy00OTA5LTgwZTctZmM4ZTQ3MDUxNzU0IiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4ODgwL3JlYWxtcy9uZXN0IiwiYXVkIjoiYWNjb3VudCIsInN1YiI6IjdjNDE0MGFlLTBjM2UtNDg0Zi1hMzc0LTZlMGVlN2VmNmIyOCIsInR5cCI6IkJlYXJlciIsImF6cCI6Im5lc3QtY2xpZW50Iiwic2lkIjoiNTE1OWI4YmItNTE2Ny00ZjM3LWE4OTAtODA0NjdmNGIyYmM3IiwiYWNyIjoiMSIsImFsbG93ZWQtb3JpZ2lucyI6WyJodHRwczovL2xvY2FsaG9zdDozMDAwIiwiaHR0cHM6Ly9vYXV0aC5wc3Rtbi5pbyIsImh0dHBzOi8vYnVjaDozMDAwIl0sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJvZmZsaW5lX2FjY2VzcyIsInVtYV9hdXRob3JpemF0aW9uIiwiZGVmYXVsdC1yb2xlcy1uZXN0Il19LCJyZXNvdXJjZV9hY2Nlc3MiOnsibmVzdC1jbGllbnQiOnsicm9sZXMiOlsiYWRtaW4iXX0sImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoiZW1haWwgcHJvZmlsZSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwibmFtZSI6Ik5lc3QgQWRtaW4iLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJhZG1pbiIsImdpdmVuX25hbWUiOiJOZXN0IiwiZmFtaWx5X25hbWUiOiJBZG1pbiIsImVtYWlsIjoiYWRtaW5AYWNtZS5jb20ifQ.UgSWsU5NAhVS4E0EE_-Wo2yLXFa9a2YZHBLJGUL_zMzkbASbp7sZXkZ31SjKFp3evIrDx8Yw5QhkwKs8NyULuj3_wGBQ72YmHTUxXJJcRzSSWnTA-81Ls7k-GkhqWmtUY0SyM4ShdGnQmmOV6gA8ySC8IZiNIDYkHJS9Sdme92vtrxrWr0_3yOp-u1QuBdnvYirbE_iQDTP9QVb1juvU9vQFzxzGdjDtQaLzxppQKRX9O9ycpbOjgDDMZ2xMIMJouBOzWN9wSbtysRa-1RSikkYRIn4ztBdZRFzM1qdUUOPoG49cr59uh86krFMA1-zN5BJ5zC8atPK_x5v0r2SM9w","expires_in":1800,"refresh_expires_in":3600,"refresh_token":"eyJhbGciOiJIUzUxMiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJiYWQxN2U1ZS0zY2ZjLTQ3MzAtYTUzOS1mN2FiNzIzMTE0OWIifQ.eyJleHAiOjE3MzA2NjQzMzQsImlhdCI6MTczMDY2MDczNCwianRpIjoiMTkyNzZiZWMtZGVlNC00ZWE0LWJkNzEtOTQ4M2M4NGMyZjUwIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4ODgwL3JlYWxtcy9uZXN0IiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdDo4ODgwL3JlYWxtcy9uZXN0Iiwic3ViIjoiN2M0MTQwYWUtMGMzZS00ODRmLWEzNzQtNmUwZWU3ZWY2YjI4IiwidHlwIjoiUmVmcmVzaCIsImF6cCI6Im5lc3QtY2xpZW50Iiwic2lkIjoiNTE1OWI4YmItNTE2Ny00ZjM3LWE4OTAtODA0NjdmNGIyYmM3Iiwic2NvcGUiOiJ3ZWItb3JpZ2lucyBiYXNpYyBlbWFpbCBhY3Igcm9sZXMgcHJvZmlsZSJ9.qIK_-DPxHyv_fwsce_fg-RGkPT1LsJCCSDW8UoAO2OahavroGQToZI_qvgfK4CHBMg-VsaTf7lReXfwsO9DA6w","token_type":"Bearer","not-before-policy":0,"session_state":"5159b8bb-5167-4f37-a890-80467f4b2bc7","scope":"email profile"}[39m [90m{"class":"KeycloakService"}[39m
-[2024-11-03 20:05:34.575 +0100] [34mDEBUG[39m: [36mResponse time: 45 ms, 200 OK[39m [90m{"class":"ResponseTimeInterceptor"}[39m
-[2024-11-03 20:05:34.583 +0100] [34mDEBUG[39m: [36mmethod=DELETE, url=/rest/50, header={"accept":"application/json, text/plain, */*","authorization":"Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI4cDd2RzRseEdOSkM1eHFsN1FPRW9qYnRXZi16dXRXeXVPZ1IxSmRmdk04In0.eyJleHAiOjE3MzA2NjI1MzQsImlhdCI6MTczMDY2MDczNCwianRpIjoiN2MyYzFjMDMtNjJlNy00OTA5LTgwZTctZmM4ZTQ3MDUxNzU0IiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4ODgwL3JlYWxtcy9uZXN0IiwiYXVkIjoiYWNjb3VudCIsInN1YiI6IjdjNDE0MGFlLTBjM2UtNDg0Zi1hMzc0LTZlMGVlN2VmNmIyOCIsInR5cCI6IkJlYXJlciIsImF6cCI6Im5lc3QtY2xpZW50Iiwic2lkIjoiNTE1OWI4YmItNTE2Ny00ZjM3LWE4OTAtODA0NjdmNGIyYmM3IiwiYWNyIjoiMSIsImFsbG93ZWQtb3JpZ2lucyI6WyJodHRwczovL2xvY2FsaG9zdDozMDAwIiwiaHR0cHM6Ly9vYXV0aC5wc3Rtbi5pbyIsImh0dHBzOi8vYnVjaDozMDAwIl0sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJvZmZsaW5lX2FjY2VzcyIsInVtYV9hdXRob3JpemF0aW9uIiwiZGVmYXVsdC1yb2xlcy1uZXN0Il19LCJyZXNvdXJjZV9hY2Nlc3MiOnsibmVzdC1jbGllbnQiOnsicm9sZXMiOlsiYWRtaW4iXX0sImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoiZW1haWwgcHJvZmlsZSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwibmFtZSI6Ik5lc3QgQWRtaW4iLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJhZG1pbiIsImdpdmVuX25hbWUiOiJOZXN0IiwiZmFtaWx5X25hbWUiOiJBZG1pbiIsImVtYWlsIjoiYWRtaW5AYWNtZS5jb20ifQ.UgSWsU5NAhVS4E0EE_-Wo2yLXFa9a2YZHBLJGUL_zMzkbASbp7sZXkZ31SjKFp3evIrDx8Yw5QhkwKs8NyULuj3_wGBQ72YmHTUxXJJcRzSSWnTA-81Ls7k-GkhqWmtUY0SyM4ShdGnQmmOV6gA8ySC8IZiNIDYkHJS9Sdme92vtrxrWr0_3yOp-u1QuBdnvYirbE_iQDTP9QVb1juvU9vQFzxzGdjDtQaLzxppQKRX9O9ycpbOjgDDMZ2xMIMJouBOzWN9wSbtysRa-1RSikkYRIn4ztBdZRFzM1qdUUOPoG49cr59uh86krFMA1-zN5BJ5zC8atPK_x5v0r2SM9w","user-agent":"axios/1.7.7","accept-encoding":"gzip, compress, deflate, br","host":"mac.fritz.box:3000","connection":"close"}[39m [90m{"class":"RequestLoggerMiddleware"}[39m
-[2024-11-03 20:05:34.594 +0100] [34mDEBUG[39m: [36mdelete: bankkontoId=50[39m [90m{"class":"BankkontoWriteController"}[39m
-[2024-11-03 20:05:34.594 +0100] [34mDEBUG[39m: [36mdelete: bankkontoId=50[39m [90m{"class":"BankkontoWriteService"}[39m
-[2024-11-03 20:05:34.594 +0100] [34mDEBUG[39m: [36mfindByBankkontoId: bankkontoId=50[39m [90m{"class":"BankkontoReadService"}[39m
-[2024-11-03 20:05:34.595 +0100] [34mDEBUG[39m: [36mResponse time: 1 ms[39m [90m{"class":"ResponseTimeInterceptor"}[39m
-[33m[Nest] 67843  - [39m03.11.2024, 20:05:34 [33m   WARN[39m [38;5;3m[Keycloak] [39m[33mCannot validate access token: Error: Grant validation failed. Reason: invalid token (expired)[39m
-[2024-11-03 20:05:34.639 +0100] [34mDEBUG[39m: [36mmethod=DELETE, url=/rest/50, header={"accept":"application/json, text/plain, */*","user-agent":"axios/1.7.7","accept-encoding":"gzip, compress, deflate, br","host":"mac.fritz.box:3000","connection":"close"}[39m [90m{"class":"RequestLoggerMiddleware"}[39m
-[2024-11-03 20:05:34.648 +0100] [34mDEBUG[39m: [36mmethod=DELETE, url=/rest/50, header={"accept":"application/json, text/plain, */*","authorization":"Bearer FALSCH","user-agent":"axios/1.7.7","accept-encoding":"gzip, compress, deflate, br","host":"mac.fritz.box:3000","connection":"close"}[39m [90m{"class":"RequestLoggerMiddleware"}[39m
-[2024-11-03 20:05:34.654 +0100] [34mDEBUG[39m: [36mmethod=POST, url=/auth/token, header={"accept":"application/json, text/plain, */*","content-type":"application/x-www-form-urlencoded","user-agent":"axios/1.7.7","content-length":"24","accept-encoding":"gzip, compress, deflate, br","host":"mac.fritz.box:3000","connection":"close"}[39m [90m{"class":"RequestLoggerMiddleware"}[39m
-[2024-11-03 20:05:34.655 +0100] [34mDEBUG[39m: [36mtoken: username=user[39m [90m{"class":"TokenController"}[39m
-[2024-11-03 20:05:34.655 +0100] [34mDEBUG[39m: [36mtoken: username=user[39m [90m{"class":"KeycloakService"}[39m
-[2024-11-03 20:05:34.681 +0100] [34mDEBUG[39m: [36m#logPayload: exp=1730662534[39m [90m{"class":"KeycloakService"}[39m
-[2024-11-03 20:05:34.681 +0100] [34mDEBUG[39m: [36m#logPayload: roles=["user"][39m [90m{"class":"KeycloakService"}[39m
-[2024-11-03 20:05:34.681 +0100] [34mDEBUG[39m: [36mtoken: response.data={"access_token":"eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI4cDd2RzRseEdOSkM1eHFsN1FPRW9qYnRXZi16dXRXeXVPZ1IxSmRmdk04In0.eyJleHAiOjE3MzA2NjI1MzQsImlhdCI6MTczMDY2MDczNCwianRpIjoiYjNjZGY3ZjktOWUxZC00MzFjLTg5ZDktMjg3NzU1MGMyOTc0IiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4ODgwL3JlYWxtcy9uZXN0IiwiYXVkIjoiYWNjb3VudCIsInN1YiI6IjQ1NGY0Njc5LWQ4YjgtNDA5Mi04MDhlLWM1MDI5YTcxMjU2MyIsInR5cCI6IkJlYXJlciIsImF6cCI6Im5lc3QtY2xpZW50Iiwic2lkIjoiNGNkN2EwNzQtZDJhYy00YzAxLWEyZGYtMGQwNDhmMzIwNTQwIiwiYWNyIjoiMSIsImFsbG93ZWQtb3JpZ2lucyI6WyJodHRwczovL2xvY2FsaG9zdDozMDAwIiwiaHR0cHM6Ly9vYXV0aC5wc3Rtbi5pbyIsImh0dHBzOi8vYnVjaDozMDAwIl0sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJvZmZsaW5lX2FjY2VzcyIsInVtYV9hdXRob3JpemF0aW9uIiwiZGVmYXVsdC1yb2xlcy1uZXN0Il19LCJyZXNvdXJjZV9hY2Nlc3MiOnsibmVzdC1jbGllbnQiOnsicm9sZXMiOlsidXNlciJdfSwiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJlbWFpbCBwcm9maWxlIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJuYW1lIjoiTmVzdCBVc2VyIiwicHJlZmVycmVkX3VzZXJuYW1lIjoidXNlciIsImdpdmVuX25hbWUiOiJOZXN0IiwiZmFtaWx5X25hbWUiOiJVc2VyIiwiZW1haWwiOiJ1c2VyQGFjbWUuY29tIn0.Sd-LKC3omFq3AFv0X1QoAQ5UFEA2Jli7zmVYWRCeaSnU7zwq-CFAkGefJPtcIOg5zXWOEG0jwwby2fUdvV7SmMk92XFduW_Sp6C2HBjVbNGC4338h44mw0UAnpXSuTz9oCbE0L7cFQq5iPIDXPlReoqk7mZwVb_lBgJ778l7VqgcOZ_f28S_K3a35n2pyOwlFyCML8xKtWHQjym7TGUIb1o5-X2Z4mnIrng-x2V5vaUU7VYs_zodnXiTOxLtG3xTwwMVPTESgkAeyYY-7t_b14_pf4QZrepf-Sfbft5Uvp0aUVcIwQdX6G24c4vjA-0oN2-kwgl8yk0J9ZRqaZB5Nw","expires_in":1800,"refresh_expires_in":3600,"refresh_token":"eyJhbGciOiJIUzUxMiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJiYWQxN2U1ZS0zY2ZjLTQ3MzAtYTUzOS1mN2FiNzIzMTE0OWIifQ.eyJleHAiOjE3MzA2NjQzMzQsImlhdCI6MTczMDY2MDczNCwianRpIjoiZWVjNTUzZTItZDI3ZS00NjFkLTk5NTYtYTFmYzhhNWMwN2QyIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4ODgwL3JlYWxtcy9uZXN0IiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdDo4ODgwL3JlYWxtcy9uZXN0Iiwic3ViIjoiNDU0ZjQ2NzktZDhiOC00MDkyLTgwOGUtYzUwMjlhNzEyNTYzIiwidHlwIjoiUmVmcmVzaCIsImF6cCI6Im5lc3QtY2xpZW50Iiwic2lkIjoiNGNkN2EwNzQtZDJhYy00YzAxLWEyZGYtMGQwNDhmMzIwNTQwIiwic2NvcGUiOiJ3ZWItb3JpZ2lucyBiYXNpYyBlbWFpbCBhY3Igcm9sZXMgcHJvZmlsZSJ9.PT7u23aNl5U2SaRjtfhsOH4TBn4ZQtvDgG8s-DJGB-A6gtWPmdWroCffM3PeL6l-3EJfAMKEi7yRPvjwTRRV_A","token_type":"Bearer","not-before-policy":0,"session_state":"4cd7a074-d2ac-4c01-a2df-0d048f320540","scope":"email profile"}[39m [90m{"class":"KeycloakService"}[39m
-[2024-11-03 20:05:34.681 +0100] [34mDEBUG[39m: [36mResponse time: 27 ms, 200 OK[39m [90m{"class":"ResponseTimeInterceptor"}[39m
-[2024-11-03 20:05:34.689 +0100] [34mDEBUG[39m: [36mmethod=DELETE, url=/rest/60, header={"accept":"application/json, text/plain, */*","authorization":"Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI4cDd2RzRseEdOSkM1eHFsN1FPRW9qYnRXZi16dXRXeXVPZ1IxSmRmdk04In0.eyJleHAiOjE3MzA2NjI1MzQsImlhdCI6MTczMDY2MDczNCwianRpIjoiYjNjZGY3ZjktOWUxZC00MzFjLTg5ZDktMjg3NzU1MGMyOTc0IiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4ODgwL3JlYWxtcy9uZXN0IiwiYXVkIjoiYWNjb3VudCIsInN1YiI6IjQ1NGY0Njc5LWQ4YjgtNDA5Mi04MDhlLWM1MDI5YTcxMjU2MyIsInR5cCI6IkJlYXJlciIsImF6cCI6Im5lc3QtY2xpZW50Iiwic2lkIjoiNGNkN2EwNzQtZDJhYy00YzAxLWEyZGYtMGQwNDhmMzIwNTQwIiwiYWNyIjoiMSIsImFsbG93ZWQtb3JpZ2lucyI6WyJodHRwczovL2xvY2FsaG9zdDozMDAwIiwiaHR0cHM6Ly9vYXV0aC5wc3Rtbi5pbyIsImh0dHBzOi8vYnVjaDozMDAwIl0sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJvZmZsaW5lX2FjY2VzcyIsInVtYV9hdXRob3JpemF0aW9uIiwiZGVmYXVsdC1yb2xlcy1uZXN0Il19LCJyZXNvdXJjZV9hY2Nlc3MiOnsibmVzdC1jbGllbnQiOnsicm9sZXMiOlsidXNlciJdfSwiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJlbWFpbCBwcm9maWxlIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJuYW1lIjoiTmVzdCBVc2VyIiwicHJlZmVycmVkX3VzZXJuYW1lIjoidXNlciIsImdpdmVuX25hbWUiOiJOZXN0IiwiZmFtaWx5X25hbWUiOiJVc2VyIiwiZW1haWwiOiJ1c2VyQGFjbWUuY29tIn0.Sd-LKC3omFq3AFv0X1QoAQ5UFEA2Jli7zmVYWRCeaSnU7zwq-CFAkGefJPtcIOg5zXWOEG0jwwby2fUdvV7SmMk92XFduW_Sp6C2HBjVbNGC4338h44mw0UAnpXSuTz9oCbE0L7cFQq5iPIDXPlReoqk7mZwVb_lBgJ778l7VqgcOZ_f28S_K3a35n2pyOwlFyCML8xKtWHQjym7TGUIb1o5-X2Z4mnIrng-x2V5vaUU7VYs_zodnXiTOxLtG3xTwwMVPTESgkAeyYY-7t_b14_pf4QZrepf-Sfbft5Uvp0aUVcIwQdX6G24c4vjA-0oN2-kwgl8yk0J9ZRqaZB5Nw","user-agent":"axios/1.7.7","accept-encoding":"gzip, compress, deflate, br","host":"mac.fritz.box:3000","connection":"close"}[39m [90m{"class":"RequestLoggerMiddleware"}[39m
-  console.debug
-    NODE_ENV = test
-
-      at Object.<anonymous> (src/config/env.ts:35:9)
-
-  console.debug
-    logger config: logLevel=debug, logFile=/Users/gentlebookpro/Projekte/UNI/SWE/bankkonto-verwalter-nestjs/log/server.log, pretty=true
-
-      at Object.<anonymous> (src/config/logger.ts:44:9)
-
-  console.debug
-    mailConfig = {
-      activated: true,
-      options: {
-        host: 'localhost',
-        port: 8025,
-        secure: false,
-        priority: 'normal',
-        logger: false
-      }
-    }
-
-      at Object.<anonymous> (src/config/mail.ts:47:13)
-
-  console.debug
-    tlsDir = /Users/gentlebookpro/Projekte/UNI/SWE/bankkonto-verwalter-nestjs/src/config/resources/tls
-
-      at Object.<anonymous> (src/config/https.ts:16:9)
-
-  console.debug
-    keycloakConnectOptions = {
-      authServerUrl: 'http://localhost:8880',
-      realm: 'nest',
-      clientId: 'nest-client',
-      policyEnforcement: 'permissive',
-      tokenValidation: 'online'
-    }
-
-      at Object.<anonymous> (src/config/keycloak.ts:43:13)
-
-  console.debug
-    dbConfig: {
-      type: 'postgres',
-      username: 'bankkonto',
-      password: 'p',
-      passwordAdmin: 'p',
-      name: 'bankkonto',
-      populate: true
-    }
-
-      at Object.<anonymous> (src/config/db.ts:9:9)
-
-  console.debug
-    dbResourcesDir = /Users/gentlebookpro/Projekte/UNI/SWE/bankkonto-verwalter-nestjs/src/config/resources/db/postgres
-
-      at Object.<anonymous> (src/config/typeormOptions.ts:46:9)
-
-  console.debug
-    typeOrmModuleOptions = {
-      type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'bankkonto',
-      database: 'bankkonto',
-      schema: 'bankkonto',
-      poolSize: 10,
-      entities: [
-        <ref *1> [class Bankkonto] {
-          [length]: 0,
-          [name]: 'Bankkonto',
-          [prototype]: { [constructor]: [Circular *1] }
-        },
-        <ref *2> [class Transaktion] {
-          [length]: 0,
-          [name]: 'Transaktion',
-          [prototype]: { [constructor]: [Circular *2] }
-        },
-        <ref *3> [class Kunde] {
-          [length]: 0,
-          [name]: 'Kunde',
-          [prototype]: { [constructor]: [Circular *3] }
-        },
-        <ref *4> [class BankkontoDokument] {
-          [length]: 0,
-          [name]: 'BankkontoDokument',
-          [prototype]: { [constructor]: [Circular *4] }
-        },
-        [length]: 4
-      ],
-      namingStrategy: SnakeNamingStrategy {
-        nestedSetColumnNames: { left: 'nsleft', right: 'nsright' },
-        materializedPathColumnName: 'mpath'
-      },
-      logging: true,
-      logger: 'advanced-console',
-      extra: { ssl: { rejectUnauthorized: false } }
-    }
-
-      at Object.<anonymous> (src/config/typeormOptions.ts:145:13)
-
-  console.debug
-    schemaGraphQL = src/config/resources/graphql/schema.graphql
-
-      at Object.<anonymous> (src/config/graphql.ts:12:9)
-
-[32m[Nest] 69412  - [39m03.11.2024, 20:26:02 [32m    LOG[39m [38;5;3m[NestFactory] [39m[32mStarting Nest application...[39m
-[32m[Nest] 69412  - [39m03.11.2024, 20:26:02 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAppModule dependencies initialized[39m[38;5;3m +27ms[39m
-[32m[Nest] 69412  - [39m03.11.2024, 20:26:02 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConfigModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 69412  - [39m03.11.2024, 20:26:02 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mMailModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 69412  - [39m03.11.2024, 20:26:02 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mLoggerModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 69412  - [39m03.11.2024, 20:26:02 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 69412  - [39m03.11.2024, 20:26:02 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mHttpModule dependencies initialized[39m[38;5;3m +1ms[39m
-[32m[Nest] 69412  - [39m03.11.2024, 20:26:02 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTerminusModule dependencies initialized[39m[38;5;3m +1ms[39m
-[32m[Nest] 69412  - [39m03.11.2024, 20:26:02 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mKeycloakConnectModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 69412  - [39m03.11.2024, 20:26:02 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAdminModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 69412  - [39m03.11.2024, 20:26:02 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mGraphQLSchemaBuilderModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 69412  - [39m03.11.2024, 20:26:02 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mKeycloakModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 69412  - [39m03.11.2024, 20:26:02 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mGraphQLModule dependencies initialized[39m[38;5;3m +0ms[39m
-  console.log
-    query: SELECT * FROM current_schema()
-
-      at Function.logInfo (src/platform/PlatformTools.ts:235:17)
-
-  console.log
-    query: SELECT version();
-
-      at Function.logInfo (src/platform/PlatformTools.ts:235:17)
-
-[32m[Nest] 69412  - [39m03.11.2024, 20:26:02 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmCoreModule dependencies initialized[39m[38;5;3m +62ms[39m
-[32m[Nest] 69412  - [39m03.11.2024, 20:26:02 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 69412  - [39m03.11.2024, 20:26:02 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 69412  - [39m03.11.2024, 20:26:02 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mDevModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 69412  - [39m03.11.2024, 20:26:02 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mBankkontoModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 69412  - [39m03.11.2024, 20:26:02 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mHealthController {/health}:[39m[38;5;3m +4ms[39m
-[32m[Nest] 69412  - [39m03.11.2024, 20:26:02 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/health/liveness, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 69412  - [39m03.11.2024, 20:26:02 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/health/readiness, GET} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 69412  - [39m03.11.2024, 20:26:02 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mPrometheusController {/metrics}:[39m[38;5;3m +0ms[39m
-[32m[Nest] 69412  - [39m03.11.2024, 20:26:02 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/metrics, GET} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 69412  - [39m03.11.2024, 20:26:02 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mBankkontoGetController {/rest}:[39m[38;5;3m +0ms[39m
-[32m[Nest] 69412  - [39m03.11.2024, 20:26:02 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/rest/:bankkontoId, GET} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 69412  - [39m03.11.2024, 20:26:02 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/rest, GET} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 69412  - [39m03.11.2024, 20:26:02 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mBankkontoWriteController {/rest}:[39m[38;5;3m +0ms[39m
-[32m[Nest] 69412  - [39m03.11.2024, 20:26:02 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/rest, POST} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 69412  - [39m03.11.2024, 20:26:02 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/rest/:bankkontoId, PUT} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 69412  - [39m03.11.2024, 20:26:02 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/rest/:bankkontoId, DELETE} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 69412  - [39m03.11.2024, 20:26:02 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mTokenController {/auth}:[39m[38;5;3m +0ms[39m
-[32m[Nest] 69412  - [39m03.11.2024, 20:26:02 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/auth/token, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 69412  - [39m03.11.2024, 20:26:02 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/auth/refresh, POST} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 69412  - [39m03.11.2024, 20:26:02 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mDevController {/dev}:[39m[38;5;3m +0ms[39m
-[32m[Nest] 69412  - [39m03.11.2024, 20:26:02 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/dev/db_populate, POST} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 69412  - [39m03.11.2024, 20:26:02 [32m    LOG[39m [38;5;3m[GraphQLModule] [39m[32mMapped {/graphql, POST} route[39m[38;5;3m +35ms[39m
-  console.log
-    query: DROP TABLE IF EXISTS transaktion CASCADE;
-    DROP TABLE IF EXISTS kunde CASCADE;
-    DROP TABLE IF EXISTS bankkonto CASCADE;
-    DROP TABLE IF EXISTS bankkonto_dokument CASCADE;
-    
-    DROP TYPE IF EXISTS transaktion_typ;
-    DROP TYPE IF EXISTS dokument_typ;
-
-      at Function.logInfo (src/platform/PlatformTools.ts:235:17)
-          at async Promise.all (index 0)
-
-  console.log
-    query: -- Schema für Bankkonto und Transaktion erstellen
-    CREATE SCHEMA IF NOT EXISTS AUTHORIZATION bankkonto;
-    
-    ALTER ROLE bankkonto SET search_path = 'bankkonto';
-    
-    -- Enum für Transaktionstypen erstellen
-    CREATE TYPE transaktion_typ AS ENUM ('EINZAHLUNG', 'AUSZAHLUNG', 'ÜBERWEISUNG', 'EINKOMMEN', 'ZAHLUNG');
-    CREATE TYPE dokument_typ AS ENUM ('VERTRAG', 'RECHNUNG');
-    
-    -- Tabelle für Bankkonto
-    CREATE TABLE IF NOT EXISTS bankkonto (
-        bankkonto_id       integer GENERATED ALWAYS AS IDENTITY(START WITH 1000) PRIMARY KEY USING INDEX TABLESPACE bankkontospace,
-        version            INTEGER NOT NULL DEFAULT 0,
-        saldo              DECIMAL(10, 2) NOT NULL CHECK (saldo >= 0),
-        transaktion_limit  DECIMAL(10, 2),
-        waehrungen         text,
-        erstellt_am        TIMESTAMP NOT NULL DEFAULT NOW(),
-        aktualisiert_am    TIMESTAMP NOT NULL DEFAULT NOW()
-    );
-    
-    CREATE TABLE IF NOT EXISTS kunde (
-        kunde_id    integer GENERATED ALWAYS AS IDENTITY(START WITH 1000) PRIMARY KEY USING INDEX TABLESPACE bankkontospace,
-        name         VARCHAR(50) NOT NULL,
-        vorname      VARCHAR(50) NOT NULL,
-        email        VARCHAR(100) UNIQUE NOT NULL,
-        bankkonto_id integer NOT NULL UNIQUE USING INDEX TABLESPACE bankkontospace REFERENCES bankkonto
-    ) TABLESPACE bankkontospace;
-    
-    -- Tabelle für Transaktion
-    CREATE TABLE IF NOT EXISTS transaktion (
-        transaktion_id    integer GENERATED ALWAYS AS IDENTITY(START WITH 1000) PRIMARY KEY USING INDEX TABLESPACE bankkontospace,
-        transaktion_typ   transaktion_typ NOT NULL,
-        betrag            DECIMAL(10, 2) NOT NULL CHECK (betrag > 0),
-        absender          integer,
-        empfaenger        integer,
-        transaktion_datum TIMESTAMP NOT NULL DEFAULT NOW(),
-        bankkonto_id      integer NOT NULL REFERENCES bankkonto
-    );
-    
-    -- Index für schnellere Abfragen auf der Transaktion-Tabelle
-    CREATE INDEX IF NOT EXISTS idx_transaktion_typ_datum_konto ON transaktion (transaktion_typ, transaktion_datum, bankkonto_id);
-    
-    CREATE TABLE IF NOT EXISTS bankkonto_dokument (
-        dokument_id     integer GENERATED ALWAYS AS IDENTITY(START WITH 1000) PRIMARY KEY USING INDEX TABLESPACE bankkontospace,
-        data            bytea NOT NULL,
-        filename        text NOT NULL,
-        dokument_typ    dokument_typ NOT NULL,
-        bankkonto_id    integer NOT NULL REFERENCES bankkonto
-    ) TABLESPACE bankkontospace;
-    CREATE INDEX IF NOT EXISTS bankkonto_dokument_bankkonto_id_idx ON bankkonto_dokument(bankkonto_id) TABLESPACE bankkontospace;
-
-      at Function.logInfo (src/platform/PlatformTools.ts:235:17)
-          at async Promise.all (index 0)
-
-[2024-11-03 20:26:02.400 +0100] [34mDEBUG[39m: [36mkeycloakClient={"transitional":{"silentJSONParsing":true,"forcedJSONParsing":true,"clarifyTimeoutError":false},"adapter":["xhr","http","fetch"],"transformRequest":[null],"transformResponse":[null],"timeout":0,"xsrfCookieName":"XSRF-TOKEN","xsrfHeaderName":"X-XSRF-TOKEN","maxContentLength":-1,"maxBodyLength":-1,"env":{},"headers":{"common":{"Accept":"application/json, text/plain, */*"},"delete":{},"get":{},"head":{},"post":{},"put":{},"patch":{}},"baseURL":"http://localhost:8880"}[39m [90m{"class":"KeycloakService"}[39m
-[2024-11-03 20:26:02.401 +0100] [34mDEBUG[39m: [36mkeycloakClient={"transitional":{"silentJSONParsing":true,"forcedJSONParsing":true,"clarifyTimeoutError":false},"adapter":["xhr","http","fetch"],"transformRequest":[null],"transformResponse":[null],"timeout":0,"xsrfCookieName":"XSRF-TOKEN","xsrfHeaderName":"X-XSRF-TOKEN","maxContentLength":-1,"maxBodyLength":-1,"env":{},"headers":{"common":{"Accept":"application/json, text/plain, */*"},"delete":{},"get":{},"head":{},"post":{},"put":{},"patch":{}},"baseURL":"http://localhost:8880"}[39m [90m{"class":"KeycloakService"}[39m
-[2024-11-03 20:26:02.512 +0100] [33mWARN[39m: [36mpostgres: DB wird neu geladen[39m [90m{"class":"DbPopulateService"}[39m
-[2024-11-03 20:26:02.512 +0100] [34mDEBUG[39m: [36mdropScript = /Users/gentlebookpro/Projekte/UNI/SWE/bankkonto-verwalter-nestjs/src/config/resources/db/postgres/drop.sql[39m [90m{"class":"DbPopulateService"}[39m
-[2024-11-03 20:26:02.535 +0100] [34mDEBUG[39m: [36mcreateScript = /Users/gentlebookpro/Projekte/UNI/SWE/bankkonto-verwalter-nestjs/src/config/resources/db/postgres/create.sql[39m [90m{"class":"DbPopulateService"}[39m
-  console.log
-    query: SELECT * FROM current_schema()
-
-      at Function.logInfo (src/platform/PlatformTools.ts:235:17)
-          at async Promise.all (index 0)
-
-  console.log
-    query: SELECT version();
-
-      at Function.logInfo (src/platform/PlatformTools.ts:235:17)
-          at async Promise.all (index 0)
-
-  console.log
-    query: SET search_path TO bankkonto;
-
-      at Function.logInfo (src/platform/PlatformTools.ts:235:17)
-          at async Promise.all (index 0)
-
-  console.log
-    query: COPY bankkonto FROM '/csv/bankkonto/bankkonto.csv' (FORMAT csv, DELIMITER ';', HEADER true);
-
-      at Function.logInfo (src/platform/PlatformTools.ts:235:17)
-          at async Promise.all (index 0)
-
-  console.log
-    query: COPY kunde FROM '/csv/bankkonto/kunde.csv' (FORMAT csv, DELIMITER ';', HEADER true);
-
-      at Function.logInfo (src/platform/PlatformTools.ts:235:17)
-          at async Promise.all (index 0)
-
-  console.log
-    query: COPY transaktion FROM '/csv/bankkonto/transaktion.csv' (FORMAT csv, DELIMITER ';', HEADER true);
-
-      at Function.logInfo (src/platform/PlatformTools.ts:235:17)
-          at async Promise.all (index 0)
-
-[32m[Nest] 69412  - [39m03.11.2024, 20:26:02 [32m    LOG[39m [38;5;3m[NestApplication] [39m[32mNest application successfully started[39m[38;5;3m +64ms[39m
-  console.info
-      _                 _    _               _        
-     | |__   __ _ _ __ | | _| | _____  _ __ | |_ ___  
-     | '_ \ / _` | '_ \| |/ / |/ / _ \| '_ \| __/ _ \ 
-     | |_) | (_| | | | |   <|   < (_) | | | | || (_) |
-     |_.__/ \__,_|_| |_|_|\_\_|\_\___/|_| |_|\__\___/
-
-      at src/logger/banner.service.ts:26:50
-
-[2024-11-03 20:26:02.572 +0100] [33mWARN[39m: [36mDB wurde neu geladen[39m [90m{"class":"DbPopulateService"}[39m
-[2024-11-03 20:26:02.573 +0100] [32mINFO[39m: [36mNode: v23.1.0[39m [90m{"class":"BannerService"}[39m
-[2024-11-03 20:26:02.573 +0100] [32mINFO[39m: [36mNODE_ENV: test[39m [90m{"class":"BannerService"}[39m
-[2024-11-03 20:26:02.573 +0100] [32mINFO[39m: [36mRechnername: Mac.fritz.box[39m [90m{"class":"BannerService"}[39m
-[2024-11-03 20:26:02.573 +0100] [32mINFO[39m: [36mPort: 3000[39m [90m{"class":"BannerService"}[39m
-[2024-11-03 20:26:02.573 +0100] [32mINFO[39m: [36mDB-System: postgres[39m [90m{"class":"BannerService"}[39m
-[2024-11-03 20:26:02.573 +0100] [32mINFO[39m: [36mBetriebssystem: Darwin (24.0.0)[39m [90m{"class":"BannerService"}[39m
-[2024-11-03 20:26:02.575 +0100] [32mINFO[39m: [36mUsername: gentlebookpro[39m [90m{"class":"BannerService"}[39m
-[2024-11-03 20:26:02.575 +0100] [32mINFO[39m: [36mSwagger UI: /swagger[39m [90m{"class":"BannerService"}[39m
-[2024-11-03 20:26:02.732 +0100] [34mDEBUG[39m: [36mmethod=POST, url=/auth/token, header={"accept":"application/json, text/plain, */*","content-type":"application/x-www-form-urlencoded","user-agent":"axios/1.7.7","content-length":"25","accept-encoding":"gzip, compress, deflate, br","host":"mac.fritz.box:3000","connection":"close"}[39m [90m{"class":"RequestLoggerMiddleware"}[39m
-[2024-11-03 20:26:02.736 +0100] [34mDEBUG[39m: [36mtoken: username=admin[39m [90m{"class":"TokenController"}[39m
-[2024-11-03 20:26:02.737 +0100] [34mDEBUG[39m: [36mtoken: username=admin[39m [90m{"class":"KeycloakService"}[39m
-  console.log
-    query: SELECT "bankkonto"."bankkonto_id" AS "bankkonto_bankkonto_id", "bankkonto"."version" AS "bankkonto_version", "bankkonto"."saldo" AS "bankkonto_saldo", "bankkonto"."transaktion_limit" AS "bankkonto_transaktion_limit", "bankkonto"."waehrungen" AS "bankkonto_waehrungen", "bankkonto"."erstellt_am" AS "bankkonto_erstellt_am", "bankkonto"."aktualisiert_am" AS "bankkonto_aktualisiert_am", "kunde"."kunde_id" AS "kunde_kunde_id", "kunde"."name" AS "kunde_name", "kunde"."vorname" AS "kunde_vorname", "kunde"."email" AS "kunde_email", "kunde"."bankkonto_id" AS "kunde_bankkonto_id", "transaktion"."transaktion_id" AS "transaktion_transaktion_id", "transaktion"."transaktion_typ" AS "transaktion_transaktion_typ", "transaktion"."betrag" AS "transaktion_betrag", "transaktion"."absender" AS "transaktion_absender", "transaktion"."empfaenger" AS "transaktion_empfaenger", "transaktion"."transaktion_datum" AS "transaktion_transaktion_datum", "transaktion"."bankkonto_id" AS "transaktion_bankkonto_id" FROM "bankkonto"."bankkonto" "bankkonto" INNER JOIN "bankkonto"."kunde" "kunde" ON "kunde"."bankkonto_id"="bankkonto"."bankkonto_id"  LEFT JOIN "bankkonto"."transaktion" "transaktion" ON "transaktion"."bankkonto_id"="bankkonto"."bankkonto_id" WHERE "bankkonto"."bankkonto_id" = $1 -- PARAMETERS: ["50"]
-
-      at Function.logInfo (src/platform/PlatformTools.ts:235:17)
-
-[2024-11-03 20:26:02.816 +0100] [34mDEBUG[39m: [36m#logPayload: exp=1730663762[39m [90m{"class":"KeycloakService"}[39m
-[2024-11-03 20:26:02.816 +0100] [34mDEBUG[39m: [36m#logPayload: roles=["admin"][39m [90m{"class":"KeycloakService"}[39m
-[2024-11-03 20:26:02.816 +0100] [34mDEBUG[39m: [36mtoken: response.data={"access_token":"eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI4cDd2RzRseEdOSkM1eHFsN1FPRW9qYnRXZi16dXRXeXVPZ1IxSmRmdk04In0.eyJleHAiOjE3MzA2NjM3NjIsImlhdCI6MTczMDY2MTk2MiwianRpIjoiM2M1NGIyNjYtOTYzNS00ZmZkLWI5ZWMtMDk2Yzk4YTUyNDc5IiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4ODgwL3JlYWxtcy9uZXN0IiwiYXVkIjoiYWNjb3VudCIsInN1YiI6IjdjNDE0MGFlLTBjM2UtNDg0Zi1hMzc0LTZlMGVlN2VmNmIyOCIsInR5cCI6IkJlYXJlciIsImF6cCI6Im5lc3QtY2xpZW50Iiwic2lkIjoiOTI2ZGRiMGUtYjIxOS00ZWExLThmMWQtZWEyYjUwYTQ1ZDhhIiwiYWNyIjoiMSIsImFsbG93ZWQtb3JpZ2lucyI6WyJodHRwczovL2xvY2FsaG9zdDozMDAwIiwiaHR0cHM6Ly9vYXV0aC5wc3Rtbi5pbyIsImh0dHBzOi8vYnVjaDozMDAwIl0sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJvZmZsaW5lX2FjY2VzcyIsInVtYV9hdXRob3JpemF0aW9uIiwiZGVmYXVsdC1yb2xlcy1uZXN0Il19LCJyZXNvdXJjZV9hY2Nlc3MiOnsibmVzdC1jbGllbnQiOnsicm9sZXMiOlsiYWRtaW4iXX0sImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoiZW1haWwgcHJvZmlsZSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwibmFtZSI6Ik5lc3QgQWRtaW4iLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJhZG1pbiIsImdpdmVuX25hbWUiOiJOZXN0IiwiZmFtaWx5X25hbWUiOiJBZG1pbiIsImVtYWlsIjoiYWRtaW5AYWNtZS5jb20ifQ.Wj2SqPIoJMKCvIkr0hgzNGFm1iMi__thfVk5-XIJu7o_uDCx1kwKL6jkrQLRYGsXT9x6k0w_mBAOsvp0OnsKHmKaydd0d0nOTmZIL83O3bBc4-z0sU0IT7wbRUVMIhJP5sDWKCVNRXiaASymX8HxAOjtAQI5l4cgFqV6-DeabuDWOFbOQKdiGYxTfCk3J0p172mKz0OvS3VF5plpyiHgAiDw9fObnSijHyqY0OO4bCwg7I3jSUKbFeHY4p1aiHKjzQo679HZCPfJ_qAWIsz5xN0mzcq3wSO58YcprRqAcHsFb0o1dKHUADYP9zDkItqeee2lbe4GgqfSYCWkZqISGA","expires_in":1800,"refresh_expires_in":3600,"refresh_token":"eyJhbGciOiJIUzUxMiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJiYWQxN2U1ZS0zY2ZjLTQ3MzAtYTUzOS1mN2FiNzIzMTE0OWIifQ.eyJleHAiOjE3MzA2NjU1NjIsImlhdCI6MTczMDY2MTk2MiwianRpIjoiYTg4OTVkNTktMTAxZi00NTkyLTgwYzYtN2Q3NWE4ZDU2ZjNjIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4ODgwL3JlYWxtcy9uZXN0IiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdDo4ODgwL3JlYWxtcy9uZXN0Iiwic3ViIjoiN2M0MTQwYWUtMGMzZS00ODRmLWEzNzQtNmUwZWU3ZWY2YjI4IiwidHlwIjoiUmVmcmVzaCIsImF6cCI6Im5lc3QtY2xpZW50Iiwic2lkIjoiOTI2ZGRiMGUtYjIxOS00ZWExLThmMWQtZWEyYjUwYTQ1ZDhhIiwic2NvcGUiOiJ3ZWItb3JpZ2lucyBiYXNpYyBlbWFpbCBhY3Igcm9sZXMgcHJvZmlsZSJ9.0LOfu5dF1swspnslXKQV-0cLvaBP2KUwgAYVEy8i38nxjokAF2TH8v7inJIcStm6hxvyoD38v22dKbp7-Ox8yw","token_type":"Bearer","not-before-policy":0,"session_state":"926ddb0e-b219-4ea1-8f1d-ea2b50a45d8a","scope":"email profile"}[39m [90m{"class":"KeycloakService"}[39m
-[2024-11-03 20:26:02.818 +0100] [34mDEBUG[39m: [36mResponse time: 84 ms, 200 OK[39m [90m{"class":"ResponseTimeInterceptor"}[39m
-[2024-11-03 20:26:02.829 +0100] [34mDEBUG[39m: [36mmethod=DELETE, url=/rest/50, header={"accept":"application/json, text/plain, */*","authorization":"Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI4cDd2RzRseEdOSkM1eHFsN1FPRW9qYnRXZi16dXRXeXVPZ1IxSmRmdk04In0.eyJleHAiOjE3MzA2NjM3NjIsImlhdCI6MTczMDY2MTk2MiwianRpIjoiM2M1NGIyNjYtOTYzNS00ZmZkLWI5ZWMtMDk2Yzk4YTUyNDc5IiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4ODgwL3JlYWxtcy9uZXN0IiwiYXVkIjoiYWNjb3VudCIsInN1YiI6IjdjNDE0MGFlLTBjM2UtNDg0Zi1hMzc0LTZlMGVlN2VmNmIyOCIsInR5cCI6IkJlYXJlciIsImF6cCI6Im5lc3QtY2xpZW50Iiwic2lkIjoiOTI2ZGRiMGUtYjIxOS00ZWExLThmMWQtZWEyYjUwYTQ1ZDhhIiwiYWNyIjoiMSIsImFsbG93ZWQtb3JpZ2lucyI6WyJodHRwczovL2xvY2FsaG9zdDozMDAwIiwiaHR0cHM6Ly9vYXV0aC5wc3Rtbi5pbyIsImh0dHBzOi8vYnVjaDozMDAwIl0sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJvZmZsaW5lX2FjY2VzcyIsInVtYV9hdXRob3JpemF0aW9uIiwiZGVmYXVsdC1yb2xlcy1uZXN0Il19LCJyZXNvdXJjZV9hY2Nlc3MiOnsibmVzdC1jbGllbnQiOnsicm9sZXMiOlsiYWRtaW4iXX0sImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoiZW1haWwgcHJvZmlsZSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwibmFtZSI6Ik5lc3QgQWRtaW4iLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJhZG1pbiIsImdpdmVuX25hbWUiOiJOZXN0IiwiZmFtaWx5X25hbWUiOiJBZG1pbiIsImVtYWlsIjoiYWRtaW5AYWNtZS5jb20ifQ.Wj2SqPIoJMKCvIkr0hgzNGFm1iMi__thfVk5-XIJu7o_uDCx1kwKL6jkrQLRYGsXT9x6k0w_mBAOsvp0OnsKHmKaydd0d0nOTmZIL83O3bBc4-z0sU0IT7wbRUVMIhJP5sDWKCVNRXiaASymX8HxAOjtAQI5l4cgFqV6-DeabuDWOFbOQKdiGYxTfCk3J0p172mKz0OvS3VF5plpyiHgAiDw9fObnSijHyqY0OO4bCwg7I3jSUKbFeHY4p1aiHKjzQo679HZCPfJ_qAWIsz5xN0mzcq3wSO58YcprRqAcHsFb0o1dKHUADYP9zDkItqeee2lbe4GgqfSYCWkZqISGA","user-agent":"axios/1.7.7","accept-encoding":"gzip, compress, deflate, br","host":"mac.fritz.box:3000","connection":"close"}[39m [90m{"class":"RequestLoggerMiddleware"}[39m
-[2024-11-03 20:26:02.850 +0100] [34mDEBUG[39m: [36mdelete: bankkontoId=50[39m [90m{"class":"BankkontoWriteController"}[39m
-[2024-11-03 20:26:02.850 +0100] [34mDEBUG[39m: [36mdelete: bankkontoId=50[39m [90m{"class":"BankkontoWriteService"}[39m
-[2024-11-03 20:26:02.850 +0100] [34mDEBUG[39m: [36mfindByBankkontoId: bankkontoId=50[39m [90m{"class":"BankkontoReadService"}[39m
-[2024-11-03 20:26:02.874 +0100] [34mDEBUG[39m: [36mResponse time: 24 ms[39m [90m{"class":"ResponseTimeInterceptor"}[39m
-[2024-11-03 20:26:02.890 +0100] [34mDEBUG[39m: [36mmethod=DELETE, url=/rest/50, header={"accept":"application/json, text/plain, */*","user-agent":"axios/1.7.7","accept-encoding":"gzip, compress, deflate, br","host":"mac.fritz.box:3000","connection":"close"}[39m [90m{"class":"RequestLoggerMiddleware"}[39m
-[33m[Nest] 69412  - [39m03.11.2024, 20:26:02 [33m   WARN[39m [38;5;3m[Keycloak] [39m[33mCannot validate access token: Error: Grant validation failed. Reason: invalid token (expired)[39m
-[2024-11-03 20:26:02.901 +0100] [34mDEBUG[39m: [36mmethod=DELETE, url=/rest/50, header={"accept":"application/json, text/plain, */*","authorization":"Bearer FALSCH","user-agent":"axios/1.7.7","accept-encoding":"gzip, compress, deflate, br","host":"mac.fritz.box:3000","connection":"close"}[39m [90m{"class":"RequestLoggerMiddleware"}[39m
-[2024-11-03 20:26:02.908 +0100] [34mDEBUG[39m: [36mmethod=POST, url=/auth/token, header={"accept":"application/json, text/plain, */*","content-type":"application/x-www-form-urlencoded","user-agent":"axios/1.7.7","content-length":"24","accept-encoding":"gzip, compress, deflate, br","host":"mac.fritz.box:3000","connection":"close"}[39m [90m{"class":"RequestLoggerMiddleware"}[39m
-[2024-11-03 20:26:02.909 +0100] [34mDEBUG[39m: [36mtoken: username=user[39m [90m{"class":"TokenController"}[39m
-[2024-11-03 20:26:02.909 +0100] [34mDEBUG[39m: [36mtoken: username=user[39m [90m{"class":"KeycloakService"}[39m
-[2024-11-03 20:26:02.940 +0100] [34mDEBUG[39m: [36m#logPayload: exp=1730663762[39m [90m{"class":"KeycloakService"}[39m
-[2024-11-03 20:26:02.940 +0100] [34mDEBUG[39m: [36m#logPayload: roles=["user"][39m [90m{"class":"KeycloakService"}[39m
-[2024-11-03 20:26:02.940 +0100] [34mDEBUG[39m: [36mtoken: response.data={"access_token":"eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI4cDd2RzRseEdOSkM1eHFsN1FPRW9qYnRXZi16dXRXeXVPZ1IxSmRmdk04In0.eyJleHAiOjE3MzA2NjM3NjIsImlhdCI6MTczMDY2MTk2MiwianRpIjoiYjdlYWJkZGItYmRiZi00YjgzLWEyNzYtZTZlZDY5M2RmNmQ4IiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4ODgwL3JlYWxtcy9uZXN0IiwiYXVkIjoiYWNjb3VudCIsInN1YiI6IjQ1NGY0Njc5LWQ4YjgtNDA5Mi04MDhlLWM1MDI5YTcxMjU2MyIsInR5cCI6IkJlYXJlciIsImF6cCI6Im5lc3QtY2xpZW50Iiwic2lkIjoiZTYxMjg0N2QtYTc5YS00MzMzLWJhZjctOTA5MGNmNjRlMmMxIiwiYWNyIjoiMSIsImFsbG93ZWQtb3JpZ2lucyI6WyJodHRwczovL2xvY2FsaG9zdDozMDAwIiwiaHR0cHM6Ly9vYXV0aC5wc3Rtbi5pbyIsImh0dHBzOi8vYnVjaDozMDAwIl0sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJvZmZsaW5lX2FjY2VzcyIsInVtYV9hdXRob3JpemF0aW9uIiwiZGVmYXVsdC1yb2xlcy1uZXN0Il19LCJyZXNvdXJjZV9hY2Nlc3MiOnsibmVzdC1jbGllbnQiOnsicm9sZXMiOlsidXNlciJdfSwiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJlbWFpbCBwcm9maWxlIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJuYW1lIjoiTmVzdCBVc2VyIiwicHJlZmVycmVkX3VzZXJuYW1lIjoidXNlciIsImdpdmVuX25hbWUiOiJOZXN0IiwiZmFtaWx5X25hbWUiOiJVc2VyIiwiZW1haWwiOiJ1c2VyQGFjbWUuY29tIn0.YRQpqoIeSakWL_agenqS8MG7raWU4-XKuLgIUSi55-wsAlVdC8gf_MaSEbadD8RvvU8J4vZPK5jMEs1lxn1gO8K3AflCY3DU-cl3RTup-jtg291ViOp-HUMhlY_MvsLK_Fm1maRPeUkE-xtTc3aWKh_YZO9Gt71jBshm0JQFYyt4QkH60xgyTn1q2tkNUBDvsSOuEmaxbY_wQGRBycK55Q_gjpmnHoQhORcQ3cqyQjvM7shXk56q6NrM16a9ZIiqDY2TXITLuBgMJ4IipvHftjbB87NfUVjplZQUBE8ASGtaFTuNSG64txGjQ-xYbaZ2kcbr9RHjI02YGKLVvCK2Uw","expires_in":1800,"refresh_expires_in":3600,"refresh_token":"eyJhbGciOiJIUzUxMiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJiYWQxN2U1ZS0zY2ZjLTQ3MzAtYTUzOS1mN2FiNzIzMTE0OWIifQ.eyJleHAiOjE3MzA2NjU1NjIsImlhdCI6MTczMDY2MTk2MiwianRpIjoiNjU4MGVmMGItZmFjMC00MTdjLTllNDMtMzU5MDgwMTIzOTBhIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4ODgwL3JlYWxtcy9uZXN0IiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdDo4ODgwL3JlYWxtcy9uZXN0Iiwic3ViIjoiNDU0ZjQ2NzktZDhiOC00MDkyLTgwOGUtYzUwMjlhNzEyNTYzIiwidHlwIjoiUmVmcmVzaCIsImF6cCI6Im5lc3QtY2xpZW50Iiwic2lkIjoiZTYxMjg0N2QtYTc5YS00MzMzLWJhZjctOTA5MGNmNjRlMmMxIiwic2NvcGUiOiJ3ZWItb3JpZ2lucyBiYXNpYyBlbWFpbCBhY3Igcm9sZXMgcHJvZmlsZSJ9.PUIvPPSivJqMBzJj4mpx4ivbJ7ToWzEORL38du-hbwt6tqRYsJt18Vh3ESRIoxoNYbiEoJ0VnqFnkjoMqbx8FQ","token_type":"Bearer","not-before-policy":0,"session_state":"e612847d-a79a-4333-baf7-9090cf64e2c1","scope":"email profile"}[39m [90m{"class":"KeycloakService"}[39m
-[2024-11-03 20:26:02.940 +0100] [34mDEBUG[39m: [36mResponse time: 31 ms, 200 OK[39m [90m{"class":"ResponseTimeInterceptor"}[39m
-[2024-11-03 20:26:02.950 +0100] [34mDEBUG[39m: [36mmethod=DELETE, url=/rest/60, header={"accept":"application/json, text/plain, */*","authorization":"Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI4cDd2RzRseEdOSkM1eHFsN1FPRW9qYnRXZi16dXRXeXVPZ1IxSmRmdk04In0.eyJleHAiOjE3MzA2NjM3NjIsImlhdCI6MTczMDY2MTk2MiwianRpIjoiYjdlYWJkZGItYmRiZi00YjgzLWEyNzYtZTZlZDY5M2RmNmQ4IiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4ODgwL3JlYWxtcy9uZXN0IiwiYXVkIjoiYWNjb3VudCIsInN1YiI6IjQ1NGY0Njc5LWQ4YjgtNDA5Mi04MDhlLWM1MDI5YTcxMjU2MyIsInR5cCI6IkJlYXJlciIsImF6cCI6Im5lc3QtY2xpZW50Iiwic2lkIjoiZTYxMjg0N2QtYTc5YS00MzMzLWJhZjctOTA5MGNmNjRlMmMxIiwiYWNyIjoiMSIsImFsbG93ZWQtb3JpZ2lucyI6WyJodHRwczovL2xvY2FsaG9zdDozMDAwIiwiaHR0cHM6Ly9vYXV0aC5wc3Rtbi5pbyIsImh0dHBzOi8vYnVjaDozMDAwIl0sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJvZmZsaW5lX2FjY2VzcyIsInVtYV9hdXRob3JpemF0aW9uIiwiZGVmYXVsdC1yb2xlcy1uZXN0Il19LCJyZXNvdXJjZV9hY2Nlc3MiOnsibmVzdC1jbGllbnQiOnsicm9sZXMiOlsidXNlciJdfSwiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJlbWFpbCBwcm9maWxlIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJuYW1lIjoiTmVzdCBVc2VyIiwicHJlZmVycmVkX3VzZXJuYW1lIjoidXNlciIsImdpdmVuX25hbWUiOiJOZXN0IiwiZmFtaWx5X25hbWUiOiJVc2VyIiwiZW1haWwiOiJ1c2VyQGFjbWUuY29tIn0.YRQpqoIeSakWL_agenqS8MG7raWU4-XKuLgIUSi55-wsAlVdC8gf_MaSEbadD8RvvU8J4vZPK5jMEs1lxn1gO8K3AflCY3DU-cl3RTup-jtg291ViOp-HUMhlY_MvsLK_Fm1maRPeUkE-xtTc3aWKh_YZO9Gt71jBshm0JQFYyt4QkH60xgyTn1q2tkNUBDvsSOuEmaxbY_wQGRBycK55Q_gjpmnHoQhORcQ3cqyQjvM7shXk56q6NrM16a9ZIiqDY2TXITLuBgMJ4IipvHftjbB87NfUVjplZQUBE8ASGtaFTuNSG64txGjQ-xYbaZ2kcbr9RHjI02YGKLVvCK2Uw","user-agent":"axios/1.7.7","accept-encoding":"gzip, compress, deflate, br","host":"mac.fritz.box:3000","connection":"close"}[39m [90m{"class":"RequestLoggerMiddleware"}[39m
-  console.debug
-    NODE_ENV = test
-
-      at Object.<anonymous> (src/config/env.ts:35:9)
-
-  console.debug
-    logger config: logLevel=debug, logFile=/Users/gentlebookpro/Projekte/UNI/SWE/bankkonto-verwalter-nestjs/log/server.log, pretty=true
-
-      at Object.<anonymous> (src/config/logger.ts:44:9)
-
-  console.debug
-    mailConfig = {
-      activated: true,
-      options: {
-        host: 'localhost',
-        port: 8025,
-        secure: false,
-        priority: 'normal',
-        logger: false
-      }
-    }
-
-      at Object.<anonymous> (src/config/mail.ts:47:13)
-
-  console.debug
-    tlsDir = /Users/gentlebookpro/Projekte/UNI/SWE/bankkonto-verwalter-nestjs/src/config/resources/tls
-
-      at Object.<anonymous> (src/config/https.ts:16:9)
-
-  console.debug
-    keycloakConnectOptions = {
-      authServerUrl: 'http://localhost:8880',
-      realm: 'nest',
-      clientId: 'nest-client',
-      policyEnforcement: 'permissive',
-      tokenValidation: 'online'
-    }
-
-      at Object.<anonymous> (src/config/keycloak.ts:43:13)
-
-  console.debug
-    dbConfig: {
-      type: 'postgres',
-      username: 'bankkonto',
-      password: 'p',
-      passwordAdmin: 'p',
-      name: 'bankkonto',
-      populate: true
-    }
-
-      at Object.<anonymous> (src/config/db.ts:9:9)
-
-  console.debug
-    dbResourcesDir = /Users/gentlebookpro/Projekte/UNI/SWE/bankkonto-verwalter-nestjs/src/config/resources/db/postgres
-
-      at Object.<anonymous> (src/config/typeormOptions.ts:46:9)
-
-  console.debug
-    typeOrmModuleOptions = {
-      type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'bankkonto',
-      database: 'bankkonto',
-      schema: 'bankkonto',
-      poolSize: 10,
-      entities: [
-        <ref *1> [class Bankkonto] {
-          [length]: 0,
-          [name]: 'Bankkonto',
-          [prototype]: { [constructor]: [Circular *1] }
-        },
-        <ref *2> [class Transaktion] {
-          [length]: 0,
-          [name]: 'Transaktion',
-          [prototype]: { [constructor]: [Circular *2] }
-        },
-        <ref *3> [class Kunde] {
-          [length]: 0,
-          [name]: 'Kunde',
-          [prototype]: { [constructor]: [Circular *3] }
-        },
-        <ref *4> [class BankkontoDokument] {
-          [length]: 0,
-          [name]: 'BankkontoDokument',
-          [prototype]: { [constructor]: [Circular *4] }
-        },
-        [length]: 4
-      ],
-      namingStrategy: SnakeNamingStrategy {
-        nestedSetColumnNames: { left: 'nsleft', right: 'nsright' },
-        materializedPathColumnName: 'mpath'
-      },
-      logging: true,
-      logger: 'advanced-console',
-      extra: { ssl: { rejectUnauthorized: false } }
-    }
-
-      at Object.<anonymous> (src/config/typeormOptions.ts:145:13)
-
-  console.debug
-    schemaGraphQL = src/config/resources/graphql/schema.graphql
-
-      at Object.<anonymous> (src/config/graphql.ts:12:9)
-
-[32m[Nest] 69517  - [39m03.11.2024, 20:26:49 [32m    LOG[39m [38;5;3m[NestFactory] [39m[32mStarting Nest application...[39m
-[32m[Nest] 69517  - [39m03.11.2024, 20:26:49 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAppModule dependencies initialized[39m[38;5;3m +21ms[39m
-[32m[Nest] 69517  - [39m03.11.2024, 20:26:49 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConfigModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 69517  - [39m03.11.2024, 20:26:49 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mMailModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 69517  - [39m03.11.2024, 20:26:49 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mLoggerModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 69517  - [39m03.11.2024, 20:26:49 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 69517  - [39m03.11.2024, 20:26:49 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mHttpModule dependencies initialized[39m[38;5;3m +1ms[39m
-[32m[Nest] 69517  - [39m03.11.2024, 20:26:49 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTerminusModule dependencies initialized[39m[38;5;3m +1ms[39m
-[32m[Nest] 69517  - [39m03.11.2024, 20:26:49 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mKeycloakConnectModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 69517  - [39m03.11.2024, 20:26:49 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAdminModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 69517  - [39m03.11.2024, 20:26:49 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mGraphQLSchemaBuilderModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 69517  - [39m03.11.2024, 20:26:49 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mKeycloakModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 69517  - [39m03.11.2024, 20:26:49 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mGraphQLModule dependencies initialized[39m[38;5;3m +1ms[39m
-  console.log
-    query: SELECT * FROM current_schema()
-
-      at Function.logInfo (src/platform/PlatformTools.ts:235:17)
-
-  console.log
-    query: SELECT version();
-
-      at Function.logInfo (src/platform/PlatformTools.ts:235:17)
-
-[32m[Nest] 69517  - [39m03.11.2024, 20:26:50 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmCoreModule dependencies initialized[39m[38;5;3m +64ms[39m
-[32m[Nest] 69517  - [39m03.11.2024, 20:26:50 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 69517  - [39m03.11.2024, 20:26:50 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 69517  - [39m03.11.2024, 20:26:50 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mDevModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 69517  - [39m03.11.2024, 20:26:50 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mBankkontoModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 69517  - [39m03.11.2024, 20:26:50 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mHealthController {/health}:[39m[38;5;3m +4ms[39m
-[32m[Nest] 69517  - [39m03.11.2024, 20:26:50 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/health/liveness, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 69517  - [39m03.11.2024, 20:26:50 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/health/readiness, GET} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 69517  - [39m03.11.2024, 20:26:50 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mPrometheusController {/metrics}:[39m[38;5;3m +0ms[39m
-[32m[Nest] 69517  - [39m03.11.2024, 20:26:50 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/metrics, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 69517  - [39m03.11.2024, 20:26:50 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mBankkontoGetController {/rest}:[39m[38;5;3m +0ms[39m
-[32m[Nest] 69517  - [39m03.11.2024, 20:26:50 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/rest/:bankkontoId, GET} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 69517  - [39m03.11.2024, 20:26:50 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/rest, GET} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 69517  - [39m03.11.2024, 20:26:50 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mBankkontoWriteController {/rest}:[39m[38;5;3m +0ms[39m
-[32m[Nest] 69517  - [39m03.11.2024, 20:26:50 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/rest, POST} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 69517  - [39m03.11.2024, 20:26:50 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/rest/:bankkontoId, PUT} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 69517  - [39m03.11.2024, 20:26:50 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/rest/:bankkontoId, DELETE} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 69517  - [39m03.11.2024, 20:26:50 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mTokenController {/auth}:[39m[38;5;3m +0ms[39m
-[32m[Nest] 69517  - [39m03.11.2024, 20:26:50 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/auth/token, POST} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 69517  - [39m03.11.2024, 20:26:50 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/auth/refresh, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 69517  - [39m03.11.2024, 20:26:50 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mDevController {/dev}:[39m[38;5;3m +0ms[39m
-[32m[Nest] 69517  - [39m03.11.2024, 20:26:50 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/dev/db_populate, POST} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 69517  - [39m03.11.2024, 20:26:50 [32m    LOG[39m [38;5;3m[GraphQLModule] [39m[32mMapped {/graphql, POST} route[39m[38;5;3m +28ms[39m
-  console.log
-    query: DROP TABLE IF EXISTS transaktion CASCADE;
-    DROP TABLE IF EXISTS kunde CASCADE;
-    DROP TABLE IF EXISTS bankkonto CASCADE;
-    DROP TABLE IF EXISTS bankkonto_dokument CASCADE;
-    
-    DROP TYPE IF EXISTS transaktion_typ;
-    DROP TYPE IF EXISTS dokument_typ;
-
-      at Function.logInfo (src/platform/PlatformTools.ts:235:17)
-          at async Promise.all (index 0)
-
-[2024-11-03 20:26:49.971 +0100] [34mDEBUG[39m: [36mkeycloakClient={"transitional":{"silentJSONParsing":true,"forcedJSONParsing":true,"clarifyTimeoutError":false},"adapter":["xhr","http","fetch"],"transformRequest":[null],"transformResponse":[null],"timeout":0,"xsrfCookieName":"XSRF-TOKEN","xsrfHeaderName":"X-XSRF-TOKEN","maxContentLength":-1,"maxBodyLength":-1,"env":{},"headers":{"common":{"Accept":"application/json, text/plain, */*"},"delete":{},"get":{},"head":{},"post":{},"put":{},"patch":{}},"baseURL":"http://localhost:8880"}[39m [90m{"class":"KeycloakService"}[39m
-[2024-11-03 20:26:49.971 +0100] [34mDEBUG[39m: [36mkeycloakClient={"transitional":{"silentJSONParsing":true,"forcedJSONParsing":true,"clarifyTimeoutError":false},"adapter":["xhr","http","fetch"],"transformRequest":[null],"transformResponse":[null],"timeout":0,"xsrfCookieName":"XSRF-TOKEN","xsrfHeaderName":"X-XSRF-TOKEN","maxContentLength":-1,"maxBodyLength":-1,"env":{},"headers":{"common":{"Accept":"application/json, text/plain, */*"},"delete":{},"get":{},"head":{},"post":{},"put":{},"patch":{}},"baseURL":"http://localhost:8880"}[39m [90m{"class":"KeycloakService"}[39m
-[2024-11-03 20:26:50.079 +0100] [33mWARN[39m: [36mpostgres: DB wird neu geladen[39m [90m{"class":"DbPopulateService"}[39m
-[2024-11-03 20:26:50.079 +0100] [34mDEBUG[39m: [36mdropScript = /Users/gentlebookpro/Projekte/UNI/SWE/bankkonto-verwalter-nestjs/src/config/resources/db/postgres/drop.sql[39m [90m{"class":"DbPopulateService"}[39m
-  console.log
-    query: -- Schema für Bankkonto und Transaktion erstellen
-    CREATE SCHEMA IF NOT EXISTS AUTHORIZATION bankkonto;
-    
-    ALTER ROLE bankkonto SET search_path = 'bankkonto';
-    
-    -- Enum für Transaktionstypen erstellen
-    CREATE TYPE transaktion_typ AS ENUM ('EINZAHLUNG', 'AUSZAHLUNG', 'ÜBERWEISUNG', 'EINKOMMEN', 'ZAHLUNG');
-    CREATE TYPE dokument_typ AS ENUM ('VERTRAG', 'RECHNUNG');
-    
-    -- Tabelle für Bankkonto
-    CREATE TABLE IF NOT EXISTS bankkonto (
-        bankkonto_id       integer GENERATED ALWAYS AS IDENTITY(START WITH 1000) PRIMARY KEY USING INDEX TABLESPACE bankkontospace,
-        version            INTEGER NOT NULL DEFAULT 0,
-        saldo              DECIMAL(10, 2) NOT NULL CHECK (saldo >= 0),
-        transaktion_limit  DECIMAL(10, 2),
-        waehrungen         text,
-        erstellt_am        TIMESTAMP NOT NULL DEFAULT NOW(),
-        aktualisiert_am    TIMESTAMP NOT NULL DEFAULT NOW()
-    );
-    
-    CREATE TABLE IF NOT EXISTS kunde (
-        kunde_id    integer GENERATED ALWAYS AS IDENTITY(START WITH 1000) PRIMARY KEY USING INDEX TABLESPACE bankkontospace,
-        name         VARCHAR(50) NOT NULL,
-        vorname      VARCHAR(50) NOT NULL,
-        email        VARCHAR(100) UNIQUE NOT NULL,
-        bankkonto_id integer NOT NULL UNIQUE USING INDEX TABLESPACE bankkontospace REFERENCES bankkonto
-    ) TABLESPACE bankkontospace;
-    
-    -- Tabelle für Transaktion
-    CREATE TABLE IF NOT EXISTS transaktion (
-        transaktion_id    integer GENERATED ALWAYS AS IDENTITY(START WITH 1000) PRIMARY KEY USING INDEX TABLESPACE bankkontospace,
-        transaktion_typ   transaktion_typ NOT NULL,
-        betrag            DECIMAL(10, 2) NOT NULL CHECK (betrag > 0),
-        absender          integer,
-        empfaenger        integer,
-        transaktion_datum TIMESTAMP NOT NULL DEFAULT NOW(),
-        bankkonto_id      integer NOT NULL REFERENCES bankkonto
-    );
-    
-    -- Index für schnellere Abfragen auf der Transaktion-Tabelle
-    CREATE INDEX IF NOT EXISTS idx_transaktion_typ_datum_konto ON transaktion (transaktion_typ, transaktion_datum, bankkonto_id);
-    
-    CREATE TABLE IF NOT EXISTS bankkonto_dokument (
-        dokument_id     integer GENERATED ALWAYS AS IDENTITY(START WITH 1000) PRIMARY KEY USING INDEX TABLESPACE bankkontospace,
-        data            bytea NOT NULL,
-        filename        text NOT NULL,
-        dokument_typ    dokument_typ NOT NULL,
-        bankkonto_id    integer NOT NULL REFERENCES bankkonto
-    ) TABLESPACE bankkontospace;
-    CREATE INDEX IF NOT EXISTS bankkonto_dokument_bankkonto_id_idx ON bankkonto_dokument(bankkonto_id) TABLESPACE bankkontospace;
-
-      at Function.logInfo (src/platform/PlatformTools.ts:235:17)
-          at async Promise.all (index 0)
-
-[2024-11-03 20:26:50.095 +0100] [34mDEBUG[39m: [36mcreateScript = /Users/gentlebookpro/Projekte/UNI/SWE/bankkonto-verwalter-nestjs/src/config/resources/db/postgres/create.sql[39m [90m{"class":"DbPopulateService"}[39m
-  console.log
-    query: SELECT * FROM current_schema()
-
-      at Function.logInfo (src/platform/PlatformTools.ts:235:17)
-          at async Promise.all (index 0)
-
-  console.log
-    query: SELECT version();
-
-      at Function.logInfo (src/platform/PlatformTools.ts:235:17)
-          at async Promise.all (index 0)
-
-  console.log
-    query: SET search_path TO bankkonto;
-
-      at Function.logInfo (src/platform/PlatformTools.ts:235:17)
-          at async Promise.all (index 0)
-
-  console.log
-    query: COPY bankkonto FROM '/csv/bankkonto/bankkonto.csv' (FORMAT csv, DELIMITER ';', HEADER true);
-
-      at Function.logInfo (src/platform/PlatformTools.ts:235:17)
-          at async Promise.all (index 0)
-
-  console.log
-    query: COPY kunde FROM '/csv/bankkonto/kunde.csv' (FORMAT csv, DELIMITER ';', HEADER true);
-
-      at Function.logInfo (src/platform/PlatformTools.ts:235:17)
-          at async Promise.all (index 0)
-
-  console.log
-    query: COPY transaktion FROM '/csv/bankkonto/transaktion.csv' (FORMAT csv, DELIMITER ';', HEADER true);
-
-      at Function.logInfo (src/platform/PlatformTools.ts:235:17)
-          at async Promise.all (index 0)
-
-[32m[Nest] 69517  - [39m03.11.2024, 20:26:50 [32m    LOG[39m [38;5;3m[NestApplication] [39m[32mNest application successfully started[39m[38;5;3m +59ms[39m
-  console.info
-      _                 _    _               _        
-     | |__   __ _ _ __ | | _| | _____  _ __ | |_ ___  
-     | '_ \ / _` | '_ \| |/ / |/ / _ \| '_ \| __/ _ \ 
-     | |_) | (_| | | | |   <|   < (_) | | | | || (_) |
-     |_.__/ \__,_|_| |_|_|\_\_|\_\___/|_| |_|\__\___/
-
-      at src/logger/banner.service.ts:26:50
-
-[2024-11-03 20:26:50.136 +0100] [33mWARN[39m: [36mDB wurde neu geladen[39m [90m{"class":"DbPopulateService"}[39m
-[2024-11-03 20:26:50.136 +0100] [32mINFO[39m: [36mNode: v23.1.0[39m [90m{"class":"BannerService"}[39m
-[2024-11-03 20:26:50.136 +0100] [32mINFO[39m: [36mNODE_ENV: test[39m [90m{"class":"BannerService"}[39m
-[2024-11-03 20:26:50.136 +0100] [32mINFO[39m: [36mRechnername: Mac.fritz.box[39m [90m{"class":"BannerService"}[39m
-[2024-11-03 20:26:50.136 +0100] [32mINFO[39m: [36mPort: 3000[39m [90m{"class":"BannerService"}[39m
-[2024-11-03 20:26:50.136 +0100] [32mINFO[39m: [36mDB-System: postgres[39m [90m{"class":"BannerService"}[39m
-[2024-11-03 20:26:50.136 +0100] [32mINFO[39m: [36mBetriebssystem: Darwin (24.0.0)[39m [90m{"class":"BannerService"}[39m
-[2024-11-03 20:26:50.137 +0100] [32mINFO[39m: [36mUsername: gentlebookpro[39m [90m{"class":"BannerService"}[39m
-[2024-11-03 20:26:50.137 +0100] [32mINFO[39m: [36mSwagger UI: /swagger[39m [90m{"class":"BannerService"}[39m
-[2024-11-03 20:26:50.301 +0100] [34mDEBUG[39m: [36mmethod=POST, url=/auth/token, header={"accept":"application/json, text/plain, */*","content-type":"application/x-www-form-urlencoded","user-agent":"axios/1.7.7","content-length":"25","accept-encoding":"gzip, compress, deflate, br","host":"mac.fritz.box:3000","connection":"close"}[39m [90m{"class":"RequestLoggerMiddleware"}[39m
-[2024-11-03 20:26:50.305 +0100] [34mDEBUG[39m: [36mtoken: username=admin[39m [90m{"class":"TokenController"}[39m
-[2024-11-03 20:26:50.306 +0100] [34mDEBUG[39m: [36mtoken: username=admin[39m [90m{"class":"KeycloakService"}[39m
-[2024-11-03 20:26:50.348 +0100] [34mDEBUG[39m: [36m#logPayload: exp=1730663810[39m [90m{"class":"KeycloakService"}[39m
-[2024-11-03 20:26:50.348 +0100] [34mDEBUG[39m: [36m#logPayload: roles=["admin"][39m [90m{"class":"KeycloakService"}[39m
-[2024-11-03 20:26:50.348 +0100] [34mDEBUG[39m: [36mtoken: response.data={"access_token":"eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI4cDd2RzRseEdOSkM1eHFsN1FPRW9qYnRXZi16dXRXeXVPZ1IxSmRmdk04In0.eyJleHAiOjE3MzA2NjM4MTAsImlhdCI6MTczMDY2MjAxMCwianRpIjoiN2FkYzYyYWYtMTlhNC00MGEzLTg3MzMtZDcwYjkxZjIwNzg3IiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4ODgwL3JlYWxtcy9uZXN0IiwiYXVkIjoiYWNjb3VudCIsInN1YiI6IjdjNDE0MGFlLTBjM2UtNDg0Zi1hMzc0LTZlMGVlN2VmNmIyOCIsInR5cCI6IkJlYXJlciIsImF6cCI6Im5lc3QtY2xpZW50Iiwic2lkIjoiMzBkMjEzODctNDkxZi00N2NjLWFhOTQtNzZhMWU4Y2Q5MGMzIiwiYWNyIjoiMSIsImFsbG93ZWQtb3JpZ2lucyI6WyJodHRwczovL2xvY2FsaG9zdDozMDAwIiwiaHR0cHM6Ly9vYXV0aC5wc3Rtbi5pbyIsImh0dHBzOi8vYnVjaDozMDAwIl0sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJvZmZsaW5lX2FjY2VzcyIsInVtYV9hdXRob3JpemF0aW9uIiwiZGVmYXVsdC1yb2xlcy1uZXN0Il19LCJyZXNvdXJjZV9hY2Nlc3MiOnsibmVzdC1jbGllbnQiOnsicm9sZXMiOlsiYWRtaW4iXX0sImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoiZW1haWwgcHJvZmlsZSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwibmFtZSI6Ik5lc3QgQWRtaW4iLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJhZG1pbiIsImdpdmVuX25hbWUiOiJOZXN0IiwiZmFtaWx5X25hbWUiOiJBZG1pbiIsImVtYWlsIjoiYWRtaW5AYWNtZS5jb20ifQ.BJLospBRzYi2AWSarBga_HWXx1_L1VfjkTsGA_hz2D7wkG33cXMKfpg9m4UnN8yuQXNtTI_0ic_fJAFjSJZFglwVOKgi-lT34sm60Aus2oDf7pxbNiDHZYjliZyoq3b4FZc5WtXEBpy67oGh8tTkZcPEnwxeeDQrNxpVhJsY1L-0BMBkCU7N5QKbafamVioZYfUT-m8krO6tVckGbLuSE1l5pWs95YCaM3_qkfho8V83hHjPB8NS4iWSF0ZOLwhd3YtGhh0kGkGO307QPseW1f-TRUgVy1d4IHZBHaNwHFeUY3vTWH6fR_VKRvN7RtZaxyhLbQXSla1NRxPj75TY5w","expires_in":1800,"refresh_expires_in":3600,"refresh_token":"eyJhbGciOiJIUzUxMiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJiYWQxN2U1ZS0zY2ZjLTQ3MzAtYTUzOS1mN2FiNzIzMTE0OWIifQ.eyJleHAiOjE3MzA2NjU2MTAsImlhdCI6MTczMDY2MjAxMCwianRpIjoiOThkNGIyYmUtMzBjMC00MzM3LWE0NjYtOGE0ZTEyYjE3NzBlIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4ODgwL3JlYWxtcy9uZXN0IiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdDo4ODgwL3JlYWxtcy9uZXN0Iiwic3ViIjoiN2M0MTQwYWUtMGMzZS00ODRmLWEzNzQtNmUwZWU3ZWY2YjI4IiwidHlwIjoiUmVmcmVzaCIsImF6cCI6Im5lc3QtY2xpZW50Iiwic2lkIjoiMzBkMjEzODctNDkxZi00N2NjLWFhOTQtNzZhMWU4Y2Q5MGMzIiwic2NvcGUiOiJ3ZWItb3JpZ2lucyBiYXNpYyBlbWFpbCBhY3Igcm9sZXMgcHJvZmlsZSJ9.ANW9hRY-HsR-jFgBThRxVU83VhRN2hpcUlrWD6ui9mnP8pd13zvShomgSQHYV8uroGiKhtADMIE4z5WTT1Ettw","token_type":"Bearer","not-before-policy":0,"session_state":"30d21387-491f-47cc-aa94-76a1e8cd90c3","scope":"email profile"}[39m [90m{"class":"KeycloakService"}[39m
-[2024-11-03 20:26:50.350 +0100] [34mDEBUG[39m: [36mResponse time: 47 ms, 200 OK[39m [90m{"class":"ResponseTimeInterceptor"}[39m
-[2024-11-03 20:26:50.359 +0100] [34mDEBUG[39m: [36mmethod=DELETE, url=/rest/5, header={"accept":"application/json, text/plain, */*","authorization":"Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI4cDd2RzRseEdOSkM1eHFsN1FPRW9qYnRXZi16dXRXeXVPZ1IxSmRmdk04In0.eyJleHAiOjE3MzA2NjM4MTAsImlhdCI6MTczMDY2MjAxMCwianRpIjoiN2FkYzYyYWYtMTlhNC00MGEzLTg3MzMtZDcwYjkxZjIwNzg3IiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4ODgwL3JlYWxtcy9uZXN0IiwiYXVkIjoiYWNjb3VudCIsInN1YiI6IjdjNDE0MGFlLTBjM2UtNDg0Zi1hMzc0LTZlMGVlN2VmNmIyOCIsInR5cCI6IkJlYXJlciIsImF6cCI6Im5lc3QtY2xpZW50Iiwic2lkIjoiMzBkMjEzODctNDkxZi00N2NjLWFhOTQtNzZhMWU4Y2Q5MGMzIiwiYWNyIjoiMSIsImFsbG93ZWQtb3JpZ2lucyI6WyJodHRwczovL2xvY2FsaG9zdDozMDAwIiwiaHR0cHM6Ly9vYXV0aC5wc3Rtbi5pbyIsImh0dHBzOi8vYnVjaDozMDAwIl0sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJvZmZsaW5lX2FjY2VzcyIsInVtYV9hdXRob3JpemF0aW9uIiwiZGVmYXVsdC1yb2xlcy1uZXN0Il19LCJyZXNvdXJjZV9hY2Nlc3MiOnsibmVzdC1jbGllbnQiOnsicm9sZXMiOlsiYWRtaW4iXX0sImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoiZW1haWwgcHJvZmlsZSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwibmFtZSI6Ik5lc3QgQWRtaW4iLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJhZG1pbiIsImdpdmVuX25hbWUiOiJOZXN0IiwiZmFtaWx5X25hbWUiOiJBZG1pbiIsImVtYWlsIjoiYWRtaW5AYWNtZS5jb20ifQ.BJLospBRzYi2AWSarBga_HWXx1_L1VfjkTsGA_hz2D7wkG33cXMKfpg9m4UnN8yuQXNtTI_0ic_fJAFjSJZFglwVOKgi-lT34sm60Aus2oDf7pxbNiDHZYjliZyoq3b4FZc5WtXEBpy67oGh8tTkZcPEnwxeeDQrNxpVhJsY1L-0BMBkCU7N5QKbafamVioZYfUT-m8krO6tVckGbLuSE1l5pWs95YCaM3_qkfho8V83hHjPB8NS4iWSF0ZOLwhd3YtGhh0kGkGO307QPseW1f-TRUgVy1d4IHZBHaNwHFeUY3vTWH6fR_VKRvN7RtZaxyhLbQXSla1NRxPj75TY5w","user-agent":"axios/1.7.7","accept-encoding":"gzip, compress, deflate, br","host":"mac.fritz.box:3000","connection":"close"}[39m [90m{"class":"RequestLoggerMiddleware"}[39m
-  console.log
-    query: SELECT "bankkonto"."bankkonto_id" AS "bankkonto_bankkonto_id", "bankkonto"."version" AS "bankkonto_version", "bankkonto"."saldo" AS "bankkonto_saldo", "bankkonto"."transaktion_limit" AS "bankkonto_transaktion_limit", "bankkonto"."waehrungen" AS "bankkonto_waehrungen", "bankkonto"."erstellt_am" AS "bankkonto_erstellt_am", "bankkonto"."aktualisiert_am" AS "bankkonto_aktualisiert_am", "kunde"."kunde_id" AS "kunde_kunde_id", "kunde"."name" AS "kunde_name", "kunde"."vorname" AS "kunde_vorname", "kunde"."email" AS "kunde_email", "kunde"."bankkonto_id" AS "kunde_bankkonto_id", "transaktion"."transaktion_id" AS "transaktion_transaktion_id", "transaktion"."transaktion_typ" AS "transaktion_transaktion_typ", "transaktion"."betrag" AS "transaktion_betrag", "transaktion"."absender" AS "transaktion_absender", "transaktion"."empfaenger" AS "transaktion_empfaenger", "transaktion"."transaktion_datum" AS "transaktion_transaktion_datum", "transaktion"."bankkonto_id" AS "transaktion_bankkonto_id" FROM "bankkonto"."bankkonto" "bankkonto" INNER JOIN "bankkonto"."kunde" "kunde" ON "kunde"."bankkonto_id"="bankkonto"."bankkonto_id"  LEFT JOIN "bankkonto"."transaktion" "transaktion" ON "transaktion"."bankkonto_id"="bankkonto"."bankkonto_id" WHERE "bankkonto"."bankkonto_id" = $1 -- PARAMETERS: ["5"]
-
-      at Function.logInfo (src/platform/PlatformTools.ts:235:17)
-
-[2024-11-03 20:26:50.375 +0100] [34mDEBUG[39m: [36mdelete: bankkontoId=5[39m [90m{"class":"BankkontoWriteController"}[39m
-[2024-11-03 20:26:50.375 +0100] [34mDEBUG[39m: [36mdelete: bankkontoId=5[39m [90m{"class":"BankkontoWriteService"}[39m
-[2024-11-03 20:26:50.375 +0100] [34mDEBUG[39m: [36mfindByBankkontoId: bankkontoId=5[39m [90m{"class":"BankkontoReadService"}[39m
-  console.log
-    query: START TRANSACTION
-
-      at Function.logInfo (src/platform/PlatformTools.ts:235:17)
-
-[2024-11-03 20:26:50.397 +0100] [34mDEBUG[39m: [36mfindByBankkontoId: bankkonto={"bankkontoId":5,"saldo":"2000.00","transaktionLimit":null,"erstelltAm":"2024-05-17T08:00:00.000Z","aktualisiertAm":"2024-05-17T08:00:00.000Z"}, kundenId={"kundeId":5,"name":"Mathias","vorname":"Watsica","email":"Patrick27@hotmail.com"}[39m [90m{"class":"BankkontoReadService"}[39m
-[2024-11-03 20:26:50.397 +0100] [34mDEBUG[39m: [36mfindByBankkontoId: transaktionen=[{"transaktionId":8,"transaktionTyp":"ÜBERWEISUNG","betrag":"50.00","absender":5,"empfaenger":6,"transaktionDatum":"2024-05-17T08:00:00.000Z"}][39m [90m{"class":"BankkontoReadService"}[39m
-  console.log
-    query: DELETE FROM "bankkonto"."kunde" WHERE "kunde_id" IN ($1) -- PARAMETERS: [5]
-
-      at Function.logInfo (src/platform/PlatformTools.ts:235:17)
-
-  console.log
-    query: DELETE FROM "bankkonto"."transaktion" WHERE "transaktion_id" IN ($1) -- PARAMETERS: [8]
-
-      at Function.logInfo (src/platform/PlatformTools.ts:235:17)
-
-  console.log
-    query: DELETE FROM "bankkonto"."bankkonto" WHERE "bankkonto_id" IN ($1) -- PARAMETERS: ["5"]
-
-      at Function.logInfo (src/platform/PlatformTools.ts:235:17)
-
-  console.log
-    query: COMMIT
-
-      at Function.logInfo (src/platform/PlatformTools.ts:235:17)
-
-[2024-11-03 20:26:50.407 +0100] [34mDEBUG[39m: [36mdelete: deleteResult={"raw":[],"affected":1}[39m [90m{"class":"BankkontoWriteService"}[39m
-[2024-11-03 20:26:50.408 +0100] [34mDEBUG[39m: [36mResponse time: 33 ms[39m [90m{"class":"ResponseTimeInterceptor"}[39m
-[2024-11-03 20:26:50.418 +0100] [34mDEBUG[39m: [36mmethod=DELETE, url=/rest/5, header={"accept":"application/json, text/plain, */*","user-agent":"axios/1.7.7","accept-encoding":"gzip, compress, deflate, br","host":"mac.fritz.box:3000","connection":"close"}[39m [90m{"class":"RequestLoggerMiddleware"}[39m
-[33m[Nest] 69517  - [39m03.11.2024, 20:26:50 [33m   WARN[39m [38;5;3m[Keycloak] [39m[33mCannot validate access token: Error: Grant validation failed. Reason: invalid token (expired)[39m
-[2024-11-03 20:26:50.427 +0100] [34mDEBUG[39m: [36mmethod=DELETE, url=/rest/5, header={"accept":"application/json, text/plain, */*","authorization":"Bearer FALSCH","user-agent":"axios/1.7.7","accept-encoding":"gzip, compress, deflate, br","host":"mac.fritz.box:3000","connection":"close"}[39m [90m{"class":"RequestLoggerMiddleware"}[39m
-[2024-11-03 20:26:50.436 +0100] [34mDEBUG[39m: [36mmethod=POST, url=/auth/token, header={"accept":"application/json, text/plain, */*","content-type":"application/x-www-form-urlencoded","user-agent":"axios/1.7.7","content-length":"24","accept-encoding":"gzip, compress, deflate, br","host":"mac.fritz.box:3000","connection":"close"}[39m [90m{"class":"RequestLoggerMiddleware"}[39m
-[2024-11-03 20:26:50.436 +0100] [34mDEBUG[39m: [36mtoken: username=user[39m [90m{"class":"TokenController"}[39m
-[2024-11-03 20:26:50.436 +0100] [34mDEBUG[39m: [36mtoken: username=user[39m [90m{"class":"KeycloakService"}[39m
-[2024-11-03 20:26:50.466 +0100] [34mDEBUG[39m: [36m#logPayload: exp=1730663810[39m [90m{"class":"KeycloakService"}[39m
-[2024-11-03 20:26:50.466 +0100] [34mDEBUG[39m: [36m#logPayload: roles=["user"][39m [90m{"class":"KeycloakService"}[39m
-[2024-11-03 20:26:50.467 +0100] [34mDEBUG[39m: [36mtoken: response.data={"access_token":"eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI4cDd2RzRseEdOSkM1eHFsN1FPRW9qYnRXZi16dXRXeXVPZ1IxSmRmdk04In0.eyJleHAiOjE3MzA2NjM4MTAsImlhdCI6MTczMDY2MjAxMCwianRpIjoiNjNlMzY4NTYtNmRjMy00MTdkLTg5ZGEtYTYxNzc0ODFmOGU5IiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4ODgwL3JlYWxtcy9uZXN0IiwiYXVkIjoiYWNjb3VudCIsInN1YiI6IjQ1NGY0Njc5LWQ4YjgtNDA5Mi04MDhlLWM1MDI5YTcxMjU2MyIsInR5cCI6IkJlYXJlciIsImF6cCI6Im5lc3QtY2xpZW50Iiwic2lkIjoiMTYwZGViNDctNzljOS00ZTBjLWIwZTctYWZjOTY0ZTk3MTk1IiwiYWNyIjoiMSIsImFsbG93ZWQtb3JpZ2lucyI6WyJodHRwczovL2xvY2FsaG9zdDozMDAwIiwiaHR0cHM6Ly9vYXV0aC5wc3Rtbi5pbyIsImh0dHBzOi8vYnVjaDozMDAwIl0sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJvZmZsaW5lX2FjY2VzcyIsInVtYV9hdXRob3JpemF0aW9uIiwiZGVmYXVsdC1yb2xlcy1uZXN0Il19LCJyZXNvdXJjZV9hY2Nlc3MiOnsibmVzdC1jbGllbnQiOnsicm9sZXMiOlsidXNlciJdfSwiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJlbWFpbCBwcm9maWxlIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJuYW1lIjoiTmVzdCBVc2VyIiwicHJlZmVycmVkX3VzZXJuYW1lIjoidXNlciIsImdpdmVuX25hbWUiOiJOZXN0IiwiZmFtaWx5X25hbWUiOiJVc2VyIiwiZW1haWwiOiJ1c2VyQGFjbWUuY29tIn0.LZJpcEj9f_6k06loEQ6QPnY-_0KyTE022AKSgETaFeW3FpITbKClfcDqbYYCEBR9RgvvsXbzocRa1tycBJx3K76Tj2zYfR9N5m8CkXFsM8yHY6T1wh8QcC08kVtP6BkSTuWJp_gGdPYkzJrVZr1QZNz6XeSq3SBarBzr-l8OivgZzLBOPTnPq6iNGCG1d1O6_rELj8dd2OpoVA7f9pHHyEq-brCWxvaZh7eI1J5HAnUJXOtsTKJdALKu0b80jPeZG1Ibc0TuMLUvD0VynjqNC09ODlr_Y20JkbNHtsN2e6mU38cDh85-fE8tGHrDYP9HDg5HOT58-H4Ovv-Z-rCOrw","expires_in":1800,"refresh_expires_in":3600,"refresh_token":"eyJhbGciOiJIUzUxMiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJiYWQxN2U1ZS0zY2ZjLTQ3MzAtYTUzOS1mN2FiNzIzMTE0OWIifQ.eyJleHAiOjE3MzA2NjU2MTAsImlhdCI6MTczMDY2MjAxMCwianRpIjoiNWZkMzQxNTYtY2EwZi00ZjViLTk5YjMtYjhmZDMxNTI3ZjFmIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4ODgwL3JlYWxtcy9uZXN0IiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdDo4ODgwL3JlYWxtcy9uZXN0Iiwic3ViIjoiNDU0ZjQ2NzktZDhiOC00MDkyLTgwOGUtYzUwMjlhNzEyNTYzIiwidHlwIjoiUmVmcmVzaCIsImF6cCI6Im5lc3QtY2xpZW50Iiwic2lkIjoiMTYwZGViNDctNzljOS00ZTBjLWIwZTctYWZjOTY0ZTk3MTk1Iiwic2NvcGUiOiJ3ZWItb3JpZ2lucyBiYXNpYyBlbWFpbCBhY3Igcm9sZXMgcHJvZmlsZSJ9.-k9bmJSRXzIhJnGnUlgo9-7fX3Pe8S--hq9Z0gvtabbhTG0aOPLRAnPmHMZbdrhmo-eYK0b4KwZLoWuawj5fGw","token_type":"Bearer","not-before-policy":0,"session_state":"160deb47-79c9-4e0c-b0e7-afc964e97195","scope":"email profile"}[39m [90m{"class":"KeycloakService"}[39m
-[2024-11-03 20:26:50.467 +0100] [34mDEBUG[39m: [36mResponse time: 31 ms, 200 OK[39m [90m{"class":"ResponseTimeInterceptor"}[39m
-[2024-11-03 20:26:50.474 +0100] [34mDEBUG[39m: [36mmethod=DELETE, url=/rest/60, header={"accept":"application/json, text/plain, */*","authorization":"Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI4cDd2RzRseEdOSkM1eHFsN1FPRW9qYnRXZi16dXRXeXVPZ1IxSmRmdk04In0.eyJleHAiOjE3MzA2NjM4MTAsImlhdCI6MTczMDY2MjAxMCwianRpIjoiNjNlMzY4NTYtNmRjMy00MTdkLTg5ZGEtYTYxNzc0ODFmOGU5IiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4ODgwL3JlYWxtcy9uZXN0IiwiYXVkIjoiYWNjb3VudCIsInN1YiI6IjQ1NGY0Njc5LWQ4YjgtNDA5Mi04MDhlLWM1MDI5YTcxMjU2MyIsInR5cCI6IkJlYXJlciIsImF6cCI6Im5lc3QtY2xpZW50Iiwic2lkIjoiMTYwZGViNDctNzljOS00ZTBjLWIwZTctYWZjOTY0ZTk3MTk1IiwiYWNyIjoiMSIsImFsbG93ZWQtb3JpZ2lucyI6WyJodHRwczovL2xvY2FsaG9zdDozMDAwIiwiaHR0cHM6Ly9vYXV0aC5wc3Rtbi5pbyIsImh0dHBzOi8vYnVjaDozMDAwIl0sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJvZmZsaW5lX2FjY2VzcyIsInVtYV9hdXRob3JpemF0aW9uIiwiZGVmYXVsdC1yb2xlcy1uZXN0Il19LCJyZXNvdXJjZV9hY2Nlc3MiOnsibmVzdC1jbGllbnQiOnsicm9sZXMiOlsidXNlciJdfSwiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJlbWFpbCBwcm9maWxlIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJuYW1lIjoiTmVzdCBVc2VyIiwicHJlZmVycmVkX3VzZXJuYW1lIjoidXNlciIsImdpdmVuX25hbWUiOiJOZXN0IiwiZmFtaWx5X25hbWUiOiJVc2VyIiwiZW1haWwiOiJ1c2VyQGFjbWUuY29tIn0.LZJpcEj9f_6k06loEQ6QPnY-_0KyTE022AKSgETaFeW3FpITbKClfcDqbYYCEBR9RgvvsXbzocRa1tycBJx3K76Tj2zYfR9N5m8CkXFsM8yHY6T1wh8QcC08kVtP6BkSTuWJp_gGdPYkzJrVZr1QZNz6XeSq3SBarBzr-l8OivgZzLBOPTnPq6iNGCG1d1O6_rELj8dd2OpoVA7f9pHHyEq-brCWxvaZh7eI1J5HAnUJXOtsTKJdALKu0b80jPeZG1Ibc0TuMLUvD0VynjqNC09ODlr_Y20JkbNHtsN2e6mU38cDh85-fE8tGHrDYP9HDg5HOT58-H4Ovv-Z-rCOrw","user-agent":"axios/1.7.7","accept-encoding":"gzip, compress, deflate, br","host":"mac.fritz.box:3000","connection":"close"}[39m [90m{"class":"RequestLoggerMiddleware"}[39m
