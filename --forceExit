@@ -1,0 +1,264 @@
+  console.debug
+    NODE_ENV = test
+
+      at Object.<anonymous> (src/config/env.ts:35:9)
+
+  console.debug
+    logger config: logLevel=debug, logFile=/Users/gentlebookpro/Projekte/UNI/SWE/bankkonto-verwalter-nestjs/log/server.log, pretty=true
+
+      at Object.<anonymous> (src/config/logger.ts:44:9)
+
+  console.debug
+    dbConfig: {
+      type: 'postgres',
+      username: 'bankkonto',
+      password: 'p',
+      passwordAdmin: 'p',
+      name: 'bankkonto',
+      populate: true
+    }
+
+      at Object.<anonymous> (src/config/db.ts:9:9)
+
+  console.debug
+    tlsDir = /Users/gentlebookpro/Projekte/UNI/SWE/bankkonto-verwalter-nestjs/src/config/resources/tls
+
+      at Object.<anonymous> (src/config/https.ts:16:9)
+
+  console.debug
+    dbResourcesDir = /Users/gentlebookpro/Projekte/UNI/SWE/bankkonto-verwalter-nestjs/src/config/resources/db/postgres
+
+      at Object.<anonymous> (src/config/typeormOptions.ts:46:9)
+
+  console.debug
+    typeOrmModuleOptions = {
+      type: 'postgres',
+      host: 'localhost',
+      port: 5432,
+      username: 'bankkonto',
+      database: 'bankkonto',
+      schema: 'bankkonto',
+      poolSize: 10,
+      entities: [
+        <ref *1> [class Bankkonto] {
+          [length]: 0,
+          [name]: 'Bankkonto',
+          [prototype]: { [constructor]: [Circular *1] }
+        },
+        <ref *2> [class Transaktion] {
+          [length]: 0,
+          [name]: 'Transaktion',
+          [prototype]: { [constructor]: [Circular *2] }
+        },
+        <ref *3> [class Kunde] {
+          [length]: 0,
+          [name]: 'Kunde',
+          [prototype]: { [constructor]: [Circular *3] }
+        },
+        <ref *4> [class BankkontoDokument] {
+          [length]: 0,
+          [name]: 'BankkontoDokument',
+          [prototype]: { [constructor]: [Circular *4] }
+        },
+        [length]: 4
+      ],
+      namingStrategy: SnakeNamingStrategy {
+        nestedSetColumnNames: { left: 'nsleft', right: 'nsright' },
+        materializedPathColumnName: 'mpath'
+      },
+      logging: true,
+      logger: 'advanced-console',
+      extra: { ssl: { rejectUnauthorized: false } }
+    }
+
+      at Object.<anonymous> (src/config/typeormOptions.ts:145:13)
+
+  console.debug
+    mailConfig = {
+      activated: true,
+      options: {
+        host: 'localhost',
+        port: 8025,
+        secure: false,
+        priority: 'normal',
+        logger: false
+      }
+    }
+
+      at Object.<anonymous> (src/config/mail.ts:47:13)
+
+  console.debug
+    keycloakConnectOptions = {
+      authServerUrl: 'http://localhost:8880',
+      realm: 'nest',
+      clientId: 'nest-client',
+      policyEnforcement: 'permissive',
+      tokenValidation: 'online'
+    }
+
+      at Object.<anonymous> (src/config/keycloak.ts:43:13)
+
+  console.debug
+    schemaGraphQL = src/config/resources/graphql/schema.graphql
+
+      at Object.<anonymous> (src/config/graphql.ts:12:9)
+
+[32m[Nest] 72260  - [39m03.11.2024, 21:11:45 [32m    LOG[39m [38;5;3m[NestFactory] [39m[32mStarting Nest application...[39m
+[32m[Nest] 72260  - [39m03.11.2024, 21:11:45 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAppModule dependencies initialized[39m[38;5;3m +31ms[39m
+[32m[Nest] 72260  - [39m03.11.2024, 21:11:45 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConfigModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 72260  - [39m03.11.2024, 21:11:45 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mMailModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 72260  - [39m03.11.2024, 21:11:45 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mLoggerModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 72260  - [39m03.11.2024, 21:11:45 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 72260  - [39m03.11.2024, 21:11:45 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mHttpModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 72260  - [39m03.11.2024, 21:11:45 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTerminusModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 72260  - [39m03.11.2024, 21:11:45 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mKeycloakConnectModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 72260  - [39m03.11.2024, 21:11:45 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAdminModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 72260  - [39m03.11.2024, 21:11:45 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mGraphQLSchemaBuilderModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 72260  - [39m03.11.2024, 21:11:45 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mKeycloakModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 72260  - [39m03.11.2024, 21:11:45 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mGraphQLModule dependencies initialized[39m[38;5;3m +0ms[39m
+  console.log
+    query: SELECT * FROM current_schema()
+
+      at Function.logInfo (src/platform/PlatformTools.ts:235:17)
+
+  console.log
+    query: SELECT version();
+
+      at Function.logInfo (src/platform/PlatformTools.ts:235:17)
+
+[32m[Nest] 72260  - [39m03.11.2024, 21:11:45 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmCoreModule dependencies initialized[39m[38;5;3m +68ms[39m
+[32m[Nest] 72260  - [39m03.11.2024, 21:11:45 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 72260  - [39m03.11.2024, 21:11:45 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 72260  - [39m03.11.2024, 21:11:45 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mDevModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 72260  - [39m03.11.2024, 21:11:45 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mBankkontoModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 72260  - [39m03.11.2024, 21:11:45 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mHealthController {/health}:[39m[38;5;3m +5ms[39m
+[32m[Nest] 72260  - [39m03.11.2024, 21:11:45 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/health/liveness, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 72260  - [39m03.11.2024, 21:11:45 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/health/readiness, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 72260  - [39m03.11.2024, 21:11:45 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mPrometheusController {/metrics}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 72260  - [39m03.11.2024, 21:11:45 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/metrics, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 72260  - [39m03.11.2024, 21:11:45 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mBankkontoGetController {/rest}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 72260  - [39m03.11.2024, 21:11:45 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/rest/:bankkontoId, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 72260  - [39m03.11.2024, 21:11:45 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/rest, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 72260  - [39m03.11.2024, 21:11:45 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mBankkontoWriteController {/rest}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 72260  - [39m03.11.2024, 21:11:45 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/rest, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 72260  - [39m03.11.2024, 21:11:45 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/rest/:bankkontoId, PUT} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 72260  - [39m03.11.2024, 21:11:45 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/rest/:bankkontoId, DELETE} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 72260  - [39m03.11.2024, 21:11:45 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mTokenController {/auth}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 72260  - [39m03.11.2024, 21:11:45 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/auth/token, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 72260  - [39m03.11.2024, 21:11:45 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/auth/refresh, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 72260  - [39m03.11.2024, 21:11:45 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mDevController {/dev}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 72260  - [39m03.11.2024, 21:11:45 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/dev/db_populate, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 72260  - [39m03.11.2024, 21:11:45 [32m    LOG[39m [38;5;3m[GraphQLModule] [39m[32mMapped {/graphql, POST} route[39m[38;5;3m +37ms[39m
+  console.log
+    query: DROP TABLE IF EXISTS transaktion CASCADE;
+    DROP TABLE IF EXISTS kunde CASCADE;
+    DROP TABLE IF EXISTS bankkonto CASCADE;
+    DROP TABLE IF EXISTS bankkonto_dokument CASCADE;
+    
+    DROP TYPE IF EXISTS transaktion_typ;
+    DROP TYPE IF EXISTS dokument_typ;
+
+      at Function.logInfo (src/platform/PlatformTools.ts:235:17)
+          at async Promise.all (index 0)
+
+  console.log
+    query: -- Schema für Bankkonto und Transaktion erstellen
+    CREATE SCHEMA IF NOT EXISTS AUTHORIZATION bankkonto;
+    
+    ALTER ROLE bankkonto SET search_path = 'bankkonto';
+    
+    -- Enum für Transaktionstypen erstellen
+    CREATE TYPE transaktion_typ AS ENUM ('EINZAHLUNG', 'AUSZAHLUNG', 'ÜBERWEISUNG', 'EINKOMMEN', 'ZAHLUNG');
+    CREATE TYPE dokument_typ AS ENUM ('VERTRAG', 'RECHNUNG');
+    
+    -- Tabelle für Bankkonto
+    CREATE TABLE IF NOT EXISTS bankkonto (
+        bankkonto_id       integer GENERATED ALWAYS AS IDENTITY(START WITH 1000) PRIMARY KEY USING INDEX TABLESPACE bankkontospace,
+        version            INTEGER NOT NULL DEFAULT 0,
+        saldo              DECIMAL(10, 2) NOT NULL CHECK (saldo >= 0),
+        transaktion_limit  DECIMAL(10, 2),
+        waehrungen         text,
+        erstellt_am        TIMESTAMP NOT NULL DEFAULT NOW(),
+        aktualisiert_am    TIMESTAMP NOT NULL DEFAULT NOW()
+    );
+    
+    CREATE TABLE IF NOT EXISTS kunde (
+        kunde_id    integer GENERATED ALWAYS AS IDENTITY(START WITH 1000) PRIMARY KEY USING INDEX TABLESPACE bankkontospace,
+        name         VARCHAR(50) NOT NULL,
+        vorname      VARCHAR(50) NOT NULL,
+        email        VARCHAR(100) UNIQUE NOT NULL,
+        bankkonto_id integer NOT NULL UNIQUE USING INDEX TABLESPACE bankkontospace REFERENCES bankkonto
+    ) TABLESPACE bankkontospace;
+    
+    -- Tabelle für Transaktion
+    CREATE TABLE IF NOT EXISTS transaktion (
+        transaktion_id    integer GENERATED ALWAYS AS IDENTITY(START WITH 1000) PRIMARY KEY USING INDEX TABLESPACE bankkontospace,
+        transaktion_typ   transaktion_typ NOT NULL,
+        betrag            DECIMAL(10, 2) NOT NULL CHECK (betrag > 0),
+        absender          integer,
+        empfaenger        integer,
+        transaktion_datum TIMESTAMP NOT NULL DEFAULT NOW(),
+        bankkonto_id      integer NOT NULL REFERENCES bankkonto
+    );
+    
+    -- Index für schnellere Abfragen auf der Transaktion-Tabelle
+    CREATE INDEX IF NOT EXISTS idx_transaktion_typ_datum_konto ON transaktion (transaktion_typ, transaktion_datum, bankkonto_id);
+    
+    CREATE TABLE IF NOT EXISTS bankkonto_dokument (
+        dokument_id     integer GENERATED ALWAYS AS IDENTITY(START WITH 1000) PRIMARY KEY USING INDEX TABLESPACE bankkontospace,
+        data            bytea NOT NULL,
+        filename        text NOT NULL,
+        dokument_typ    dokument_typ NOT NULL,
+        bankkonto_id    integer NOT NULL REFERENCES bankkonto
+    ) TABLESPACE bankkontospace;
+    CREATE INDEX IF NOT EXISTS bankkonto_dokument_bankkonto_id_idx ON bankkonto_dokument(bankkonto_id) TABLESPACE bankkontospace;
+
+      at Function.logInfo (src/platform/PlatformTools.ts:235:17)
+          at async Promise.all (index 0)
+
+  console.log
+    query: SELECT * FROM current_schema()
+
+      at Function.logInfo (src/platform/PlatformTools.ts:235:17)
+          at async Promise.all (index 0)
+
+  console.log
+    query: SELECT version();
+
+      at Function.logInfo (src/platform/PlatformTools.ts:235:17)
+          at async Promise.all (index 0)
+
+  console.log
+    query: SET search_path TO bankkonto;
+
+      at Function.logInfo (src/platform/PlatformTools.ts:235:17)
+          at async Promise.all (index 0)
+
+  console.log
+    query: COPY bankkonto FROM '/csv/bankkonto/bankkonto.csv' (FORMAT csv, DELIMITER ';', HEADER true);
+
+      at Function.logInfo (src/platform/PlatformTools.ts:235:17)
+          at async Promise.all (index 0)
+
+  console.log
+    query: COPY kunde FROM '/csv/bankkonto/kunde.csv' (FORMAT csv, DELIMITER ';', HEADER true);
+
+      at Function.logInfo (src/platform/PlatformTools.ts:235:17)
+          at async Promise.all (index 0)
+
+  console.log
+    query: COPY transaktion FROM '/csv/bankkonto/transaktion.csv' (FORMAT csv, DELIMITER ';', HEADER true);
+
+      at Function.logInfo (src/platform/PlatformTools.ts:235:17)
+          at async Promise.all (index 0)
+
+[32m[Nest] 72260  - [39m03.11.2024, 21:11:45 [32m    LOG[39m [38;5;3m[NestApplication] [39m[32mNest application successfully started[39m[38;5;3m +68ms[39m
+  console.info
+      _                 _    _               _        
+     | |__   __ _ _ __ | | _| | _____  _ __ | |_ ___  
+     | '_ \ / _` | '_ \| |/ / |/ / _ \| '_ \| __/ _ \ 
+     | |_) | (_| | | | |   <|   < (_) | | | | || (_) |
+     |_.__/ \__,_|_| |_|_|\_\_|\_\___/|_| |_|\__\___/
+
+      at src/logger/banner.service.ts:26:50
+

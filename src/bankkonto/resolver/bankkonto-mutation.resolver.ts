@@ -5,10 +5,8 @@ import { getLogger } from '../../logger/logger.js';
 import { ResponseTimeInterceptor } from '../../logger/response-time.interceptor.js';
 import { BankkontoUpdateDTO } from '../model/dto/bankkonto-update.dto.js';
 import { BankkontoDTO } from '../model/dto/bankkonto.dto.js';
-import { TransaktionDTO } from '../model/dto/transaktion.dto.js';
 import { type Bankkonto } from '../model/entity/bankkonto.entity.js';
 import { type Kunde } from '../model/entity/kunde.entity.js';
-import { type Transaktion } from '../model/entity/transaktion.entity.js';
 import { BankkontoWriteService } from '../service/bankkonto-write.service.js';
 import { type IdInput } from './bankkonto-query.resolver.js';
 import { HttpExceptionFilter } from './http-exception.filter.js';
@@ -88,31 +86,17 @@ export class BankkontoMutationResolver {
             email: kundeDTO.email,
             bankkonto: undefined,
         };
-        // "Optional Chaining" ab ES2020
-        const transaktionen = bankkontoDTO.transaktionen.map(
-            (transaktionDTO: TransaktionDTO) => {
-                const transaktion: Transaktion = {
-                    transaktionId: undefined,
-                    transaktionDatum: undefined,
-                    betrag: transaktionDTO.betrag,
-                    empfaenger: transaktionDTO.empfaenger,
-                    absender: transaktionDTO.absender,
-                    transaktionTyp: undefined,
-                    bankkonto: undefined,
-                };
-                return transaktion;
-            },
-        );
+
         const bankkonto: Bankkonto = {
             bankkontoId: undefined,
             version: undefined,
-            saldo: bankkontoDTO.saldo,
+            saldo: 0,
             transaktionLimit: bankkontoDTO.transaktionsLimit,
             waehrungen: bankkontoDTO.waehrungen,
             erstelltAm: undefined,
             aktualisiertAm: undefined,
             kunde,
-            transaktionen,
+            transaktionen: undefined,
             dokumente: undefined,
         };
 
@@ -125,7 +109,7 @@ export class BankkontoMutationResolver {
         return {
             bankkontoId: undefined,
             version: undefined,
-            saldo: bankkontoDTO.saldo,
+            saldo: 0,
             transaktionLimit: bankkontoDTO.transaktionsLimit,
             aktualisiertAm: undefined,
             erstelltAm: undefined,
