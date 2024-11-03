@@ -9,8 +9,8 @@ import {
     Min,
     ValidateNested,
 } from 'class-validator';
-import { KundeDTO } from './kunde.dto';
-import { TransaktionDTO } from './transaktion.dto';
+import { KundeDTO } from './kunde.dto.js';
+import { TransaktionDTO } from './transaktion.dto.js';
 
 export class BankkontoDtoOhneReferenz {
     @Min(0)

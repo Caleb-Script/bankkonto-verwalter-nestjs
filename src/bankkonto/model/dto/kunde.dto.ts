@@ -9,7 +9,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, Matches, MaxLength } from 'class-validator';
 
 /**
- * Entity-Klasse für Titel ohne TypeORM.
+ * Entity-Klasse für Kunde ohne TypeORM.
  */
 export class KundeDTO {
     @Matches(String.raw`^\w.*`)

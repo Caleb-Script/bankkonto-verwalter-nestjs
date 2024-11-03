@@ -1,7 +1,7 @@
 import { Optional } from '@nestjs/common';
 import { ApiProperty } from '@nestjs/swagger';
 import { IsInt, IsNumberString, Min } from 'class-validator';
-import { BankkontoDTO } from './bankkonto.dto';
+import { BankkontoDTO } from './bankkonto.dto.js';
 
 export class BankkontoUpdateDTO extends BankkontoDTO {
     @IsNumberString()

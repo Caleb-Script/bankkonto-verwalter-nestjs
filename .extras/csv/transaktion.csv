@@ -1,4 +1,4 @@
-transaktion_id;transaktion_type;betrag;absender;empfaenger;erstellt_am;bankkonto_id
+transaktion_id;transaktion_type;betrag;absender;empfaenger;transaktion_datum;bankkonto_id
 1;EINZAHLUNG;100.00;1;;2024-05-17T10:00:00.000Z;1
 2;ÜBERWEISUNG;50.00;1;2;2024-05-17T10:00:00.000Z;1
 3;EINKOMMEN;300.00;3;2;2024-05-17T10:00:00.000Z;2

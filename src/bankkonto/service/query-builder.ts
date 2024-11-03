@@ -1,3 +1,6 @@
+/* eslint-disable @eslint-community/eslint-comments/disable-enable-pair */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable max-statements */
 /**
  * Das Modul besteht aus der Klasse {@linkcode QueryBuilder}.
  * @packageDocumentation
@@ -77,7 +80,7 @@ export class QueryBuilder {
      * @returns QueryBuilder
      */
     // "rest properties" fuer anfaengliche WHERE-Klausel: ab ES 2018 https://github.com/tc39/proposal-object-rest-spread
-    // eslint-disable-next-line max-lines-per-function
+    // eslint-disable-next-line max-lines-per-function, sonarjs/cognitive-complexity
     build({
         transaktionTyp,
         absender,
@@ -103,7 +106,7 @@ export class QueryBuilder {
         );
 
         queryBuilder.leftJoinAndSelect(
-            `${this.#bankkontoAlias}.transactions`,
+            `${this.#bankkontoAlias}.transaktionen`,
             this.#transaktionAlias,
         );
 
@@ -115,7 +118,7 @@ export class QueryBuilder {
             typeof transaktionTyp === 'string'
         ) {
             queryBuilder = queryBuilder.where(
-                `${this.#transaktionAlias}.transaction_type = :transaktionTyp`,
+                `${this.#transaktionAlias}.transaktion_type = :transaktionTyp`,
                 {
                     transaktionTyp: `${transaktionTyp}`,
                 },
@@ -157,12 +160,38 @@ export class QueryBuilder {
         }
 
         // Bedingung für waehrungen
-        if (waehrungen !== undefined && Array.isArray(waehrungen)) {
-            queryBuilder = queryBuilder.andWhere(
-                `${this.#bankkontoAlias}.waehrungen && :waehrungen`,
-                { waehrungen },
-            );
-            useWhere = false;
+        if (waehrungen !== undefined) {
+            const ilike =
+                typeOrmModuleOptions.type === 'postgres' ? 'ILIKE' : 'LIKE';
+
+            // Falls `waehrungen` ein einzelner String ist, konvertiere es in ein Array
+            const waehrungenArray = waehrungen.split(',').map((w) => w.trim());
+
+            // Prepare a list for conditions and a parameters object
+            const conditions: string[] = [];
+            const parameters: any = {};
+
+            // Für jede Währung eine eigene Bedingung hinzufügen
+            waehrungenArray.forEach((waehrung, index) => {
+                const waehrungPattern = `%${waehrung}%`;
+                const paramKey = `waehrungPattern${index}`; // Generate a unique key for each parameter
+
+                // Add the condition to the conditions array
+                conditions.push(
+                    `${this.#bankkontoAlias}.waehrungen ${ilike} :${paramKey}`,
+                );
+                // eslint-disable-next-line security/detect-object-injection
+                parameters[paramKey] = waehrungPattern; // Add the parameter to the parameters object
+            });
+
+            // Apply conditions using OR if useWhere is true, otherwise AND
+            if (useWhere) {
+                queryBuilder.where(conditions.join(' AND '), parameters);
+            } else {
+                queryBuilder.andWhere(conditions.join(' AND '), parameters);
+            }
+
+            useWhere = false; // Nach der ersten Bedingung wird where durch andWhere ersetzt
         }
 
         Object.keys(props).forEach((key) => {

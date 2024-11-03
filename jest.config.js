@@ -7,10 +7,6 @@ const jestConfig = {
     // setupFilesAfterEnv: ['<rootDir>/dist/__tests__/setup-jest.js'],
 
     // Verzeichnis in node_modules mit einer Datei jest-preset.js
-    // https://kulshekhar.github.io/ts-jest/docs/next/guides/esm-support
-    // https://kulshekhar.github.io/ts-jest/docs/getting-started/presets
-    // https://jestjs.io/docs/getting-started#via-ts-jest
-    // https://swc.rs/docs/usage/jest: swc ("speedy web compiler") statt ts-jest
     preset: 'ts-jest/presets/default-esm',
 
     extensionsToTreatAsEsm: ['.ts', '.mts', '.json'],
@@ -29,15 +25,17 @@ const jestConfig = {
         ],
     },
 
-    testRegex: '__tests__\\.*\\\\.*test\\.m?ts$',
+    //  testRegex: String.raw`__tests__\.*\\.*test\.m?ts$`,
+    testRegex: String.raw`__tests__/.*/.*\.test\.m?ts$`,
+    //  roots: ['<rootDir>/__tests__'],
     collectCoverageFrom: ['<rootDir>/src/**/*.*ts'],
     // coverageDirectory: 'coverage',
     testEnvironment: 'node',
 
     bail: true,
     coveragePathIgnorePatterns: [
-        '<rootDir>/src/main\\.m?ts$',
-        '.*\\.module\\.m?ts$',
+        String.raw`<rootDir>/src/main\.m?ts$`,
+        String.raw`.*\.module\.m?ts$`,
         '<rootDir>/src/health/',
     ],
     // lcov fuer SonarQube
