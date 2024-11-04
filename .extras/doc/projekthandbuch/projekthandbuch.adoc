@@ -20,15 +20,6 @@
 
 Sed porttitor lectus nibh. Nulla porttitor accumsan tincidunt.
 
-.Use Cases
-[plantuml,use-cases,svg]
-----
-include::use-cases.plantuml[]
-----
-
-Quisque velit nisi, pretium ut lacinia in, elementum id enim. Nulla porttitor
-accumsan tincidunt.
-
 .Komponentendiagramm
 [plantuml,komponenten,svg]
 ----
@@ -51,15 +42,6 @@ include::BankkontoGetController.plantuml[]
 
 Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Donec
 sollicitudin molestie malesuada.
-
-."Sequenzdiagramm" mit den Methodenaufrufen
-[plantuml,sequenzdiagramm,svg]
-----
-include::sequenzdiagramm.plantuml[]
-----
-
-Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
-tempor invidunt ut.
 
 ."BankkontoWriteController" für Schreibzugriffe an der REST-Schnittstelle
 [plantuml,BankkontoGetController,svg]
