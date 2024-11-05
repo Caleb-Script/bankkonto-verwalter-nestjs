@@ -41,7 +41,7 @@ jobs:
           path: dist
 
       - name: zip node_modules
-        run: zip -r node_modules.zip node_modules
+        run: zip -r nm.zip node_modules
 
       - name: Upload node_modules folder
         uses: actions/upload-artifact@v4
@@ -122,10 +122,10 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: node_modules-${{ matrix.node-version }}
-          path: node_modules.zip
+          path: nm.zip
 
       - name: unzip node_modules
-        run: unzip node_modules.zip ./node_modules.zip
+        run: unzip nm.zip
 
       - name: Build Docker image
         run: docker build -t gruppe-4/bankkonto:2024.10.1 .
