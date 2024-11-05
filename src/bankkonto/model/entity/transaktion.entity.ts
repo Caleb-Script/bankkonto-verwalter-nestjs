@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import {
     Column,
     CreateDateColumn,
@@ -8,6 +9,7 @@ import {
     PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Bankkonto } from './bankkonto.entity.js';
+import { DecimalTransformer } from './decimal-transformer.js';
 
 export type TransaktionTyp =
     | 'EINZAHLUNG'
@@ -25,7 +27,12 @@ export class Transaktion {
     @Column('varchar')
     readonly transaktionTyp: TransaktionTyp | undefined;
 
-    @Column('decimal', { precision: 10, scale: 2 })
+    @Column('decimal', {
+        precision: 8,
+        scale: 2,
+        transformer: new DecimalTransformer(),
+    })
+    @ApiProperty({ example: 1, type: Number })
     readonly betrag: number | undefined;
 
     @Column({ type: 'varchar', nullable: true })

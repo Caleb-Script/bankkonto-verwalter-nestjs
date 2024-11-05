@@ -14,6 +14,8 @@ import {
 } from '../model/entity/transaktion.entity.js';
 import { BankkontoReadService } from './bankkonto-read.service.js';
 import {
+    InsufficientFundsException,
+    LimitReachedException,
     VersionInvalidException,
     VersionOutdatedException,
 } from './exceptions.js';
@@ -145,15 +147,23 @@ export class BankkontoWriteService {
             absender,
             empfaenger,
         );
-        const { bankkontoId, version, saldo, waehrungen } = bankkonto;
-
-        this.#validateTransaktionLimit(bankkonto, betrag, transaktionTyp);
+        const {
+            bankkontoId,
+            version,
+            saldo,
+            waehrungen,
+            besitztTransaktionLimit,
+            transaktionLimit,
+        } = bankkonto;
 
         const updatedSaldo = this.#berechneNeuenSaldo(
             saldo,
             betrag,
             transaktionTyp,
         );
+
+        this.#validateTransaktionLimit(bankkonto, betrag, transaktionTyp);
+
         const transaktion = await this.#newTransaktion(
             transaktionDTO,
             bankkonto,
@@ -162,7 +172,8 @@ export class BankkontoWriteService {
         // Convert DTO to Bankkonto format
         const updatedBankkonto = this.#bankkontoUpdateDTOToBankkonto({
             updatedSaldo,
-            transaktionLimit: 0,
+            besitztTransaktionLimit: besitztTransaktionLimit!,
+            transaktionLimit: transaktionLimit!,
             waehrungen: waehrungen!,
         });
 
@@ -192,20 +203,62 @@ export class BankkontoWriteService {
         bankkonto: Bankkonto,
         betrag: number,
         transaktionTyp: TransaktionTyp,
-    ): void {
+    ) {
         if (
-            ['ÜBERWEISUNG', 'AUSZAHLUNG', 'ZAHLUNG'].includes(transaktionTyp) &&
-            (bankkonto.saldo < betrag ||
-                (bankkonto.transaktionLimit !== undefined &&
-                    bankkonto.transaktionLimit < betrag))
+            bankkonto.besitztTransaktionLimit === true &&
+            bankkonto.transaktionLimit !== undefined &&
+            (transaktionTyp === 'AUSZAHLUNG' ||
+                transaktionTyp === 'ÜBERWEISUNG')
         ) {
-            throw new Error(
-                bankkonto.saldo < betrag
-                    ? 'Nicht genügend Mittel'
-                    : 'Über dem Limit!',
+            const heutigesDatum = new Date();
+            heutigesDatum.setHours(0, 0, 0, 0);
+
+            const heutigeTransaktionsSumme = (bankkonto.transaktionen ?? [])
+                .filter(
+                    (transaktion) =>
+                        transaktion.transaktionTyp === transaktionTyp &&
+                        (transaktion.transaktionTyp === 'AUSZAHLUNG' ||
+                            transaktion.transaktionTyp === 'ÜBERWEISUNG') &&
+                        transaktion.transaktionDatum &&
+                        new Date(transaktion.transaktionDatum).setHours(
+                            0,
+                            0,
+                            0,
+                            0,
+                        ) === heutigesDatum.getTime(),
+                )
+                .reduce(
+                    (sum, transaktion) => sum + (transaktion.betrag ?? 0),
+                    0,
+                );
+
+            const neueTransaktionsSumme = heutigeTransaktionsSumme + betrag;
+            const restlichesLimit =
+                bankkonto.transaktionLimit - heutigeTransaktionsSumme;
+            this.#logger.debug(
+                '#validateTransaktionLimit: restliches Limit heute=%d',
+                restlichesLimit,
             );
+
+            if (bankkonto.saldo < betrag) {
+                throw new InsufficientFundsException(bankkonto.saldo, betrag);
+            }
+
+            if (neueTransaktionsSumme > bankkonto.transaktionLimit) {
+                throw new LimitReachedException(bankkonto.transaktionLimit);
+            }
         }
     }
+
+    // Hilfsmethode, um zu prüfen, ob das Datum der Transaktion heute ist
+    // #istHeutigesDatum(datum: Date): boolean {
+    //     const heute = new Date();
+    //     return (
+    //         datum.getDate() === heute.getDate() &&
+    //         datum.getMonth() === heute.getMonth() &&
+    //         datum.getFullYear() === heute.getFullYear()
+    //     );
+    // }
 
     #berechneNeuenSaldo(
         saldo: number,
@@ -282,10 +335,12 @@ export class BankkontoWriteService {
 
     #bankkontoUpdateDTOToBankkonto({
         updatedSaldo,
+        besitztTransaktionLimit,
         transaktionLimit,
         waehrungen,
     }: {
         updatedSaldo: number;
+        besitztTransaktionLimit: boolean;
         transaktionLimit: number;
         waehrungen: string[];
     }): Bankkonto {
@@ -293,6 +348,7 @@ export class BankkontoWriteService {
             bankkontoId: undefined,
             version: undefined,
             saldo: updatedSaldo,
+            besitztTransaktionLimit,
             transaktionLimit,
             kunde: undefined,
             transaktionen: undefined,

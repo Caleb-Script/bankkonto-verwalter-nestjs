@@ -98,6 +98,9 @@ export class BankkontoQuery implements Suchkriterien {
     declare readonly kundeId: string;
 
     @ApiProperty({ required: false })
+    declare readonly beitztTransaktionLimit: boolean;
+
+    @ApiProperty({ required: false })
     declare readonly transaktionTyp: TransaktionTyp;
 
     @ApiProperty({ required: false })
@@ -303,6 +306,7 @@ export class BankkontoGetController {
         };
         const bankkontoModel: BankkontoModel = {
             saldo: bankkonto.saldo,
+            besitztTransaktionLimit: bankkonto.besitztTransaktionLimit,
             transaktionLimit: bankkonto.transaktionLimit,
             waehrungen: bankkonto.waehrungen,
             erstelltAm: bankkonto.erstelltAm,

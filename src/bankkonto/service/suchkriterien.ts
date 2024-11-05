@@ -5,6 +5,7 @@ import type { TransaktionTyp } from '../model/entity/transaktion.entity';
  */
 export type Suchkriterien = {
     readonly saldo?: string;
+    readonly beitztTransaktionLimit?: boolean;
     readonly transaktionsLimit?: number;
     readonly datum?: string;
     readonly transaktionTyp?: TransaktionTyp;
