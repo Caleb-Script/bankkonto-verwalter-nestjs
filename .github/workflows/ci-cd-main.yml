@@ -106,16 +106,8 @@ jobs:
       - name: Download dist folder
         uses: actions/download-artifact@v4
         with:
-          name: dist-package-${{ matrix.node-version }}
-          path: dist.zip
-      - name: dist ordner erstellen
-        run: mkdir -p dist
-
-      - name: List files in the working directory
-        run: ls -al
-
-      - name: Unzip dist package
-        run: unzip dist.zip -d dist
+          name: dist-${{ matrix.node-version }}
+          path: dist
 
       - name: Build Docker image
         run: docker build -t gruppe-4/bankkonto:2024.10.1 .
