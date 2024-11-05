@@ -195,9 +195,10 @@ export class BankkontoWriteController {
      * @param bankkontoId Pfad-Paramater für die Bankkonto-ID.
      * @returns Leeres Promise-Objekt.
      */
+    // eslint-disable-next-line max-params
     @Post('transaktion')
     @Roles({ roles: ['admin', 'user'] })
-    @HttpCode(HttpStatus.NO_CONTENT)
+    @HttpCode(HttpStatus.CREATED)
     @ApiOperation({
         summary: 'Ein vorhandenes Bankkonto aktualisieren',
         tags: ['Aktualisieren'],
@@ -221,6 +222,7 @@ export class BankkontoWriteController {
         @Body() transaktionDTO: TransaktionDTO,
         @Headers('If-Match') version: string | undefined,
         @Res() res: Response,
+        @Req() req: Request,
     ): Promise<Response> {
         this.#logger.debug(
             'transaktion: transaktionDTO=%o, version=%s',
@@ -246,7 +248,10 @@ export class BankkontoWriteController {
             saldo,
             bankkontoNeueVersion,
         );
-        return res.header('ETag', `"${bankkontoNeueVersion}"`).send();
+        const location = `${getBaseUri(req)}/${transaktionID}`;
+        res.header('ETag', `"${bankkontoNeueVersion}"`);
+        res.location(location);
+        return res.send();
     }
 
     // #transaktionDTOToTransaktion(transaktionDTO: TransaktionDTO): TransaktionDTO {

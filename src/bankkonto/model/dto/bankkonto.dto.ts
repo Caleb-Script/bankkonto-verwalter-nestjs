@@ -5,6 +5,7 @@ import {
     ArrayUnique,
     IsBoolean,
     IsOptional,
+    Min,
     ValidateNested,
 } from 'class-validator';
 import { KundeDTO } from './kunde.dto.js';
@@ -17,12 +18,13 @@ export class BankkontoDtoOhneReferenz {
 
     @ApiProperty({ example: 100, description: 'Tägliches Transaktionslimit' })
     @IsOptional()
+    @Min(0)
     readonly transaktionLimit!: number;
 
     @IsOptional()
     @ArrayUnique()
     @ApiProperty({ example: ['EUR', 'GBP', 'USD', 'JPY', 'CHE'] })
-    readonly waehrungen: string[] | undefined;
+    readonly waehrungen?: string[] | undefined;
 }
 export class BankkontoDTO extends BankkontoDtoOhneReferenz {
     @ValidateNested()

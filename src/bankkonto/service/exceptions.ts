@@ -52,7 +52,7 @@ export class LimitReachedException extends HttpException {
     constructor(readonly limit: number) {
         super(
             `Das Transaktionslimit von ${limit} wurde erreicht.`,
-            HttpStatus.FORBIDDEN,
+            HttpStatus.UNPROCESSABLE_ENTITY,
         );
         this.name = 'LimitReachedException';
     }
@@ -68,7 +68,7 @@ export class InsufficientFundsException extends HttpException {
     ) {
         super(
             `Nicht genügend Geld auf dem Konto. Verfügbar: ${saldo}, benötigt: ${betrag}.`,
-            HttpStatus.BAD_REQUEST,
+            HttpStatus.UNPROCESSABLE_ENTITY,
         );
         this.name = 'InsufficientFundsException';
     }
