@@ -75,7 +75,7 @@ jobs:
         run: ls -al
 
       - name: unzip node_modules
-        run: unzip nm.zip -d ./
+        run: unzip nm.zip -d ./node_modules
 
       - name: Lint code
         run: npm run eslint
