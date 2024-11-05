@@ -1,4 +1,3 @@
-import { Optional } from '@nestjs/common';
 import { ApiProperty } from '@nestjs/swagger';
 import { IsInt, IsNumberString, Min } from 'class-validator';
 import { BankkontoDTO } from './bankkonto.dto.js';
@@ -15,11 +14,4 @@ export class BankkontoUpdateDTO extends BankkontoDTO {
     @IsInt()
     @ApiProperty({ example: `100`, description: `Betrag` })
     readonly betrag!: number;
-
-    @ApiProperty({
-        example: `100`,
-        description: `Täglicher Transaktions limit`,
-    })
-    @Optional()
-    readonly transaktionLimit?: number;
 }

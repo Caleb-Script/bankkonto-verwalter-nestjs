@@ -1,3 +1,5 @@
+// eslint-disable-next-line @eslint-community/eslint-comments/disable-enable-pair
+/* eslint-disable max-lines */
 import {
     Body,
     Controller,
@@ -34,12 +36,15 @@ import {
     BankkontoDTO,
     BankkontoDtoOhneReferenz,
 } from '../model/dto/bankkonto.dto.js';
+import { TransaktionDTO } from '../model/dto/transaktion.dto.js';
 import { type Bankkonto } from '../model/entity/bankkonto.entity.js';
 import { type Kunde } from '../model/entity/kunde.entity.js';
 import { BankkontoWriteService } from '../service/bankkonto-write.service.js';
 import { getBaseUri } from './getBaseUri.js';
 
 const MSG_FORBIDDEN = 'Kein Token mit ausreichender Berechtigung vorhanden';
+const HEADER_IF_MATCH = 'Header "If-Match" fehlt';
+const FEHLERHAFTE_BANKKONTODATEN = 'Fehlerhafte Bankkontodaten';
 /**
  * Die Controller-Klasse für die Verwaltung von Bankkonten.
  */
@@ -74,7 +79,7 @@ export class BankkontoWriteController {
     @Roles({ roles: ['admin', 'user'] })
     @ApiOperation({ summary: 'Ein neues Bankkonto anlegen' })
     @ApiCreatedResponse({ description: 'Erfolgreich neu angelegt' })
-    @ApiBadRequestResponse({ description: 'Fehlerhafte Bankkontodaten' })
+    @ApiBadRequestResponse({ description: FEHLERHAFTE_BANKKONTODATEN })
     @ApiForbiddenResponse({ description: MSG_FORBIDDEN })
     async post(
         @Body() bankkontoDTO: BankkontoDTO,
@@ -121,13 +126,13 @@ export class BankkontoWriteController {
         required: false,
     })
     @ApiNoContentResponse({ description: 'Erfolgreich aktualisiert' })
-    @ApiBadRequestResponse({ description: 'Fehlerhafte Bankkontodaten' })
+    @ApiBadRequestResponse({ description: FEHLERHAFTE_BANKKONTODATEN })
     @ApiPreconditionFailedResponse({
         description: 'Falsche Version im Header "If-Match"',
     })
     @ApiResponse({
         status: HttpStatus.PRECONDITION_REQUIRED,
-        description: 'Header "If-Match" fehlt',
+        description: HEADER_IF_MATCH,
     })
     @ApiForbiddenResponse({ description: MSG_FORBIDDEN })
     async put(
@@ -144,7 +149,7 @@ export class BankkontoWriteController {
         );
 
         if (version === undefined) {
-            const msg = 'Header "If-Match" fehlt';
+            const msg = HEADER_IF_MATCH;
             this.#logger.debug('put: msg=%s', msg);
             return res
                 .status(HttpStatus.PRECONDITION_REQUIRED)
@@ -183,6 +188,72 @@ export class BankkontoWriteController {
         await this.#service.delete(bankkontoId);
     }
 
+    /**
+     * Ein Bankkonto wird anhand seiner Bankkonto-ID-gelöscht, die als Pfad-Parameter angegeben
+     * ist. Der zurückgelieferte Statuscode ist `204` (`No Content`).
+     *
+     * @param bankkontoId Pfad-Paramater für die Bankkonto-ID.
+     * @returns Leeres Promise-Objekt.
+     */
+    // eslint-disable-next-line max-params
+    @Post('transaktion')
+    @Roles({ roles: ['admin', 'user'] })
+    @HttpCode(HttpStatus.CREATED)
+    @ApiOperation({
+        summary: 'Ein vorhandenes Bankkonto aktualisieren',
+        tags: ['Aktualisieren'],
+    })
+    @ApiHeader({
+        name: 'If-Match',
+        description: 'Header für optimistische Synchronisation',
+        required: false,
+    })
+    @ApiNoContentResponse({ description: 'Erfolgreich aktualisiert' })
+    @ApiBadRequestResponse({ description: FEHLERHAFTE_BANKKONTODATEN })
+    @ApiPreconditionFailedResponse({
+        description: 'Falsche Version im Header "If-Match"',
+    })
+    @ApiResponse({
+        status: HttpStatus.PRECONDITION_REQUIRED,
+        description: HEADER_IF_MATCH,
+    })
+    @ApiForbiddenResponse({ description: MSG_FORBIDDEN })
+    async transaktion(
+        @Body() transaktionDTO: TransaktionDTO,
+        @Headers('If-Match') version: string | undefined,
+        @Res() res: Response,
+        @Req() req: Request,
+    ): Promise<Response> {
+        this.#logger.debug(
+            'transaktion: transaktionDTO=%o, version=%s',
+            transaktionDTO,
+            version,
+        );
+
+        if (version === undefined) {
+            const msg = HEADER_IF_MATCH;
+            this.#logger.debug('put: msg=%s', msg);
+            return res
+                .status(HttpStatus.PRECONDITION_REQUIRED)
+                .set('Content-Type', 'application/json')
+                .send(msg);
+        }
+
+        const neueTransaktion =
+            await this.#service.createTransaktion(transaktionDTO);
+        const { transaktionID, saldo, bankkontoNeueVersion } = neueTransaktion;
+        this.#logger.debug(
+            'transaktion: transaktionId=%s, saldo=%d, version=%s',
+            transaktionID,
+            saldo,
+            bankkontoNeueVersion,
+        );
+        const location = `${getBaseUri(req)}/${transaktionID}`;
+        res.header('ETag', `"${bankkontoNeueVersion}"`);
+        res.location(location);
+        return res.send();
+    }
+
     // #transaktionDTOToTransaktion(transaktionDTO: TransaktionDTO): TransaktionDTO {
     //     const transaktionen = bankkontoDTO.transaktionen.map(
     //         (transaktionDTO) => {
@@ -216,7 +287,8 @@ export class BankkontoWriteController {
             bankkontoId: undefined,
             version: undefined,
             saldo: 0,
-            transaktionLimit: bankkontoDTO.transaktionsLimit,
+            besitztTransaktionLimit: bankkontoDTO.besitztTransaktionLimit,
+            transaktionLimit: bankkontoDTO.transaktionLimit,
             kunde,
             transaktionen: undefined,
             waehrungen: bankkontoDTO.waehrungen,
@@ -236,8 +308,9 @@ export class BankkontoWriteController {
         return {
             bankkontoId: undefined,
             version: undefined,
-            saldo: 0,
-            transaktionLimit: bankkontoDTO.transaktionsLimit,
+            saldo: undefined,
+            besitztTransaktionLimit: bankkontoDTO.besitztTransaktionLimit,
+            transaktionLimit: bankkontoDTO.transaktionLimit,
             kunde: undefined,
             transaktionen: undefined,
             dokumente: undefined,

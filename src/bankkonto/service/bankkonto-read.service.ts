@@ -54,7 +54,7 @@ export class BankkontoReadService {
         this.#logger.debug('findByBankkontoId: bankkontoId=%d', bankkontoId);
 
         const bankkonto = await this.#queryBuilder
-            .buildId({ bankkontoId, mitTransaktionen })
+            .buildId({ bankkontoId, mitTransaktionen: true })
             .getOne();
         if (bankkonto === null) {
             throw new NotFoundException(

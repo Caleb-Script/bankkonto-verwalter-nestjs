@@ -1,18 +1,3 @@
-// Copyright (C) 2016 - present Juergen Zimmermann, Hochschule Karlsruhe
-//
-// This program is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-//
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with this program. If not, see <https://www.gnu.org/licenses/>.
-
 /* eslint-disable max-classes-per-file */
 
 import { HttpException, HttpStatus } from '@nestjs/common';
@@ -41,7 +26,7 @@ export class KundenIdExistsException extends HttpException {
 export class VersionInvalidException extends HttpException {
     constructor(readonly version: string | undefined) {
         super(
-            `Die Versionsnummer ${version} ist ungueltig.`,
+            `Die Versionsnummer ${version} ist ungültig.`,
             HttpStatus.PRECONDITION_FAILED,
         );
     }
@@ -56,6 +41,36 @@ export class VersionOutdatedException extends HttpException {
             `Die Versionsnummer ${version} ist nicht aktuell.`,
             HttpStatus.PRECONDITION_FAILED,
         );
+    }
+}
+
+// TODO bessere StatusCodes
+/**
+ * Exception-Klasse für das Erreichen des Transaktionslimits.
+ */
+export class LimitReachedException extends HttpException {
+    constructor(readonly limit: number) {
+        super(
+            `Das Transaktionslimit von ${limit} wurde erreicht.`,
+            HttpStatus.UNPROCESSABLE_ENTITY,
+        );
+        this.name = 'LimitReachedException';
+    }
+}
+
+/**
+ * Exception-Klasse für unzureichende Mittel auf dem Konto.
+ */
+export class InsufficientFundsException extends HttpException {
+    constructor(
+        readonly saldo: number,
+        readonly betrag: number,
+    ) {
+        super(
+            `Nicht genügend Geld auf dem Konto. Verfügbar: ${saldo}, benötigt: ${betrag}.`,
+            HttpStatus.UNPROCESSABLE_ENTITY,
+        );
+        this.name = 'InsufficientFundsException';
     }
 }
 
