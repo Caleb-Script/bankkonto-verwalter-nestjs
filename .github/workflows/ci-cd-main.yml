@@ -157,7 +157,8 @@ jobs:
 
       - name: Push Docker image to registry
         run: |
-          docker push gruppe-4/bankkonto:2024.10.1
+          docker tag gruppe-4/bankkonto:2024.10.1 bankkonto-verwalter:2024.11.5
+          docker push bankkonto-verwalter:2024.11.5
 
   deploy:
     runs-on: ubuntu-latest
