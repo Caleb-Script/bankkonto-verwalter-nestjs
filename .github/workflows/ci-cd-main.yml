@@ -47,7 +47,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: node_modules-${{ matrix.node-version }}
-          path: node_modules.zip
+          path: nm.zip
 
   analyze:
     runs-on: ubuntu-latest
@@ -65,8 +65,14 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
 
-      - name: Install dependencies
-        run: npm ci
+      - name: Download node_modules folder
+        uses: actions/download-artifact@v4
+        with:
+          name: node_modules-${{ matrix.node-version }}
+          path: nm.zip
+
+      - name: unzip node_modules
+        run: unzip nm.zip
 
       - name: Lint code
         run: npm run eslint
