@@ -219,6 +219,7 @@ export class BankkontoWriteService {
                         transaktion.transaktionTyp === transaktionTyp &&
                         (transaktion.transaktionTyp === 'AUSZAHLUNG' ||
                             // TODO Warum dieser fehler
+                            // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
                             transaktion.transaktionTyp === 'ÜBERWEISUNG') &&
                         transaktion.transaktionDatum &&
                         new Date(transaktion.transaktionDatum).setHours(

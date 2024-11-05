@@ -192,7 +192,6 @@ export class BankkontoWriteController {
      * Ein Bankkonto wird anhand seiner Bankkonto-ID-gelöscht, die als Pfad-Parameter angegeben
      * ist. Der zurückgelieferte Statuscode ist `204` (`No Content`).
      *
-     * @param bankkontoId Pfad-Paramater für die Bankkonto-ID.
      * @returns Leeres Promise-Objekt.
      */
     // eslint-disable-next-line max-params
