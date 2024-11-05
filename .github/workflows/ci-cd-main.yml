@@ -7,12 +7,14 @@ on:
     tags:
       - 'v*'  # Nur für Versionstags (z.B. v1.0.0)
 
+# node-version: [20.x, 22.x, 23.x]
+
 jobs:
   build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [20.x, 22.x, 23.x]
+        node-version: [20.x]
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -43,7 +45,7 @@ jobs:
     needs: build
     strategy:
       matrix:
-        node-version: [20.x, 22.x, 23.x]
+        node-version: [20.x]
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -71,7 +73,7 @@ jobs:
     needs: [build, analyze]
     strategy:
       matrix:
-        node-version: [20.x, 22.x, 23.x]
+        node-version: [20.x]
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -94,13 +96,38 @@ jobs:
   docker:
     runs-on: ubuntu-latest
     needs: package
+    strategy:
+      matrix:
+        node-version: [20.x]
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download dist folder
+        uses: actions/download-artifact@v4
+        with:
+          name: dist-package-${{ matrix.node-version }}
+          path: dist.zip
+
+      - name: Unzip dist package
+        run: unzip dist.zip -d .
+
       - name: Build Docker image
-        run: "echo 'TODO: Docker-Image bauen und veroeffentlichen'"
+        run: docker build -t gruppe-4/bankkonto:2024.10.1 .
+
+      - name: Push Docker image to registry
+        env:
+          DOCKER_USER: ${{ secrets.DOCKER_USER }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        run: |
+          echo $DOCKER_PASSWORD | docker login -u $DOCKER_USER --password-stdin
+          docker push gruppe-4/bankkonto:2024.10.1
 
   deploy:
     runs-on: ubuntu-latest
     needs: docker
     steps:
       - name: Deploy to Kubernetes
-        run: "echo 'TODO: Deployment für Kubernetes durchführen'"
+        run: |
+          echo "Starting deployment..."
+          kubectl apply -f config.yaml

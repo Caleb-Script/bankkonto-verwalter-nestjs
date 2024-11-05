@@ -1,0 +1,113 @@
+# Definition des Schemas
+schema {
+  query: Query
+  mutation: Mutation
+}
+
+# Abfragen
+type Query {
+  bankkonto(bankkontoId: ID!): Bankkonto
+  bankkonten(suchkriterien: SuchkriterienInput): [Bankkonto!]
+}
+
+# Mutationen (falls benötigt, hier nur zur Vollständigkeit)
+type Mutation {
+  create(input: bankkontoInput!): CreatePayload
+  update(input: bankkontoUpdateInput!): UpdatePayload
+  makeTransaktion(bankkonto: ID!, input: transaktionInput!): CreatePayload
+  delete(bankkontoId: ID!): Boolean
+
+  # Mutation, wenn z.B. der Login-Zeitpunkt im IDM-System gespeichert wird
+  token(username: String!, password: String!): TokenResult
+  refresh(refresh_token: String!): TokenResult
+}
+
+type Kunde {
+  kundeId: ID!
+  name: String!
+  vorname: String!
+  email: String!
+}
+
+type Transaktion {
+  transaktionId: ID!
+  transaktionTyp: String!
+  betrag: Float!
+  absender: String
+  empfaenger: String
+}
+
+# Typdefinitionen
+type Bankkonto {
+  bankkontoId: ID!
+  version: Int!
+  saldo: Float!
+  transaktionLimit: Int
+  waehrungen: [String]
+  erstelltAm: String!
+  aktualisiertAm: String!
+  kunde: Kunde!
+}
+
+# Enums
+enum TransaktionTyp {
+  EINZAHLUNG
+  AUSZAHLUNG
+  UEBERWEISUNG
+  EINKOMMEN
+  ZAHLUNG
+}
+
+# Suchkriterien für die Abfrage
+input SuchkriterienInput {
+  saldo: String
+  transaktionsLimit: Int
+  datum: String
+  transaktionTyp: String
+  absender: String
+  empfaenger: String
+  waehrungen: [String]
+  email: String
+}
+
+input KundeInput {
+  name: String!
+  vorname: String!
+  email: String!
+}
+
+# Eingabedatentypen für Mutationen
+input bankkontoInput {
+  transaktionLimit: Int
+  waehrungen: [String!]!
+  kundeId: KundeInput!
+}
+
+input transaktionInput {
+  betrag: Float!
+  absender: Int
+  empfaenger: Int
+  transaktionTyp: TransaktionTyp!
+}
+
+type CreatePayload {
+  id: Int
+}
+
+
+input bankkontoUpdateInput {
+  saldo: Float
+  transaktionLimit: Int
+  waehrungen: [String]
+}
+
+type UpdatePayload {
+  version: Int
+}
+
+type TokenResult {
+  access_token: String!
+  expires_in: Int!
+  refresh_token: String!
+  refresh_expires_in: Int!
+}
