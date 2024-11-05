@@ -125,7 +125,7 @@ jobs:
           path: node_modules.zip
 
       - name: unzip node_modules
-        run: unzip node_modules.zip ./node_modules
+        run: unzip node_modules.zip ./node_modules.zip
 
       - name: Build Docker image
         run: docker build -t gruppe-4/bankkonto:2024.10.1 .
