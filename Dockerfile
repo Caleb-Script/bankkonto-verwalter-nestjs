@@ -1,5 +1,11 @@
 # syntax=docker/dockerfile:1.10.0
 
+# Definiere ARG für die Umgebungsvariablen
+ARG NODE_ENV
+ARG CLIENT_SECRET
+ARG SONAR_TOKEN
+ARG SNYK_TOKEN
+
 # "Build Argument"; alternativ: ENV = Umgebungsvariable im gebauten Image
 ARG NODE_VERSION=23.0.0
 
@@ -85,6 +91,11 @@ EOF
 # S t a g e   f i n a l
 # ------------------------------------------------------------------------------
 FROM node:${NODE_VERSION}-bookworm-slim AS final
+
+ENV NODE_ENV=${NODE_ENV} \
+    CLIENT_SECRET=${CLIENT_SECRET} \
+    SONAR_TOKEN=${SONAR_TOKEN} \
+    SNYK_TOKEN=${SNYK_TOKEN}
 
 # Anzeige bei "docker inspect ..."
 # https://specs.opencontainers.org/image-spec/annotations

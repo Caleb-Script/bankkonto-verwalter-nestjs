@@ -64,7 +64,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
-          
+
       - name: Install dependencies
         run: npm ci
 
@@ -115,8 +115,10 @@ jobs:
       - name: Download dist folder
         uses: actions/download-artifact@v4
         with:
-          name: dist-${{ matrix.node-version }}
-          path: dist
+          name: dist-package-${{ matrix.node-version }}
+          path: ./
+      - name: unzip node_modules
+        run: unzip dist.zip -d ./dist
 
       - name: Download node_modules folder
         uses: actions/download-artifact@v4
@@ -127,8 +129,24 @@ jobs:
       - name: unzip node_modules
         run: unzip nm.zip -d ./node_modules
 
+      - name: Create .env file
+        run: |
+          echo "NODE_ENV=development" >> .env
+          echo "CLIENT_SECRET=${{ secrets.CLIENT_SECRET }}" >> .env
+          echo "SONAR_TOKEN=${{ secrets.SONAR_TOKEN }}" >> .env
+          echo "SNYK_TOKEN=${{ secrets.SNYK_TOKEN }}" >> .env
+
       - name: Build Docker image
-        run: docker build -t gruppe-4/bankkonto:2024.10.1 .
+        run: |
+          docker build \
+            --build-arg NODE_ENV=development \
+            --build-arg CLIENT_SECRET=${{ secrets.CLIENT_SECRET }} \
+            --build-arg SONAR_TOKEN=${{ secrets.SONAR_TOKEN }} \
+            --build-arg SNYK_TOKEN=${{ secrets.SNYK_TOKEN }} \
+            -t gruppe-4/bankkonto:2024.10.1 .
+
+      - name: Clean up .env file
+        run: rm .env
 
       - name: Push Docker image to registry
         env:
