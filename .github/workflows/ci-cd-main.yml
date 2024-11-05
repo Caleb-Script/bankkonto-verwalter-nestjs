@@ -71,6 +71,9 @@ jobs:
           name: node_modules-${{ matrix.node-version }}
           path: nm.zip
 
+      - name: List files in the working directory
+        run: ls -al
+
       - name: unzip node_modules
         run: unzip nm.zip
 
