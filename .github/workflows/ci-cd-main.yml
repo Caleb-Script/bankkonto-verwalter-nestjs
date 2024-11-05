@@ -109,6 +109,11 @@ jobs:
           name: dist-package-${{ matrix.node-version }}
           path: dist.zip
 
+      - name: List files in the working directory
+        run: ls -al
+
+
+
       - name: Unzip dist package
         run: unzip dist.zip -d .
 
