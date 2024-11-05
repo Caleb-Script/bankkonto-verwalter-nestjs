@@ -9,13 +9,14 @@ CREATE TYPE dokument_typ AS ENUM ('VERTRAG', 'RECHNUNG');
 
 -- Tabelle für Bankkonto
 CREATE TABLE IF NOT EXISTS bankkonto (
-    bankkonto_id       integer GENERATED ALWAYS AS IDENTITY(START WITH 1000) PRIMARY KEY USING INDEX TABLESPACE bankkontospace,
-    version            INTEGER NOT NULL DEFAULT 0,
-    saldo              DECIMAL(10, 2) NOT NULL CHECK (saldo >= 0),
-    transaktion_limit  DECIMAL(10, 2),
-    waehrungen         text,
-    erstellt_am        TIMESTAMP NOT NULL DEFAULT NOW(),
-    aktualisiert_am    TIMESTAMP NOT NULL DEFAULT NOW()
+    bankkonto_id              integer GENERATED ALWAYS AS IDENTITY(START WITH 1000) PRIMARY KEY USING INDEX TABLESPACE bankkontospace,
+    version                   INTEGER NOT NULL DEFAULT 0,
+    saldo                     DECIMAL(8, 2) NOT NULL CHECK (saldo >= 0),
+    besitzt_transaktion_limit boolean NOT NULL DEFAULT FALSE,
+    transaktion_limit         DECIMAL(8, 2),
+    waehrungen                text,
+    erstellt_am               TIMESTAMP NOT NULL DEFAULT NOW(),
+    aktualisiert_am           TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
 CREATE TABLE IF NOT EXISTS kunde (

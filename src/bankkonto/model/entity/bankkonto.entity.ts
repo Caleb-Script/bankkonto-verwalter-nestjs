@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import {
     Column,
     CreateDateColumn,
@@ -9,6 +10,7 @@ import {
     VersionColumn,
 } from 'typeorm';
 import { BankkontoDokument } from './bankkonto-dokument.entity.js';
+import { DecimalTransformer } from './decimal-transformer.js';
 import { Kunde } from './kunde.entity.js';
 import { Transaktion } from './transaktion.entity.js';
 
@@ -20,10 +22,25 @@ export class Bankkonto {
     @VersionColumn()
     readonly version: number | undefined;
 
-    @Column('decimal', { precision: 10, scale: 2 })
+    @Column('decimal', {
+        precision: 8,
+        scale: 2,
+        transformer: new DecimalTransformer(),
+    })
+    @ApiProperty({ example: 1, type: Number })
     readonly saldo!: number;
 
-    @Column({ type: 'int', nullable: true })
+    @Column('decimal')
+    @ApiProperty({ example: true, type: Boolean })
+    readonly besitztTransaktionLimit: boolean | undefined;
+
+    @Column('decimal', {
+        precision: 8,
+        scale: 2,
+        transformer: new DecimalTransformer(),
+        nullable: true,
+    })
+    @ApiProperty({ example: 1, type: Number })
     readonly transaktionLimit: number | undefined;
 
     @OneToOne(() => Kunde, (kunde: Kunde) => kunde.bankkonto, {

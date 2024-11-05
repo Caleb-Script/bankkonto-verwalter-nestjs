@@ -1,10 +1,20 @@
 /* eslint-disable max-classes-per-file */
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
-import { ArrayUnique, IsOptional, ValidateNested } from 'class-validator';
+import {
+    ArrayUnique,
+    IsBoolean,
+    IsOptional,
+    ValidateNested,
+} from 'class-validator';
 import { KundeDTO } from './kunde.dto.js';
 
 export class BankkontoDtoOhneReferenz {
+    @IsBoolean()
+    @IsOptional()
+    @ApiProperty({ example: true, type: Boolean })
+    readonly besitztTransakionLimit: boolean | undefined;
+
     @ApiProperty({ example: 100, description: 'Tägliches Transaktionslimit' })
     @IsOptional()
     readonly transaktionsLimit!: number;

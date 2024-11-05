@@ -1,3 +1,5 @@
+// eslint-disable-next-line @eslint-community/eslint-comments/disable-enable-pair
+/* eslint-disable max-lines */
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { type DeleteResult, Repository } from 'typeorm';
@@ -132,7 +134,10 @@ export class BankkontoWriteService {
     }
 
     async createTransaktion(transaktionDTO: TransaktionDTO) {
-        this.#logger.debug('createTransaktion: %o', transaktionDTO);
+        this.#logger.debug(
+            'createTransaktion: transaktionDTO=%o',
+            transaktionDTO,
+        );
 
         const { absender, empfaenger, betrag, transaktionTyp } = transaktionDTO;
         const bankkonto = await this.#findBankkontoByTransaktionTyp(
@@ -149,6 +154,11 @@ export class BankkontoWriteService {
             betrag,
             transaktionTyp,
         );
+        const transaktion = await this.#newTransaktion(
+            transaktionDTO,
+            bankkonto,
+        );
+        this.#logger.debug('created transaktion: transaktion=%o', transaktion);
         // Convert DTO to Bankkonto format
         const updatedBankkonto = this.#bankkontoUpdateDTOToBankkonto({
             updatedSaldo,
@@ -156,16 +166,16 @@ export class BankkontoWriteService {
             waehrungen: waehrungen!,
         });
 
-        await this.update({
+        const bankkontoNeueVersion = await this.update({
             bankkontoId,
             version: `"${version}"`,
             bankkonto: updatedBankkonto,
         });
-        const transaktion = await this.#newTransaktion(
-            transaktionDTO,
-            bankkontoId!,
-        );
-        return transaktion.transaktionId;
+        return {
+            transaktionID: transaktion.transaktionId,
+            saldo: updatedBankkonto.saldo,
+            bankkontoNeueVersion,
+        };
     }
 
     async #findBankkontoByTransaktionTyp(
@@ -173,9 +183,9 @@ export class BankkontoWriteService {
         absender?: number,
         empfaenger?: number,
     ): Promise<Bankkonto> {
-        return transaktionTyp === 'EINZAHLUNG' || transaktionTyp === 'EINKOMMEN'
-            ? this.#readService.findByBankkontoId({ bankkontoId: absender! })
-            : this.#readService.findByBankkontoId({ bankkontoId: empfaenger! });
+        return transaktionTyp === 'EINKOMMEN' || transaktionTyp === 'EINZAHLUNG'
+            ? this.#readService.findByBankkontoId({ bankkontoId: empfaenger! })
+            : this.#readService.findByBankkontoId({ bankkontoId: absender! });
     }
 
     #validateTransaktionLimit(
@@ -202,9 +212,13 @@ export class BankkontoWriteService {
         betrag: number,
         transaktionTyp: string,
     ): number {
-        return transaktionTyp === 'EINZAHLUNG' || transaktionTyp === 'EINKOMMEN'
-            ? saldo + betrag
-            : saldo - betrag;
+        const neuerSaldo: number =
+            transaktionTyp === 'EINZAHLUNG' || transaktionTyp === 'EINKOMMEN'
+                ? saldo + betrag
+                : saldo - betrag;
+
+        this.#logger.debug('berechneNeuenSaldo: neuerSaldo=%d', neuerSaldo);
+        return neuerSaldo;
     }
 
     async #sendmail(bankkonto: Bankkonto) {
@@ -243,11 +257,11 @@ export class BankkontoWriteService {
 
     async #newTransaktion(
         transaktionDTO: TransaktionDTO,
-        bankkontoId: number,
+        bankkonto: Bankkonto,
     ): Promise<Transaktion> {
         const { absender, empfaenger, betrag, transaktionTyp } = transaktionDTO;
         const transaktion: Transaktion = await this.#transaktionRepo.save({
-            bankkontoId,
+            bankkonto,
             transaktionTyp,
             betrag,
             absender,
@@ -263,7 +277,6 @@ export class BankkontoWriteService {
                 transaktionTyp: 'EINKOMMEN',
             });
         }
-
         return transaktion;
     }
 
