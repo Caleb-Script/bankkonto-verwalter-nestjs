@@ -20,6 +20,7 @@ import {
     VersionOutdatedException,
 } from './exceptions.js';
 
+const ÜBERWEISUNG = 'ÜBERWEISUNG';
 /** Typdefinitionen zum Aktualisieren eines Bankkontos mit `update`. */
 export type UpdateParams = {
     /** ID des zu aktualisierenden Bankkontos. */
@@ -157,7 +158,7 @@ export class BankkontoWriteService {
         } = bankkonto;
 
         const updatedSaldo = this.#berechneNeuenSaldo(
-            saldo,
+            saldo!,
             betrag,
             transaktionTyp,
         );
@@ -207,8 +208,7 @@ export class BankkontoWriteService {
         if (
             bankkonto.besitztTransaktionLimit === true &&
             bankkonto.transaktionLimit !== undefined &&
-            (transaktionTyp === 'AUSZAHLUNG' ||
-                transaktionTyp === 'ÜBERWEISUNG')
+            (transaktionTyp === 'AUSZAHLUNG' || transaktionTyp === ÜBERWEISUNG)
         ) {
             const heutigesDatum = new Date();
             heutigesDatum.setHours(0, 0, 0, 0);
@@ -218,7 +218,8 @@ export class BankkontoWriteService {
                     (transaktion) =>
                         transaktion.transaktionTyp === transaktionTyp &&
                         (transaktion.transaktionTyp === 'AUSZAHLUNG' ||
-                            transaktion.transaktionTyp === 'ÜBERWEISUNG') &&
+                            // TODO Warum dieser fehler
+                            transaktion.transaktionTyp === ÜBERWEISUNG) &&
                         transaktion.transaktionDatum &&
                         new Date(transaktion.transaktionDatum).setHours(
                             0,
@@ -240,8 +241,8 @@ export class BankkontoWriteService {
                 restlichesLimit,
             );
 
-            if (bankkonto.saldo < betrag) {
-                throw new InsufficientFundsException(bankkonto.saldo, betrag);
+            if (bankkonto.saldo! < betrag) {
+                throw new InsufficientFundsException(bankkonto.saldo!, betrag);
             }
 
             if (neueTransaktionsSumme > bankkonto.transaktionLimit) {
@@ -322,7 +323,7 @@ export class BankkontoWriteService {
             transactionDate: new Date(),
         });
 
-        if (transaktionTyp === 'ÜBERWEISUNG') {
+        if (transaktionTyp === ÜBERWEISUNG) {
             await this.createTransaktion({
                 absender,
                 empfaenger,

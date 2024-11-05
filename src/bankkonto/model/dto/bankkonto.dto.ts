@@ -13,11 +13,11 @@ export class BankkontoDtoOhneReferenz {
     @IsBoolean()
     @IsOptional()
     @ApiProperty({ example: true, type: Boolean })
-    readonly besitztTransakionLimit: boolean | undefined;
+    readonly besitztTransaktionLimit: boolean | undefined;
 
     @ApiProperty({ example: 100, description: 'Tägliches Transaktionslimit' })
     @IsOptional()
-    readonly transaktionsLimit!: number;
+    readonly transaktionLimit!: number;
 
     @IsOptional()
     @ArrayUnique()

@@ -28,7 +28,7 @@ export class Bankkonto {
         transformer: new DecimalTransformer(),
     })
     @ApiProperty({ example: 1, type: Number })
-    readonly saldo!: number;
+    readonly saldo!: number | undefined;
 
     @Column('decimal')
     @ApiProperty({ example: true, type: Boolean })
