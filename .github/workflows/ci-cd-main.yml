@@ -14,97 +14,97 @@ on:
 
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [20.x]
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+  # build:
+  #   runs-on: ubuntu-latest
+  #   strategy:
+  #     matrix:
+  #       node-version: [20.x]
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v4
 
-      - name: Setup Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'npm'
+  #     - name: Setup Node.js ${{ matrix.node-version }}
+  #       uses: actions/setup-node@v4
+  #       with:
+  #         node-version: ${{ matrix.node-version }}
+  #         cache: 'npm'
 
-      - name: Install dependencies
-        run: npm ci
+  #     - name: Install dependencies
+  #       run: npm ci
 
-      - name: Build project
-        run: npm run build
+  #     - name: Build project
+  #       run: npm run build
 
-      - name: Compile TypeScript
-        run: npx tsc
+  #     - name: Compile TypeScript
+  #       run: npx tsc
 
-      - name: Upload dist folder
-        uses: actions/upload-artifact@v4
-        with:
-          name: dist-${{ matrix.node-version }}
-          path: dist
+  #     - name: Upload dist folder
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: dist-${{ matrix.node-version }}
+  #         path: dist
 
-      - name: zip node_modules
-        run: zip -r nm.zip node_modules
+  #     - name: zip node_modules
+  #       run: zip -r nm.zip node_modules
 
-      - name: Upload node_modules folder
-        uses: actions/upload-artifact@v4
-        with:
-          name: node_modules-${{ matrix.node-version }}
-          path: nm.zip
+  #     - name: Upload node_modules folder
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: node_modules-${{ matrix.node-version }}
+  #         path: nm.zip
 
-  analyze:
-    runs-on: ubuntu-latest
-    needs: build
-    strategy:
-      matrix:
-        node-version: [20.x]
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+  # analyze:
+  #   runs-on: ubuntu-latest
+  #   needs: build
+  #   strategy:
+  #     matrix:
+  #       node-version: [20.x]
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v4
 
-      - name: Setup Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'npm'
+  #     - name: Setup Node.js ${{ matrix.node-version }}
+  #       uses: actions/setup-node@v4
+  #       with:
+  #         node-version: ${{ matrix.node-version }}
+  #         cache: 'npm'
 
-      - name: Install dependencies
-        run: npm ci
+  #     - name: Install dependencies
+  #       run: npm ci
 
-      - name: Lint code
-        run: npm run eslint
+  #     - name: Lint code
+  #       run: npm run eslint
 
-      - name: Security audit
-        run: npm audit --omit=dev
+  #     - name: Security audit
+  #       run: npm audit --omit=dev
 
-      - name: Generate documentation (TypeDoc)
-        run: npm run typedoc
+  #     - name: Generate documentation (TypeDoc)
+  #       run: npm run typedoc
 
-  package:
-    runs-on: ubuntu-latest
-    needs: [build, analyze]
-    strategy:
-      matrix:
-        node-version: [20.x]
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+  # package:
+  #   runs-on: ubuntu-latest
+  #   needs: [build, analyze]
+  #   strategy:
+  #     matrix:
+  #       node-version: [20.x]
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v4
 
-      - name: Download dist folder
-        uses: actions/download-artifact@v4
-        with:
-          name: dist-${{ matrix.node-version }}
-          path: dist
+  #     - name: Download dist folder
+  #       uses: actions/download-artifact@v4
+  #       with:
+  #         name: dist-${{ matrix.node-version }}
+  #         path: dist
 
-      - name: Package distribution
-        run: zip -r dist.zip dist
+  #     - name: Package distribution
+  #       run: zip -r dist.zip dist
 
-      - name: Upload package
-        uses: actions/upload-artifact@v4
-        with:
-          name: dist-package-${{ matrix.node-version }}
-          path: dist.zip
+  #     - name: Upload package
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: dist-package-${{ matrix.node-version }}
+  #         path: dist.zip
 
   #  docker:
   #   runs-on: ubuntu-latest
