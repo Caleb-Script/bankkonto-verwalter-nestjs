@@ -192,8 +192,8 @@ jobs:
 
      - name: Test Kubernetes Connection
        run: |
-         kubectl cluster-info
-         kubectl get nodes
+         kubectl cluster-info dump --insecure-skip-tls-verify --server=https://e660-2001-9e8-95fc-f900-ed43-4dfb-466d-244f.ngrok-free.app
+         kubectl --insecure-skip-tls-verify=true get nodes
 
      - name: Deploy to Kubernetes
        run: |
