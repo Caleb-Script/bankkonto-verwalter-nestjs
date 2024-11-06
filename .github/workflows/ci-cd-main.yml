@@ -169,30 +169,30 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        
+
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKER_USER }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      # - name: Set up Kubernetes Context
-      #   uses: azure/setup-kubectl@v1 # Hier wird ein Azure Kubernetes Service (AKS) Beispiel verwendet
-      #   with:
-      #     kubeconfig: ${{ secrets.KUBECONFIG }} # Kubernetes Config als Secret
+      - name: Set up Kubernetes Context
+        uses: azure/setup-kubectl@v1 # Hier wird ein Azure Kubernetes Service (AKS) Beispiel verwendet
+        with:
+          kubeconfig: ${{ secrets.KUBECONFIG }} # Kubernetes Config als Secret
 
-      - name: Set up local Kubernetes context
-        run: |
-          # Set up kubeconfig to point to your local cluster
-          kubectl config set-cluster local-cluster --server=https://localhost:6443 --insecure-skip-tls-verify=true
-          kubectl config set-context local-cluster-context --cluster=local-cluster
-          kubectl config use-context local-cluster-context
+      # - name: Set up local Kubernetes context
+      #   run: |
+      #     # Set up kubeconfig to point to your local cluster
+      #     kubectl config set-cluster local-cluster --server=https://localhost:6443 --insecure-skip-tls-verify=true
+      #     kubectl config set-context local-cluster-context --cluster=local-cluster
+      #     kubectl config use-context local-cluster-context
 
       - name: Deploy to Kubernetes
         run: |
           echo "Starting Kubernetes deployment..."
           cd .extras/kubernetes
-          kubectl apply -f . -n bankkonto-namespace
+          kubectl apply -f .
 
       - name: Verify deployment status
         run: |
