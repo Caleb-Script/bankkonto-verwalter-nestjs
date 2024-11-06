@@ -182,7 +182,7 @@ jobs:
          echo "${{ secrets.KUBECONFIG }}" > ~/.kube/config
          if [ -f ~/.kube/config ]; then
            # Replace the localhost server URL with your ngrok URL
-           sed -i '' 's/localhost:6443/https:\/\/e660-2001-9e8-95fc-f900-ed43-4dfb-466d-244f.ngrok-free.app/g' ~/.kube/config
+           sed -i 's/localhost:6443/https:\/\/e660-2001-9e8-95fc-f900-ed43-4dfb-466d-244f.ngrok-free.app/g' ~/.kube/config
          else
            echo "Die kubeconfig-Datei wurde nicht gefunden."
          fi
