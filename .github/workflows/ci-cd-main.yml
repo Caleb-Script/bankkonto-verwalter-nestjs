@@ -188,11 +188,13 @@ jobs:
       #     kubectl config set-context local-cluster-context --cluster=local-cluster
       #     kubectl config use-context local-cluster-context
 
-      - name: Set up Kubeconfig for Oracle Cloud K3s
+      - name: Set up Kubeconfig
         run: |
           mkdir -p ~/.kube
           echo "${{ secrets.KUBECONFIG }}" > ~/.kube/config
-          kubectl config use-context docker-desktop
+          sed -i '' 's/localhost:6443/1af2-2001-9e8-95fc-f900-ed43-4dfb-466d-244f.ngrok-free.app/g' ~/.kube/config
+
+
 
       - name: Deploy to Kubernetes
         run: |
