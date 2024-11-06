@@ -18,6 +18,7 @@ temp
 tmp
 dependencies.svg
 --forceExit
+kubeconfig
 
 # Sensible Daten (Passwort, Token, private Schluessel)
 .extras/compose/db/mysql/db_root_password.txt

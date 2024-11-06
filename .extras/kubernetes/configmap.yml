@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: bankkonto-config
+  namespace: bankkonto-namespace
+data:
+  NODE_ENV: development
+  SOME_OTHER_CONFIG: value
