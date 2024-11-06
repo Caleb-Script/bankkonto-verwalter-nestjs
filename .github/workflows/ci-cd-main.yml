@@ -1,9 +1,6 @@
 name: CI/CD Pipeline
 
 on:
-  pull_request:
-    branches:
-      - main
   push:
     branches:
       - main
@@ -190,11 +187,12 @@ jobs:
       #     kubectl config set-cluster local-cluster --server=https://localhost:6443 --insecure-skip-tls-verify=true
       #     kubectl config set-context local-cluster-context --cluster=local-cluster
       #     kubectl config use-context local-cluster-context
+
       - name: Set up Kubeconfig for Oracle Cloud K3s
         run: |
           mkdir -p ~/.kube
           echo "${{ secrets.KUBECONFIG }}" > ~/.kube/config
-          kubectl config use-context oracle-k3s-context
+          kubectl config use-context docker-desktop
 
       - name: Deploy to Kubernetes
         run: |
