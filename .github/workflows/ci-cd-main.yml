@@ -181,12 +181,8 @@ jobs:
          mkdir -p ~/.kube
          echo "${{ secrets.KUBECONFIG }}" > ~/.kube/config
          echo "${{ secrets.KUBERNETES_CA_CERT }}" > ~/.kube/ca.crt
-         if [ -f ~/.kube/config ]; then
-           # Set CA file in Kubeconfig
-           kubectl config set-cluster my-cluster --certificate-authority=~/.kube/ca.crt --server=https://e660-2001-9e8-95fc-f900-ed43-4dfb-466d-244f.ngrok-free.app
-         else
-           echo "Die kubeconfig-Datei wurde nicht gefunden."
-         fi
+         kubectl config use-context docker-desktop
+        # kubectl config set-cluster my-cluster --certificate-authority=~/.kube/ca.crt --server=https://e660-2001-9e8-95fc-f900-ed43-4dfb-466d-244f.ngrok-free.app
 
      - name: ls -al
        run: ls -al
