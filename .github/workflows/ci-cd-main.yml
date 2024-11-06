@@ -189,7 +189,7 @@ jobs:
          kubectl config use-context docker-desktop
          kubectl config view
          kubectl --insecure-skip-tls-verify=true get nodes
-         kubectl cluster-info dump --insecure-skip-tls-verify --server=https://e660-2001-9e8-95fc-f900-ed43-4dfb-466d-244f.ngrok-free.app
+         kubectl cluster-info dump --insecure-skip-tls-verify --server=https://a727-2001-9e8-95fc-f900-ed43-4dfb-466d-244f.ngrok-free.app
 
      - name: Deploy to Kubernetes
        run: |
