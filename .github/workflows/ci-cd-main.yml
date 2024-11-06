@@ -106,66 +106,66 @@ jobs:
           name: dist-package-${{ matrix.node-version }}
           path: dist.zip
 
-  docker:
-    runs-on: ubuntu-latest
-    needs: package
-    strategy:
-      matrix:
-        node-version: [20.x]
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+  #  docker:
+  #   runs-on: ubuntu-latest
+  #   needs: package
+  #   strategy:
+  #     matrix:
+  #       node-version: [20.x]
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v4
 
-      - name: Download dist folder
-        uses: actions/download-artifact@v4
-        with:
-          name: dist-package-${{ matrix.node-version }}
-          path: ./
-      - name: unzip node_modules
-        run: unzip dist.zip -d ./dist
+  #     - name: Download dist folder
+  #       uses: actions/download-artifact@v4
+  #       with:
+  #         name: dist-package-${{ matrix.node-version }}
+  #         path: ./
+  #     - name: unzip node_modules
+  #       run: unzip dist.zip -d ./dist
 
-      - name: Download node_modules folder
-        uses: actions/download-artifact@v4
-        with:
-          name: node_modules-${{ matrix.node-version }}
-          path: ./
+  #     - name: Download node_modules folder
+  #       uses: actions/download-artifact@v4
+  #       with:
+  #         name: node_modules-${{ matrix.node-version }}
+  #         path: ./
 
-      - name: unzip node_modules
-        run: unzip nm.zip -d ./node_modules
+  #     - name: unzip node_modules
+  #       run: unzip nm.zip -d ./node_modules
 
-      - name: Create .env file
-        run: |
-          echo "NODE_ENV=development" >> .env
-          echo "CLIENT_SECRET=${{ secrets.CLIENT_SECRET }}" >> .env
-          echo "SONAR_TOKEN=${{ secrets.SONAR_TOKEN }}" >> .env
-          echo "SNYK_TOKEN=${{ secrets.SNYK_TOKEN }}" >> .env
+  #     - name: Create .env file
+  #       run: |
+  #         echo "NODE_ENV=development" >> .env
+  #         echo "CLIENT_SECRET=${{ secrets.CLIENT_SECRET }}" >> .env
+  #         echo "SONAR_TOKEN=${{ secrets.SONAR_TOKEN }}" >> .env
+  #         echo "SNYK_TOKEN=${{ secrets.SNYK_TOKEN }}" >> .env
 
-      - name: Build Docker image
-        run: |
-          docker build \
-            --build-arg NODE_ENV=development \
-            --build-arg CLIENT_SECRET=${{ secrets.CLIENT_SECRET }} \
-            --build-arg SONAR_TOKEN=${{ secrets.SONAR_TOKEN }} \
-            --build-arg SNYK_TOKEN=${{ secrets.SNYK_TOKEN }} \
-            -t gruppe-4/bankkonto:2024.10.1 .
+  #     - name: Build Docker image
+  #       run: |
+  #         docker build \
+  #           --build-arg NODE_ENV=development \
+  #           --build-arg CLIENT_SECRET=${{ secrets.CLIENT_SECRET }} \
+  #           --build-arg SONAR_TOKEN=${{ secrets.SONAR_TOKEN }} \
+  #           --build-arg SNYK_TOKEN=${{ secrets.SNYK_TOKEN }} \
+  #           -t gruppe-4/bankkonto:2024.10.1 .
 
-      - name: Clean up .env file
-        run: rm .env
+  #     - name: Clean up .env file
+  #       run: rm .env
 
-      - name: Log in to Docker Hub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKER_USER }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+  #     - name: Log in to Docker Hub
+  #       uses: docker/login-action@v2
+  #       with:
+  #         username: ${{ secrets.DOCKER_USER }}
+  #         password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Push Docker image to registry
-        run: |
-          docker tag gruppe-4/bankkonto:2024.10.1 calebscript/bankkonto-verwalter:2024.10.1
-          docker push calebscript/bankkonto-verwalter:2024.10.1
+  #     - name: Push Docker image to registry
+  #       run: |
+  #         docker tag gruppe-4/bankkonto:2024.10.1 calebscript/bankkonto-verwalter:2024.10.1
+  #         docker push calebscript/bankkonto-verwalter:2024.10.1
 
   deploy:
     runs-on: ubuntu-latest
-    needs: docker
+    # needs: docker
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -192,7 +192,13 @@ jobs:
         run: |
           mkdir -p ~/.kube
           echo "${{ secrets.KUBECONFIG }}" > ~/.kube/config
-          sed -i '' 's/localhost:6443/1af2-2001-9e8-95fc-f900-ed43-4dfb-466d-244f.ngrok-free.app/g' ~/.kube/config
+          # Prüfe, ob die Datei existiert und führe den sed-Befehl aus
+          if [ -f ~/.kube/config ]; then
+            sed -i 's/localhost:6443/1af2-2001-9e8-95fc-f900-ed43-4dfb-466d-244f.ngrok-free.app/g' ~/.kube/config
+          else
+            echo "Die kubeconfig-Datei wurde nicht gefunden."
+          fi
+
 
 
 
@@ -206,3 +212,5 @@ jobs:
         run: |
           kubectl rollout status deployment/bankkonto-app -n bankkonto-namespace
           kubectl get pods -n bankkonto-namespace
+
+          # Update ci-cd-main.yml
