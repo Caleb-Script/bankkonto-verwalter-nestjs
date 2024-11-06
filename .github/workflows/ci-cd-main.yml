@@ -6,8 +6,11 @@ on:
       - main
     tags:
       - 'v*'  # Nur für Versionstags (z.B. v1.0.0)
+  schedule:
+  - cron: "0 2 * * 1-5"
 
 # node-version: [20.x, 22.x, 23.x]
+# runs-on: macos-latest
 
 
 jobs:
@@ -160,11 +163,11 @@ jobs:
           docker tag gruppe-4/bankkonto:2024.10.1 calebscript/bankkonto-verwalter:2024.10.1
           docker push calebscript/bankkonto-verwalter:2024.10.1
 
-  deploy:
-    runs-on: ubuntu-latest
-    needs: docker
-    steps:
-      - name: Deploy to Kubernetes
-        run: |
-          echo "Starting deployment..."
-          kubectl apply -f config.yaml
+ # deploy:
+ #   runs-on: ubuntu-latest
+ #   needs: docker
+ #   steps:
+ #     - name: Deploy to Kubernetes
+ #       run: |
+ #         echo "Starting deployment..."
+ #         kubectl apply -f config.yaml
