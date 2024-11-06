@@ -180,9 +180,10 @@ jobs:
        run: |
          mkdir -p ~/.kube
          echo "${{ secrets.KUBECONFIG }}" > ~/.kube/config
+         echo "${{ secrets.KUBERNETES_CA_CERT }}" > ~/.kube/ca.crt
          if [ -f ~/.kube/config ]; then
-           # Replace the localhost server URL with your ngrok URL
-           sed -i 's/localhost:6443/https:\/\/e660-2001-9e8-95fc-f900-ed43-4dfb-466d-244f.ngrok-free.app/g' ~/.kube/config
+           # Set CA file in Kubeconfig
+           kubectl config set-cluster my-cluster --certificate-authority=~/.kube/ca.crt --server=https://e660-2001-9e8-95fc-f900-ed43-4dfb-466d-244f.ngrok-free.app
          else
            echo "Die kubeconfig-Datei wurde nicht gefunden."
          fi
