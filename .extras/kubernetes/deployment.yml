@@ -22,7 +22,7 @@ spec:
             - secretRef:
                 name: bankkonto-secrets
 
-# kubectl config view --raw > kubeconfig
+# kubectl config view --raw > kubeconfig_ORIGINAL
 
 #---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # kubectl apply -f .

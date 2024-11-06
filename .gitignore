@@ -19,6 +19,7 @@ tmp
 dependencies.svg
 --forceExit
 kubeconfig
+kubeconfig_ORIGINAL
 
 # Sensible Daten (Passwort, Token, private Schluessel)
 .extras/compose/db/mysql/db_root_password.txt
