@@ -32,9 +32,9 @@ services:
     # https://gist.github.com/mrw34/c97bb03ea1054afb551886ffc8b63c3b
     # https://stackoverflow.com/questions/55072221/deploying-postgresql-docker-with-ssl-certificate-and-key-with-volumes
     command: >
-      -c ssl=on
-      -c ssl_cert_file=/var/lib/postgresql/certificate.crt
-      -c ssl_key_file=/var/lib/postgresql/key.pem
+       -c ssl=on
+       -c ssl_cert_file=/var/lib/postgresql/certificate.crt
+       -c ssl_key_file=/var/lib/postgresql/key.pem
     volumes:
       - type: bind
         source: C:/Zimmermann/volumes/postgres/data
@@ -59,7 +59,7 @@ services:
         # .s.PGSQL.5432.lock
         target: /var/run/postgresql
       - type: bind
-        source: C:/Zimmermann/volumes/postgres/csv/buch
+        source: C:/Zimmermann/volumes/postgres/csv/bankkonto
         target: /csv
         read_only: true
       - type: bind
