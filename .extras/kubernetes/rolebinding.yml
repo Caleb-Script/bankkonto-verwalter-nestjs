@@ -1,16 +1,12 @@
 apiVersion: rbac.authorization.k8s.io/v1
-kind: RoleBinding
+kind: ClusterRoleBinding
 metadata:
-  name: node-list-binding
-  namespace: bankkonto-namespace
+  name: admin-binding
 subjects:
-- kind: ServiceAccount
-  name: docker-desktop
-  namespace: bankkonto-namespace
 - kind: User
   name: docker-desktop
   apiGroup: rbac.authorization.k8s.io
 roleRef:
-  kind: Role
-  name: docker-desktop
+  kind: ClusterRole
+  name: cluster-admin
   apiGroup: rbac.authorization.k8s.io

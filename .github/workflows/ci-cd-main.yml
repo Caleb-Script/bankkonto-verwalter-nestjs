@@ -14,191 +14,191 @@ on:
 
 
 jobs:
-  # build:
-  #   runs-on: ubuntu-latest
-  #   strategy:
-  #     matrix:
-  #       node-version: [20.x]
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v4
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [20.x]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-  #     - name: Setup Node.js ${{ matrix.node-version }}
-  #       uses: actions/setup-node@v4
-  #       with:
-  #         node-version: ${{ matrix.node-version }}
-  #         cache: 'npm'
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
 
-  #     - name: Install dependencies
-  #       run: npm ci
+      - name: Install dependencies
+        run: npm ci
 
-  #     - name: Build project
-  #       run: npm run build
+      - name: Build project
+        run: npm run build
 
-  #     - name: Compile TypeScript
-  #       run: npx tsc
+      - name: Compile TypeScript
+        run: npx tsc
 
-  #     - name: Upload dist folder
-  #       uses: actions/upload-artifact@v4
-  #       with:
-  #         name: dist-${{ matrix.node-version }}
-  #         path: dist
+      - name: Upload dist folder
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist-${{ matrix.node-version }}
+          path: dist
 
-  #     - name: zip node_modules
-  #       run: zip -r nm.zip node_modules
+      - name: zip node_modules
+        run: zip -r nm.zip node_modules
 
-  #     - name: Upload node_modules folder
-  #       uses: actions/upload-artifact@v4
-  #       with:
-  #         name: node_modules-${{ matrix.node-version }}
-  #         path: nm.zip
+      - name: Upload node_modules folder
+        uses: actions/upload-artifact@v4
+        with:
+          name: node_modules-${{ matrix.node-version }}
+          path: nm.zip
 
-  # analyze:
-  #   runs-on: ubuntu-latest
-  #   needs: build
-  #   strategy:
-  #     matrix:
-  #       node-version: [20.x]
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v4
+  analyze:
+    runs-on: ubuntu-latest
+    needs: build
+    strategy:
+      matrix:
+        node-version: [20.x]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-  #     - name: Setup Node.js ${{ matrix.node-version }}
-  #       uses: actions/setup-node@v4
-  #       with:
-  #         node-version: ${{ matrix.node-version }}
-  #         cache: 'npm'
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
 
-  #     - name: Install dependencies
-  #       run: npm ci
+      - name: Install dependencies
+        run: npm ci
 
-  #     - name: Lint code
-  #       run: npm run eslint
+      - name: Lint code
+        run: npm run eslint
 
-  #     - name: Security audit
-  #       run: npm audit --omit=dev
+      - name: Security audit
+        run: npm audit --omit=dev
 
-  #     - name: Generate documentation (TypeDoc)
-  #       run: npm run typedoc
+      - name: Generate documentation (TypeDoc)
+        run: npm run typedoc
 
-  # package:
-  #   runs-on: ubuntu-latest
-  #   needs: [build, analyze]
-  #   strategy:
-  #     matrix:
-  #       node-version: [20.x]
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v4
+  package:
+    runs-on: ubuntu-latest
+    needs: [build, analyze]
+    strategy:
+      matrix:
+        node-version: [20.x]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-  #     - name: Download dist folder
-  #       uses: actions/download-artifact@v4
-  #       with:
-  #         name: dist-${{ matrix.node-version }}
-  #         path: dist
+      - name: Download dist folder
+        uses: actions/download-artifact@v4
+        with:
+          name: dist-${{ matrix.node-version }}
+          path: dist
 
-  #     - name: Package distribution
-  #       run: zip -r dist.zip dist
+      - name: Package distribution
+        run: zip -r dist.zip dist
 
-  #     - name: Upload package
-  #       uses: actions/upload-artifact@v4
-  #       with:
-  #         name: dist-package-${{ matrix.node-version }}
-  #         path: dist.zip
+      - name: Upload package
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist-package-${{ matrix.node-version }}
+          path: dist.zip
 
-  #  docker:
-  #   runs-on: ubuntu-latest
-  #   needs: package
-  #   strategy:
-  #     matrix:
-  #       node-version: [20.x]
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v4
+  docker:
+    runs-on: ubuntu-latest
+    needs: package
+    strategy:
+      matrix:
+        node-version: [20.x]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-  #     - name: Download dist folder
-  #       uses: actions/download-artifact@v4
-  #       with:
-  #         name: dist-package-${{ matrix.node-version }}
-  #         path: ./
-  #     - name: unzip node_modules
-  #       run: unzip dist.zip -d ./dist
+      - name: Download dist folder
+        uses: actions/download-artifact@v4
+        with:
+          name: dist-package-${{ matrix.node-version }}
+          path: ./
+      - name: unzip node_modules
+        run: unzip dist.zip -d ./dist
 
-  #     - name: Download node_modules folder
-  #       uses: actions/download-artifact@v4
-  #       with:
-  #         name: node_modules-${{ matrix.node-version }}
-  #         path: ./
+      - name: Download node_modules folder
+        uses: actions/download-artifact@v4
+        with:
+          name: node_modules-${{ matrix.node-version }}
+          path: ./
 
-  #     - name: unzip node_modules
-  #       run: unzip nm.zip -d ./node_modules
+      - name: unzip node_modules
+        run: unzip nm.zip -d ./node_modules
 
-  #     - name: Create .env file
-  #       run: |
-  #         echo "NODE_ENV=development" >> .env
-  #         echo "CLIENT_SECRET=${{ secrets.CLIENT_SECRET }}" >> .env
-  #         echo "SONAR_TOKEN=${{ secrets.SONAR_TOKEN }}" >> .env
-  #         echo "SNYK_TOKEN=${{ secrets.SNYK_TOKEN }}" >> .env
+      - name: Create .env file
+        run: |
+          echo "NODE_ENV=development" >> .env
+          echo "CLIENT_SECRET=${{ secrets.CLIENT_SECRET }}" >> .env
+          echo "SONAR_TOKEN=${{ secrets.SONAR_TOKEN }}" >> .env
+          echo "SNYK_TOKEN=${{ secrets.SNYK_TOKEN }}" >> .env
 
-  #     - name: Build Docker image
-  #       run: |
-  #         docker build \
-  #           --build-arg NODE_ENV=development \
-  #           --build-arg CLIENT_SECRET=${{ secrets.CLIENT_SECRET }} \
-  #           --build-arg SONAR_TOKEN=${{ secrets.SONAR_TOKEN }} \
-  #           --build-arg SNYK_TOKEN=${{ secrets.SNYK_TOKEN }} \
-  #           -t gruppe-4/bankkonto:2024.10.1 .
+      - name: Build Docker image
+        run: |
+          docker build \
+            --build-arg NODE_ENV=development \
+            --build-arg CLIENT_SECRET=${{ secrets.CLIENT_SECRET }} \
+            --build-arg SONAR_TOKEN=${{ secrets.SONAR_TOKEN }} \
+            --build-arg SNYK_TOKEN=${{ secrets.SNYK_TOKEN }} \
+            -t gruppe-4/bankkonto:2024.10.1 .
 
-  #     - name: Clean up .env file
-  #       run: rm .env
+      - name: Clean up .env file
+        run: rm .env
 
-  #     - name: Log in to Docker Hub
-  #       uses: docker/login-action@v2
-  #       with:
-  #         username: ${{ secrets.DOCKER_USER }}
-  #         password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USER }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
 
-  #     - name: Push Docker image to registry
-  #       run: |
-  #         docker tag gruppe-4/bankkonto:2024.10.1 calebscript/bankkonto-verwalter:2024.10.1
-  #         docker push calebscript/bankkonto-verwalter:2024.10.1
+      - name: Push Docker image to registry
+        run: |
+          docker tag gruppe-4/bankkonto:2024.10.1 calebscript/bankkonto-verwalter:2024.10.1
+          docker push calebscript/bankkonto-verwalter:2024.10.1
 
-  deploy:
-   runs-on: ubuntu-latest
-   #needs: docker
-   steps:
-     - name: Checkout code
-       uses: actions/checkout@v4
+  # deploy:
+  #  runs-on: ubuntu-latest
+  #  #needs: docker
+  #  steps:
+  #    - name: Checkout code
+  #      uses: actions/checkout@v4
 
-     - name: Log in to Docker Hub
-       uses: docker/login-action@v2
-       with:
-         username: ${{ secrets.DOCKER_USER }}
-         password: ${{ secrets.DOCKER_PASSWORD }}
+  #    - name: Log in to Docker Hub
+  #      uses: docker/login-action@v2
+  #      with:
+  #        username: ${{ secrets.DOCKER_USER }}
+  #        password: ${{ secrets.DOCKER_PASSWORD }}
 
-     - name: Set up Kubeconfig
-       run: |
-         mkdir -p ~/.kube
-         cat "${{ secrets.KUBECONFIG }}" > ~/.kube/config
-         cat "${{ secrets.KUBERNETES_CA_CERT }}" > ~/.kube/ca.crt
+  #    - name: Set up Kubeconfig
+  #      run: |
+  #        mkdir -p ~/.kube
+  #        cat "${{ secrets.KUBECONFIG }}" > ~/.kube/config
+  #        cat "${{ secrets.KUBERNETES_CA_CERT }}" > ~/.kube/ca.crt
 
-     - name: Test Kubernetes Connection
-       run: |
-         kubectl config use-context docker-desktop
-         kubectl config view
-         kubectl --insecure-skip-tls-verify=true get nodes
-         kubectl cluster-info dump --insecure-skip-tls-verify --server=https://a727-2001-9e8-95fc-f900-ed43-4dfb-466d-244f.ngrok-free.app
+  #    - name: Test Kubernetes Connection
+  #      run: |
+  #        kubectl config use-context docker-desktop
+  #        kubectl config view
+  #        kubectl --insecure-skip-tls-verify=true get nodes
+  #        kubectl cluster-info dump --insecure-skip-tls-verify --server=https://a727-2001-9e8-95fc-f900-ed43-4dfb-466d-244f.ngrok-free.app
 
-     - name: Deploy to Kubernetes
-       run: |
-         echo "Starting Kubernetes deployment..."
-         cd .extras/kubernetes
-         kubectl apply -f . --validate=false
+  #    - name: Deploy to Kubernetes
+  #      run: |
+  #        echo "Starting Kubernetes deployment..."
+  #        cd .extras/kubernetes
+  #        kubectl apply -f . --validate=false
 
-     - name: Verify deployment status
-       run: |
-         kubectl rollout status deployment/bankkonto-app -n bankkonto-namespace
-         kubectl get pods -n bankkonto-namespace
+  #    - name: Verify deployment status
+  #      run: |
+  #        kubectl rollout status deployment/bankkonto-app -n bankkonto-namespace
+  #        kubectl get pods -n bankkonto-namespace
 
 
 
