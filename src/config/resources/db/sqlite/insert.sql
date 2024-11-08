@@ -1,42 +1,23 @@
-INSERT INTO buch(id, version, isbn, rating, art, preis, rabatt, lieferbar, datum, homepage, schlagwoerter, erzeugt, aktualisiert) VALUES
-    (1,0,'978-3-897-22583-1',4,'EPUB',11.1,0.011,true,'2022-02-01','https://acme.at','JAVASCRIPT','2022-02-01 00:00:00','2022-02-01 00:00:00');
-INSERT INTO buch(id, version, isbn, rating, art, preis, rabatt, lieferbar, datum, homepage, schlagwoerter, erzeugt, aktualisiert) VALUES
-    (20,0,'978-3-827-31552-6',2,'HARDCOVER',22.2,0.022,true,'2022-02-02','https://acme.biz','TYPESCRIPT','2022-02-02 00:00:00','2022-02-02 00:00:00');
-INSERT INTO buch(id, version, isbn, rating, art, preis, rabatt, lieferbar, datum, homepage, schlagwoerter, erzeugt, aktualisiert) VALUES
-    (30,0,'978-0-201-63361-0',3,'PAPERBACK',33.3,0.033,true,'2022-02-03','https://acme.com','JAVASCRIPT,TYPESCRIPT','2022-02-03 00:00:00','2022-02-03 00:00:00');
-INSERT INTO buch(id, version, isbn, rating, art, preis, rabatt, lieferbar, datum, homepage, schlagwoerter, erzeugt, aktualisiert) VALUES
-    (40,0,'978-0-007-09732-6',4,'EPUB',44.4,0.044,true,'2022-02-04','https://acme.de',null,'2022-02-04 00:00:00','2022-02-04 00:00:00');
-INSERT INTO buch(id, version, isbn, rating, art, preis, rabatt, lieferbar, datum, homepage, schlagwoerter, erzeugt, aktualisiert) VALUES
-    (50,0,'978-3-824-40481-0',2,'HARDCOVER',55.5,0.055,true,'2022-02-05','https://acme.es','JAVA','2022-02-05 00:00:00','2022-02-05 00:00:00');
-INSERT INTO buch(id, version, isbn, rating, art, preis, rabatt, lieferbar, datum, homepage, schlagwoerter, erzeugt, aktualisiert) VALUES
-    (60,0,'978-3-540-43081-0',1,'PAPERBACK',66.6,0.066,true,'2022-02-06','https://acme.fi','PYTHON','2022-02-06 00:00:00','2022-02-06 00:00:00');
+-- Beispiel-Daten für die bankkonto-Tabelle einfügen
+INSERT INTO bankkonto (bankkontoId, version, saldo, transaktionLimit, erstelltAm, aktualisiertAm) VALUES
+    (1, 0, 1000.00, 500.00, '2023-01-01 10:00:00', '2023-01-01 10:00:00'),
+    (2, 0, 1500.00, 1000.00, '2023-01-02 11:00:00', '2023-01-02 11:00:00'),
+    (3, 0, 2000.00, 1500.00, '2023-01-03 12:00:00', '2023-01-03 12:00:00'),
+    (4, 0, 2500.00, 2000.00, '2023-01-04 13:00:00', '2023-01-04 13:00:00'),
+    (5, 0, 3000.00, 2500.00, '2023-01-05 14:00:00', '2023-01-05 14:00:00');
 
-INSERT INTO titel(id, titel, untertitel, buch_id) VALUES
-    (1,'Alpha','alpha',1);
-INSERT INTO titel(id, titel, untertitel, buch_id) VALUES
-    (20,'Beta',null,20);
-INSERT INTO titel(id, titel, untertitel, buch_id) VALUES
-    (30,'Gamma','gamma',30);
-INSERT INTO titel(id, titel, untertitel, buch_id) VALUES
-    (40,'Delta','delta',40);
-INSERT INTO titel(id, titel, untertitel, buch_id) VALUES
-    (50,'Epsilon','epsilon',50);
-INSERT INTO titel(id, titel, untertitel, buch_id) VALUES
-    (60,'Phi','phi',60);
+-- Beispiel-Daten für die kunde-Tabelle einfügen
+INSERT INTO kunde (kundeId, name, vorname, email, bankkonto_bankkontoId) VALUES
+    (1, 'Mustermann', 'Max', 'max.mustermann@example.com', 1),
+    (2, 'Musterfrau', 'Erika', 'erika.musterfrau@example.com', 2),
+    (3, 'Schmidt', 'Hans', 'hans.schmidt@example.com', 3),
+    (4, 'Meier', 'Anna', 'anna.meier@example.com', 4),
+    (5, 'Fischer', 'Peter', 'peter.fischer@example.com', 5);
 
-INSERT INTO abbildung(id, beschriftung, content_type, buch_id) VALUES
-    (1,'Abb. 1','img/png',1);
-INSERT INTO abbildung(id, beschriftung, content_type, buch_id) VALUES
-    (20,'Abb. 1','img/png',20);
-INSERT INTO abbildung(id, beschriftung, content_type, buch_id) VALUES
-    (21,'Abb. 2','img/png',20);
-INSERT INTO abbildung(id, beschriftung, content_type, buch_id) VALUES
-    (30,'Abb. 1','img/png',30);
-INSERT INTO abbildung(id, beschriftung, content_type, buch_id) VALUES
-    (31,'Abb. 2','img/png',30);
-INSERT INTO abbildung(id, beschriftung, content_type, buch_id) VALUES
-    (40,'Abb. 1','img/png',40);
-INSERT INTO abbildung(id, beschriftung, content_type, buch_id) VALUES
-    (50,'Abb. 1','img/png',50);
-INSERT INTO abbildung(id, beschriftung, content_type, buch_id) VALUES
-    (60,'Abb. 1','img/png',60);
+-- Beispiel-Daten für die transaktion-Tabelle einfügen
+INSERT INTO transaktion (transaktionId, transaktionTyp, betrag, absender, empfaenger, transaktionDatum, bankkonto_bankkontoId) VALUES
+    (1, 'Überweisung Gehalt', 1500.00, 1, 2, '2023-01-05 09:30:00', 1),  -- Max überweist an Erika
+    (2, 'Überweisung für Dienstleistung', 300.00, 2, 3, '2023-01-09 11:00:00', 2),  -- Erika überweist an Hans
+    (3, 'Geschenk', 100.00, 3, 4, '2023-01-10 15:00:00', 3),  -- Hans überweist an Anna
+    (4, 'Überweisung für Miete', 500.00, 4, 5, '2023-01-11 12:30:00', 4),  -- Anna überweist an Peter
+    (5, 'Überweisung für Einkauf', 250.00, 5, 1, '2023-01-12 14:45:00', 5);  -- Peter überweist an Max
