@@ -23,7 +23,7 @@ package bankkonto {
     class QueryBuilder
 
     class BankkontoReadService << control >> <<@Injectable()>> {
-      + async findById(id: number): Promise<Bankkonto | undefined>
+      + async findByBankkontoId(id: number): Promise<Bankkonto | undefined>
       + async find(suchkriterien?: Record<string, any>): Promise<Bankkonto[]>
     }
 
