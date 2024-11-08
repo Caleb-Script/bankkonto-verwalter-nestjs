@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: keycloak
+  namespace: bankkonto-namespace
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: keycloak
+  template:
+    metadata:
+      labels:
+        app: keycloak
+    spec:
+      containers:
+        - name: keycloak
+          image: quay.io/keycloak/keycloak:25.0.6-0
+          ports:
+            - containerPort: 8080
+            - containerPort: 8443
+          envFrom:
+            - configMapRef:
+                name: keycloak-config
+            - secretRef:
+                name: keycloak-secrets
+          volumeMounts:
+            - name: keycloak-data
+              mountPath: /opt/keycloak/data
+            - name: keycloak-tls
+              mountPath: /opt/keycloak/conf/certificate.crt
+              subPath: certificate.crt
+              readOnly: true
+            - name: keycloak-tls
+              mountPath: /opt/keycloak/conf/key.pem
+              subPath: key.pem
+              readOnly: true
+          args:
+            - "start-dev"
+          resources:
+            limits:
+              cpu: "2000m"
+              memory: "4Gi"
+            requests:
+              cpu: "2000m"
+              memory: "2Gi"
+      volumes:
+        - name: keycloak-data
+          persistentVolumeClaim:
+            claimName: keycloak-data-pv-claim
+        - name: keycloak-tls
+          secret:
+            secretName: keycloak-tls

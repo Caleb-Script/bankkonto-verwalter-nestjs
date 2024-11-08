@@ -86,6 +86,7 @@ export class BankkontoMutationResolver {
             email: kundeDTO.email,
             bankkonto: undefined,
         };
+        this.#logger.debug(kunde);
 
         const bankkonto: Bankkonto = {
             bankkontoId: undefined,

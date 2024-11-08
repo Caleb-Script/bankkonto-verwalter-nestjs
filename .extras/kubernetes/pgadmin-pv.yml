@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pgadmin-pv
+spec:
+  capacity:
+    storage: 5Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+
+  hostPath:
+    path: /Users/gentlebookpro/Projekte/UNI/SWE/zimmermann/volumes/postgres/pgadmin
+---
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pgadmin4-pv
+spec:
+  capacity:
+    storage: 2Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+
+  hostPath:
+    path: /Users/gentlebookpro/Projekte/UNI/SWE/zimmermann/volumes/postgres/pgadmin4

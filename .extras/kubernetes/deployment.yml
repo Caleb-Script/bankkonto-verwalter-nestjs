@@ -4,7 +4,7 @@ metadata:
   name: bankkonto-app
   namespace: bankkonto-namespace
 spec:
-  replicas: 2 # Anzahl der Pods, die du haben möchtest
+  replicas: 1 # Anzahl der Pods, die du haben möchtest
   selector:
     matchLabels:
       app: bankkonto-app # Label zur Auswahl der Pods
@@ -16,16 +16,39 @@ spec:
       containers:
         - name: bankkonto-app
           image: calebscript/bankkonto-verwalter:2024.10.1
+          volumeMounts:
+          - name: bankkonto-secrets
+            mountPath: /opt/app/dist/config/resources/tls  # Pfad im Container
+            readOnly: true
+          - name: app-config
+            mountPath: /opt/app/dist/config/resources/app.yml
+            readOnly: true
+          # Bind Mount für das Log-Verzeichnis
+          - name: log-volume
+            mountPath: /opt/app/log
           ports:
             - containerPort: 3000
           envFrom:
             - secretRef:
                 name: bankkonto-secrets
+      volumes:
+      - name: bankkonto-secrets
+        secret:
+          secretName: bankkonto-secrets
+      # Volume für das Log-Verzeichnis
+      - name: log-volume
+        hostPath:
+          path: /Users/gentlebookpro/Projekte/UNI/SWE/bankkonto-verwalter-nestjs/log
+          type: Directory
+      # Volume für die Konfiguration
+      - name: app-config
+        hostPath:
+          path: /Users/gentlebookpro/Projekte/UNI/SWE/bankkonto-verwalter-nestjs/.extras/compose/bankkonto/app.yml
+          type: File
 
 # kubectl config view --raw > kubeconfig_ORIGINAL
 
 #---------------------------------------------------------------------------------------------------------------------------------------------------------------------
-# kubectl apply -f .
 # kubectl get pods -n bankkonto-namespace
 # helm list -n bankkonto-namespace
 
@@ -42,14 +65,15 @@ spec:
 # Deinstalliere die Helm-Release
 # helm uninstall bankkonto -n bankkonto-namespace
 
-# Lösche den Namespace (optional)
-# kubectl delete namespace bankkonto-namespace
-
 
 # kubectl delete deployment bankkonto-app -n bankkonto-namespace
 # kubectl delete service bankkonto-service -n bankkonto-namespace
 # kubectl delete configmap bankkonto-config -n bankkonto-namespace
 # kubectl delete secret bankkonto-secrets -n bankkonto-namespace
+
+# kubectl delete pvc postgres-tablespace-pv-claim -n bankkonto-namespace
+
+
 
 # Überprüfe den Status der Ressourcen:
 # kubectl get pods -n bankkonto-namespace
@@ -59,6 +83,8 @@ spec:
 # kubectl get secrets -n bankkonto-namespace
 #---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+
+#------------------------------------------------------------------------------------------------------------------------------------------------------
 
 # kubectl delete deployment bankkonto-app -n default
 # kubectl delete service bankkonto-service -n default

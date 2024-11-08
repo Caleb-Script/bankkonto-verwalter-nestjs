@@ -182,13 +182,6 @@ jobs:
   #        cat "${{ secrets.KUBECONFIG }}" > ~/.kube/config
   #        cat "${{ secrets.KUBERNETES_CA_CERT }}" > ~/.kube/ca.crt
 
-  #    - name: Test Kubernetes Connection
-  #      run: |
-  #        kubectl config use-context docker-desktop
-  #        kubectl config view
-  #        kubectl --insecure-skip-tls-verify=true get nodes
-  #        kubectl cluster-info dump --insecure-skip-tls-verify --server=https://a727-2001-9e8-95fc-f900-ed43-4dfb-466d-244f.ngrok-free.app
-
   #    - name: Deploy to Kubernetes
   #      run: |
   #        echo "Starting Kubernetes deployment..."
@@ -199,8 +192,3 @@ jobs:
   #      run: |
   #        kubectl rollout status deployment/bankkonto-app -n bankkonto-namespace
   #        kubectl get pods -n bankkonto-namespace
-
-
-
-
-          # Update ci-cd-main.yml

@@ -32,7 +32,7 @@ services:
       #  protocol: tcp
     volumes:
       - type: bind
-        source: C:/Zimmermann/volumes/fakesmtp
+        source: /Users/gentlebookpro/Projekte/UNI/SWE/zimmermann/volumes/fakesmtp
         target: /tmp
     environment:
       TZ: Europe/Berlin

@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: keycloak-config
+  namespace: bankkonto-namespace
+data:
+  TZ: "Europe/Berlin"
+  KC_HTTPS_CERTIFICATE_FILE: "/opt/keycloak/conf/certificate.crt"
+  KC_HTTPS_CERTIFICATE_KEY_FILE: "/opt/keycloak/conf/key.pem"
+  KC_HEALTH_ENABLED: "true"
+  KC_METRICS_ENABLED: "true"
+  KC_LOG: "console"
+  KC_LOG_CONSOLE_COLOR: "true"

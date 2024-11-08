@@ -80,7 +80,7 @@ input KundeInput {
 input bankkontoInput {
   transaktionLimit: Int
   waehrungen: [String!]!
-  kundeId: KundeInput!
+  kunde: KundeInput!
 }
 
 input transaktionInput {

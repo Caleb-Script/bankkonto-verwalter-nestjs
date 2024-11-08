@@ -1,17 +1,3 @@
-# Copyright (C) 2023 - present Juergen Zimmermann
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 # ==============================================================================
 # N o d e
@@ -27,19 +13,17 @@
 # "better-sqlite3" erfordert Python zum Uebersetzen, wenn das Docker-Image gebaut wird
 
 db:
-  #type: postgres
+  type: postgres
   #type: mysql
   #type: oracle
   #type: sqlite
 
   host: postgres
-  #host: mysql
-  #host: oracle
 
-  #username: buch
-  #password: p
-  #passwordAdmin: p
-  #name: buch
+  username: bankkonto
+  password: p
+  passwordAdmin: p
+  name: bankkonto
   populate: true
 
 # ==============================================================================
@@ -48,9 +32,10 @@ db:
 # Client-ID muss durch die Umgebungsvariable CLIENT_ID gesetzt werden
 keycloak:
   authServerUrl: http://keycloak:8080
-  #realm: nest
+  #authServerUrl: http://localhost:8880
+  realm: nest
   # siehe Keycloak Menuepunkt "Clients" > Tab "Clients list" > Spalte "Client ID"
-  #clientId: nest-client
+  clientId: nest-client
   #tokenValidation: online
 
 # ==============================================================================
