@@ -1,7 +1,7 @@
-DROP INDEX IF EXISTS abbildung_buch_id_idx;
-DROP INDEX IF EXISTS buch_isbn_idx;
+DROP INDEX IF EXISTS transaktion_bankkonto_bankkontoId_idx;
+DROP INDEX IF EXISTS bankkonto_bankkontoId_idx;
 
 -- https://www.sqlite.org/lang_droptable.html
-DROP TABLE IF EXISTS abbildung;
-DROP TABLE IF EXISTS titel;
-DROP TABLE IF EXISTS buch;
+DROP TABLE IF EXISTS transaktion;
+DROP TABLE IF EXISTS kunde;
+DROP TABLE IF EXISTS bankkonto;

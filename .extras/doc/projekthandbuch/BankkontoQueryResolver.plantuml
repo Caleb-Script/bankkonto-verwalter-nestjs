@@ -27,11 +27,11 @@ package bankkonto {
     hide BankkontoDTO circle
 
     interface IdInput {
-        id: number
+        bankkontoId: number
     }
 
     class BankkontoQueryResolver << control >> << @Resolver() >> << @UseInterceptors() >> {
-      + @Query() async bankkonto(@Args() id: IdInput): Promise<BankkontoDTO>
+      + @Query() async bankkonto(@Args() bankkontoId: IdInput): Promise<BankkontoDTO>
       + @Query() async bankkonten(@Args() kunde: string | undefined): Promise<BankkontoDTO[]>
     }
 

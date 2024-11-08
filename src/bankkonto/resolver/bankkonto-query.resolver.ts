@@ -29,7 +29,7 @@ export class BankkontoQueryResolver {
 
     @Query('bankkonto')
     @Public()
-    async findById(@Args() { bankkontoId }: IdInput) {
+    async findByBankkontoId(@Args() { bankkontoId }: IdInput) {
         this.#logger.debug('findByBankkontoId: bankkontoId=%d', bankkontoId);
 
         const bankkonto = await this.#service.findByBankkontoId({
