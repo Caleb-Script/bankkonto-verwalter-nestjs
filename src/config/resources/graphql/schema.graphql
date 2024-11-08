@@ -80,7 +80,7 @@ input KundeInput {
 input bankkontoInput {
   transaktionLimit: Int
   waehrungen: [String!]!
-  kundeId: KundeInput!
+  kunde: KundeInput!
 }
 
 input transaktionInput {
@@ -91,14 +91,16 @@ input transaktionInput {
 }
 
 type CreatePayload {
-  id: Int
+  bankkontoId: Int!
 }
 
 
 input bankkontoUpdateInput {
-  saldo: Float
-  transaktionLimit: Int
+  betrag: Float
+  transaktionLimit: Float
   waehrungen: [String]
+  bankkontoId: ID!
+  version: Int
 }
 
 type UpdatePayload {

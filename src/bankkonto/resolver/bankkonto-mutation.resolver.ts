@@ -40,21 +40,21 @@ export class BankkontoMutationResolver {
 
         const bankkonto = this.#bankkontoDtoToBankkonto(bankkontoDTO);
         const bankkontoId = await this.#service.create(bankkonto);
-        this.#logger.debug('createBankkonto: kontoId=%d', bankkontoId);
+        this.#logger.debug('createBankkonto: bankkontoId=%d', bankkontoId);
         const payload: CreatePayload = { bankkontoId };
         return payload;
     }
 
     @Mutation()
     @Roles({ roles: ['admin', 'user'] })
-    async update(@Args('input') bankkontoDTO: BankkontoUpdateDTO) {
-        this.#logger.debug('update: bankkonto=%o', bankkontoDTO);
+    async update(@Args('input') bankkontoUpdateDTO: BankkontoUpdateDTO) {
+        this.#logger.debug('update: bankkonto=%o', bankkontoUpdateDTO);
 
-        const bankkonto = this.#kontoUpdateDtoToKonto(bankkontoDTO);
-        const versionStr = `"${bankkontoDTO.version.toString()}"`;
+        const bankkonto = this.#kontoUpdateDtoToKonto(bankkontoUpdateDTO);
+        const versionStr = `"${bankkontoUpdateDTO.version.toString()}"`;
 
         const versionResult = await this.#service.update({
-            bankkontoId: bankkontoDTO.bankkontoId,
+            bankkontoId: bankkontoUpdateDTO.bankkontoId,
             bankkonto,
             version: versionStr,
         });

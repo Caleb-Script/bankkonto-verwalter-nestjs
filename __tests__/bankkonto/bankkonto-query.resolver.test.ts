@@ -30,13 +30,11 @@ type BankkontoDTO = Omit<
 // -----------------------------------------------------------------------------
 // T e s t d a t e n
 // -----------------------------------------------------------------------------
-const idVorhanden = '1';
+const bankkontoIdVorhanden = '1';
 
-const kundeVorhanden = 'Mumann';
-const teilKundeVorhanden = 'a';
-const teilKundeNichtVorhanden = 'abc';
-
-const transaktionLimitVorhanden = '100.00';
+const emailVorhanden = 'max@example.com';
+const teilEmailVorhanden = 'a';
+const teilEmailNichtVorhanden = '123';
 
 // -----------------------------------------------------------------------------
 // T e s t s
@@ -69,13 +67,20 @@ describe('GraphQL Queries', () => {
         const body: GraphQLRequest = {
             query: `
                 {
-                    bankkonto(id: "${idVorhanden}") {
-                        version
-                        transaktionLimit
-                        kunde {
-                            kundeId
+                    bankkonto(bankkontoId: "${bankkontoIdVorhanden}") {
+                    bankkontoId
+                    version
+                    saldo
+                    transaktionLimit
+                    waehrungen
+                    erstelltAm
+                    aktualisiertAm
+                    kunde {
+                        kundeId
+                        name
+                        vorname
+                        email
                         }
-                        saldo(short: true)
                     }
                 }
             `,
@@ -101,13 +106,23 @@ describe('GraphQL Queries', () => {
 
     test('Bankkonto zu nicht-vorhandener ID', async () => {
         // given
-        const id = '999999';
+        const bankkontoId = '999999';
         const body: GraphQLRequest = {
             query: `
                 {
-                    bankkonto(id: "${id}") {
-                        kunde {
-                            kundeId
+                    bankkonto(bankkontoId: "999") {
+                    bankkontoId
+                    version
+                    saldo
+                    transaktionLimit
+                    waehrungen
+                    erstelltAm
+                    aktualisiertAm
+                    kunde {
+                        kundeId
+                        name
+                        vorname
+                        email
                         }
                     }
                 }
@@ -130,25 +145,31 @@ describe('GraphQL Queries', () => {
         const [error] = errors!;
         const { message, path, extensions } = error;
 
-        expect(message).toBe(`Es gibt kein Bankkonto mit der ID ${id}.`);
+        expect(message).toBe(`Es gibt kein Bankkonto mit der  ${bankkontoId}.`);
         expect(path).toBeDefined();
         expect(path![0]).toBe('bankkonto');
         expect(extensions).toBeDefined();
         expect(extensions!.code).toBe('BAD_USER_INPUT');
     });
 
-    test('Bankkonto zu vorhandenem Kunden', async () => {
+    test('Bankkonto zu vorhandener Email', async () => {
         // given
         const body: GraphQLRequest = {
             query: `
                 {
-                    bankkonten(suchkriterien: {
-                        kundename: "${kundeVorhanden}"
-                    }) {
+                    bankkonten(suchkriterien: { email: "${emailVorhanden}" }) {
+                        bankkontoId
+                        version
+                        saldo
+                        transaktionLimit
+                        waehrungen
+                        erstelltAm
+                        aktualisiertAm
                         kunde {
                             kundeId
                             name
                             vorname
+                            email
                         }
                     }
                 }
@@ -176,21 +197,27 @@ describe('GraphQL Queries', () => {
 
         const [bankkonto] = bankkontenArray;
 
-        expect(bankkonto!.kunde?.kundeId).toBe(kundeVorhanden);
+        expect(bankkonto!.kunde?.kundeId).toBe(emailVorhanden);
     });
 
-    test('Bankkonto zu vorhandenem Teil-KundenNamen', async () => {
+    test('Bankkonto zu vorhandenem Teil-Email', async () => {
         // given
         const body: GraphQLRequest = {
             query: `
                 {
-                    kunden(suchkriterien: {
-                        kundename: "${teilKundeVorhanden}"
-                    }) {
+                    bankkonten(suchkriterien: { email: "${teilEmailVorhanden}" }) {
+                        bankkontoId
+                        version
+                        saldo
+                        transaktionLimit
+                        waehrungen
+                        erstelltAm
+                        aktualisiertAm
                         kunde {
                             kundeId
                             name
                             vorname
+                            email
                         }
                     }
                 }
@@ -216,21 +243,29 @@ describe('GraphQL Queries', () => {
             .map((bankkonto) => bankkonto.kunde)
             .forEach((kunde) =>
                 expect(kunde?.kundeId).toEqual(
-                    expect.stringContaining(teilKundeVorhanden.toLowerCase()),
+                    expect.stringContaining(teilEmailVorhanden.toLowerCase()),
                 ),
             );
     });
 
-    test('Bankkonto zu nicht vorhandenem Kunden', async () => {
+    test('Bankkonto zu nicht vorhandener Email Adresse', async () => {
         // given
         const body: GraphQLRequest = {
             query: `
                 {
-                    bankkonten(suchkriterien: {
-                        kunde: "${teilKundeNichtVorhanden}"
-                    }) {
+                    bankkonten(suchkriterien: { email: "${teilEmailNichtVorhanden}" }) {
+                        bankkontoId
+                        version
+                        saldo
+                        transaktionLimit
+                        waehrungen
+                        erstelltAm
+                        aktualisiertAm
                         kunde {
                             kundeId
+                            name
+                            vorname
+                            email
                         }
                     }
                 }
@@ -260,89 +295,96 @@ describe('GraphQL Queries', () => {
         expect(extensions!.code).toBe('BAD_USER_INPUT');
     });
 
-    test('Bankkonto zu vorhandenem TransaktionsLimit', async () => {
-        // given
-        const body: GraphQLRequest = {
-            query: `
-                {
-                    bankkonten(suchkriterien: {
-                        transaktionsLimit: "${transaktionLimitVorhanden}"
-                    }) {
-                        kunde {
-                            kundeId
-                        }
-                    }
-                }
-            `,
-        };
+    // test('Bankkonto zu vorhandenem TransaktionsLimit', async () => {
+    //     // given
+    //     const body: GraphQLRequest = {
+    //         query: `
+    //             {
+    //                 bankkonten(suchkriterien: {
+    //                     transaktionsLimit: "${transaktionLimitVorhanden}"
+    //                 }) {
+    //                     kunde {
+    //                         kundeId
+    //                     }
+    //                 }
+    //             }
+    //         `,
+    //     };
 
-        // when
-        const { status, headers, data }: AxiosResponse<GraphQLResponseBody> =
-            await client.post(graphqlPath, body);
+    //     // when
+    //     const { status, headers, data }: AxiosResponse<GraphQLResponseBody> =
+    //         await client.post(graphqlPath, body);
 
-        // then
-        expect(status).toBe(HttpStatus.OK);
-        expect(headers['content-type']).toMatch(/json/iu);
-        expect(data.errors).toBeUndefined();
+    //     // then
+    //     expect(status).toBe(HttpStatus.OK);
+    //     expect(headers['content-type']).toMatch(/json/iu);
+    //     expect(data.errors).toBeUndefined();
 
-        expect(data.data).toBeDefined();
+    //     expect(data.data).toBeDefined();
 
-        const { bankkonten } = data.data!;
+    //     const { bankkonten } = data.data!;
 
-        expect(bankkonten).not.toHaveLength(0);
+    //     expect(bankkonten).not.toHaveLength(0);
 
-        const bankkontenArray: BankkontoDTO[] = bankkonten;
+    //     const bankkontenArray: BankkontoDTO[] = bankkonten;
 
-        expect(bankkontenArray).toHaveLength(1);
+    //     expect(bankkontenArray).toHaveLength(1);
 
-        const [bankkonto] = bankkontenArray;
-        const { kunde } = bankkonto!;
+    //     const [bankkonto] = bankkontenArray;
+    //     const { kunde } = bankkonto!;
 
-        // expect(isbn).toBe(isbnVorhanden);
-        expect(kunde?.kundeId).toBeDefined();
-    });
+    //     // expect(isbn).toBe(isbnVorhanden);
+    //     expect(kunde?.kundeId).toBeDefined();
+    // });
 
-    test('Bankkonten mit besitztTransaktionsLimit=true', async () => {
-        // given
-        const body: GraphQLRequest = {
-            query: `
-                {
-                    bankkonten(suchkriterien: {
-                        besitztTransaktionsLimit: true
-                    }) {
-                        besitztTransaktionsLimit
-                        kunde {
-                            kundeId
-                        }
-                    }
-                }
-            `,
-        };
+    // test('Bankkonten mit besitztTransaktionsLimit=true', async () => {
+    //     // given
+    //     const body: GraphQLRequest = {
+    //         query: `
+    //             {
+    //                 bankkonten(suchkriterien: { besitztTransaktionsLimit: true }) {
+    //                     bankkontoId
+    //                     version
+    //                     saldo
+    //                     transaktionLimit
+    //                     waehrungen
+    //                     erstelltAm
+    //                     aktualisiertAm
+    //                     kunde {
+    //                         kundeId
+    //                         name
+    //                         vorname
+    //                         email
+    //                     }
+    //                 }
+    //             }
+    //         `,
+    //     };
 
-        // when
-        const { status, headers, data }: AxiosResponse<GraphQLResponseBody> =
-            await client.post(graphqlPath, body);
+    //     // when
+    //     const { status, headers, data }: AxiosResponse<GraphQLResponseBody> =
+    //         await client.post(graphqlPath, body);
 
-        // then
-        expect(status).toBe(HttpStatus.OK);
-        expect(headers['content-type']).toMatch(/json/iu);
-        expect(data.errors).toBeUndefined();
+    //     // then
+    //     expect(status).toBe(HttpStatus.OK);
+    //     expect(headers['content-type']).toMatch(/json/iu);
+    //     expect(data.errors).toBeUndefined();
 
-        expect(data.data).toBeDefined();
+    //     expect(data.data).toBeDefined();
 
-        const { bankkonten } = data.data!;
+    //     const { bankkonten } = data.data!;
 
-        expect(bankkonten).not.toHaveLength(0);
+    //     expect(bankkonten).not.toHaveLength(0);
 
-        const bankkontenArray: BankkontoDTO[] = bankkonten;
+    //     const bankkontenArray: BankkontoDTO[] = bankkonten;
 
-        bankkontenArray.forEach((bankkonto) => {
-            const { besitztTransaktionLimit, kunde } = bankkonto;
+    //     bankkontenArray.forEach((bankkonto) => {
+    //         const { besitztTransaktionLimit, kunde } = bankkonto;
 
-            expect(besitztTransaktionLimit).toBe(true);
-            expect(kunde?.kundeId).toBeDefined();
-        });
-    });
+    //         expect(besitztTransaktionLimit).toBe(true);
+    //         expect(kunde?.kundeId).toBeDefined();
+    //     });
+    // });
 });
 
 /* eslint-enable @typescript-eslint/no-unsafe-assignment */

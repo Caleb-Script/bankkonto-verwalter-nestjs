@@ -11,7 +11,7 @@ CREATE TYPE dokument_typ AS ENUM ('VERTRAG', 'RECHNUNG');
 CREATE TABLE IF NOT EXISTS bankkonto (
     bankkonto_id              integer GENERATED ALWAYS AS IDENTITY(START WITH 1000) PRIMARY KEY USING INDEX TABLESPACE bankkontospace,
     version                   INTEGER NOT NULL DEFAULT 0,
-    saldo                     DECIMAL(8, 2) NOT NULL CHECK (saldo >= 0),
+    saldo                     DECIMAL(10, 2) NOT NULL CHECK (saldo >= 0),
     besitzt_transaktion_limit boolean NOT NULL DEFAULT FALSE,
     transaktion_limit         DECIMAL(8, 2),
     waehrungen                text,
