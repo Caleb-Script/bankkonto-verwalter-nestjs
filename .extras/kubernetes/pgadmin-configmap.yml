@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pgadmin-config
+  namespace: bankkonto-namespace
+data:
+  PGADMIN_DISABLE_POSTFIX: "true"

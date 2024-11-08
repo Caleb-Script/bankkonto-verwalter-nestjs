@@ -1,32 +1,3 @@
-# Copyright (C) 2022 - present Juergen Zimmermann, Hochschule Karlsruhe
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
-# Aufruf:   docker compose up
-#           docker compose exec keycloak bash
-#             ls /opt/keycloak/data
-#             ls -l /opt/keycloak/data/h2/keycloakdb.mv.db
-#           docker compose down
-
-# java -jar h2-2.2.224.jar
-#     https://github.com/keycloak/keycloak/blob/main/pom.xml#L95
-#     https://repo.maven.apache.org/maven2/com/h2database/h2/2.2.224/h2-2.2.224.jar
-#     Generic H2 (Embedded)
-#     JDBC URL:       jdbc:h2:tcp://localhost/C:/Zimmermann/volumes/keycloak/h2/keycloakdb
-#     Benutzername:   sa
-#     Passwort:       password
-#         Tabellen: USER_ENTITY, USER_ROLE_MAPPING, ...
 
 #include:
 #  - path: [../postgres/compose.yml]
@@ -43,7 +14,8 @@ services:
         target: 8443
     volumes:
       - type: bind
-        source: C:/Zimmermann/volumes/keycloak
+        # source: C:/Zimmermann/volumes/keycloak
+        source:  /Users/gentlebookpro/Projekte/UNI/SWE/zimmermann/volumes/keycloak
         # mit Unterverzeichnis h2
         target: /opt/keycloak/data
       - type: bind

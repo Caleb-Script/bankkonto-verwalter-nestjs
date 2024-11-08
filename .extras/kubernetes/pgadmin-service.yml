@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: pgadmin
+  namespace: bankkonto-namespace
+spec:
+  ports:
+    - port: 8888         # ausserhalb
+      targetPort: 80     # innerhalb
+      protocol: TCP
+    # - port: 80           # The port pgAdmin is listening on within the cluster
+    #   targetPort: 80      # The port exposed by the pgAdmin container
+    #   protocol: TCP
+    #   nodePort: 30001     # Only needed if using NodePort
+  selector:
+    app: pgadmin
+  type: LoadBalancer
+  # type: NodePort

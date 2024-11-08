@@ -1,0 +1,86 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres
+  namespace: bankkonto-namespace
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:16.4-bookworm
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secrets
+                  key: POSTGRES_USER
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secrets
+                  key: POSTGRES_PASSWORD
+          envFrom:
+            - configMapRef:
+                name: postgres-config
+          command:
+            - postgres
+            - -c
+            - ssl=on
+            - -c
+            - ssl_cert_file=/var/lib/postgresql/certificate.crt
+            - -c
+            - ssl_key_file=/var/lib/postgresql/key.pem
+          volumeMounts:
+            - name: postgres-data
+              mountPath: /var/lib/postgresql/data
+            - name: postgres-config
+              mountPath: /etc/postgresql/postgresql.conf
+            - name: postgres-tablespace
+              mountPath: /var/lib/postgresql/tablespace
+            - name: postgres-certs
+              mountPath: /var/lib/postgresql
+              readOnly: false
+            - name: postgres-run
+              mountPath: /var/run/postgresql
+            - name: postgres-csv
+              mountPath: /csv
+            - name: postgres-sql
+              mountPath: /sql
+      securityContext:
+        runAsUser: 999
+        runAsGroup: 999
+        fsGroup: 999
+      volumes:
+        - name: postgres-data
+          persistentVolumeClaim:
+            claimName: postgres-data-pv-claim
+        - name: postgres-config
+          configMap:
+            name: postgres-config
+        - name: postgres-tablespace
+          persistentVolumeClaim:
+            claimName: postgres-tablespace-pv-claim
+        # - name: postgres-certs
+        #   secret:
+        #     secretName: postgres-tls
+        - name: postgres-certs
+          persistentVolumeClaim:
+            claimName: postgres-certs-pvc
+        - name: postgres-run
+          emptyDir: {}
+        - name: postgres-csv
+          persistentVolumeClaim:
+            claimName: postgres-csv-pv-claim
+        - name: postgres-sql
+          persistentVolumeClaim:
+            claimName: postgres-sql-pv-claim

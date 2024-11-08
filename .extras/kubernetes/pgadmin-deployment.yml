@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pgadmin
+  namespace: bankkonto-namespace
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pgadmin  # Diese Zeile sorgt dafür, dass der Selector mit den Labels übereinstimmt
+  template:
+    metadata:
+      labels:
+        app: pgadmin  # Diese Labels müssen mit den Labels im Selector übereinstimmen
+    spec:
+      containers:
+        - name: pgadmin
+          image: dpage/pgadmin4:8.12.0
+          ports:
+            - containerPort: 8888
+          env:
+            - name: PGADMIN_DEFAULT_EMAIL
+              valueFrom:
+                secretKeyRef:
+                  name: pgadmin-secrets
+                  key: PGADMIN_DEFAULT_EMAIL
+            - name: PGADMIN_DEFAULT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: pgadmin-secrets
+                  key: PGADMIN_DEFAULT_PASSWORD
+          envFrom:
+            - configMapRef:
+                name: pgadmin-config
+          volumeMounts:
+            - name: pgadmin-data
+              mountPath: /var/lib/pgadmin
+            - name: pgadmin4-data
+              mountPath: /var/lib/pgadmin4
+      volumes:
+        - name: pgadmin-data
+          persistentVolumeClaim:
+            claimName: pgadmin-pv-claim
+        - name: pgadmin4-data
+          persistentVolumeClaim:
+            claimName: pgadmin4-pv-claim
