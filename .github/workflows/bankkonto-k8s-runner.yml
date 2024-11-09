@@ -4,9 +4,6 @@ on:
   push:
     branches:
       - main  # Trigger bei Push auf den Main-Branch
-  pull_request:
-    branches:
-      - main  # Trigger bei Pull Requests auf den Main-Branch
   workflow_dispatch:  # Manuelles Auslösen des Workflows
 
 jobs:
