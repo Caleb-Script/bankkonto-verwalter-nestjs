@@ -120,4 +120,4 @@ jobs:
         run: npm ci
 
       - name: Run ESLint
-        run: npm run lint  # Linting-Befehl, um Code-Qualität zu prüfen
+        run: npm run eslint  # Linting-Befehl, um Code-Qualität zu prüfen
