@@ -25,7 +25,7 @@ export class TransaktionDTO {
         description: 'Art der Transaktion',
         example: 'ZAHLUNG',
     })
-    @IsIn(['EINZAHLUNG', 'AUSZAHLUNG', 'ÜBERWEISUNG'])
+    @IsIn(['EINZAHLUNG', 'AUSZAHLUNG', 'UEBERWEISUNG'])
     @ApiProperty({ description: 'Art der Transaktion' })
     readonly transaktionTyp!: TransaktionTyp;
 }

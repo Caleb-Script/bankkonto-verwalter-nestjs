@@ -20,7 +20,7 @@ import {
     VersionOutdatedException,
 } from './exceptions.js';
 
-const ÜBERWEISUNG = 'ÜBERWEISUNG';
+const UEBERWEISUNG = 'UEBERWEISUNG';
 /** Typdefinitionen zum Aktualisieren eines Bankkontos mit `update`. */
 export type UpdateParams = {
     /** ID des zu aktualisierenden Bankkontos. */
@@ -137,12 +137,14 @@ export class BankkontoWriteService {
     }
 
     async createTransaktion(transaktionDTO: TransaktionDTO) {
+        const { absender, empfaenger, betrag, transaktionTyp } = transaktionDTO;
         this.#logger.debug(
-            'createTransaktion: transaktionDTO=%o',
-            transaktionDTO,
+            'createTransaktion: absender=%s, empfaenger=%s, betrag=%s, transaktionTyp=%s',
+            absender,
+            empfaenger,
+            betrag,
         );
 
-        const { absender, empfaenger, betrag, transaktionTyp } = transaktionDTO;
         const bankkonto = await this.#findBankkontoByTransaktionTyp(
             transaktionTyp,
             absender,
@@ -195,6 +197,12 @@ export class BankkontoWriteService {
         absender?: number,
         empfaenger?: number,
     ): Promise<Bankkonto> {
+        this.#logger.debug(
+            'findBankkontoByTransaktionTyp: transaktionTyp=%s, absender=%s,empfenger=%s',
+            transaktionTyp,
+            absender,
+            empfaenger,
+        );
         return transaktionTyp === 'EINKOMMEN' || transaktionTyp === 'EINZAHLUNG'
             ? this.#readService.findByBankkontoId({ bankkontoId: empfaenger! })
             : this.#readService.findByBankkontoId({ bankkontoId: absender! });
@@ -208,7 +216,7 @@ export class BankkontoWriteService {
         if (
             bankkonto.besitztTransaktionLimit === true &&
             bankkonto.transaktionLimit !== undefined &&
-            (transaktionTyp === 'AUSZAHLUNG' || transaktionTyp === ÜBERWEISUNG)
+            (transaktionTyp === 'AUSZAHLUNG' || transaktionTyp === UEBERWEISUNG)
         ) {
             const heutigesDatum = new Date();
             heutigesDatum.setHours(0, 0, 0, 0);
@@ -220,7 +228,7 @@ export class BankkontoWriteService {
                         (transaktion.transaktionTyp === 'AUSZAHLUNG' ||
                             // TODO Warum dieser fehler
                             // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-                            transaktion.transaktionTyp === 'ÜBERWEISUNG') &&
+                            transaktion.transaktionTyp === 'UEBERWEISUNG') &&
                         transaktion.transaktionDatum &&
                         new Date(transaktion.transaktionDatum).setHours(
                             0,
@@ -324,7 +332,7 @@ export class BankkontoWriteService {
             transactionDate: new Date(),
         });
 
-        if (transaktionTyp === ÜBERWEISUNG) {
+        if (transaktionTyp === UEBERWEISUNG) {
             await this.createTransaktion({
                 absender,
                 empfaenger,

@@ -14,7 +14,7 @@ import { DecimalTransformer } from './decimal-transformer.js';
 export type TransaktionTyp =
     | 'EINZAHLUNG'
     | 'AUSZAHLUNG'
-    | 'ÜBERWEISUNG'
+    | 'UEBERWEISUNG'
     | 'EINKOMMEN'
     | 'ZAHLUNG';
 
