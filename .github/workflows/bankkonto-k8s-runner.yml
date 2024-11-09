@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main  # Trigger bei Push auf den Main-Branch
+      - 60.dockerfile-bugfix # Trigger
   pull_request:
     branches:
       - main  # Trigger bei Pull Requests auf den Main-Branch
