@@ -13,17 +13,25 @@ ARG NODE_VERSION=23.0.0
 # S t a g e   d i s t
 # ---------------------------------------------------------------------------------------
 FROM node:${NODE_VERSION}-bookworm-slim AS dist
+# FROM node:${NODE_VERSION}-bookworm AS dist
 
 # ggf. Python fuer Argon2
 # https://packages.debian.org/bookworm/python3.11-minimal
-# https://packages.debian.org/bookworm/python3.11-dev
+# https://packages.debian.org/trixie/python3.12-minimal
+# "python3-dev" enthaelt "multiprocessing"
+# "build-essential" enthaelt "make"
 RUN <<EOF
+# https://explainshell.com/explain?cmd=set+-eux
 set -eux
 apt-get update
 apt-get upgrade --yes
 
-# Installiere Python und Abhängigkeiten
-apt-get install --no-install-recommends --yes python3.11=3.11.2-6+deb12u4 python3.11-dev=3.11.2-6+deb12u4 python3.11-minimal=3.11.2-6+deb12u4
+# Debian Bookworm bietet nur Packages fuer Python 3.11; Ubuntu Jammy LTS nur fuer Python 3.10
+# https://packages.debian.org/bookworm/python3.11-minimal
+# https://packages.debian.org/bookworm/python3.11-dev
+# Python 3.12: Uebersetzung des Python-Quellcodes erforderlich
+# https://itnixpro.com/how-to-install-python-3-12-on-debian-12debian-11
+apt-get install --no-install-recommends --yes python3.11-minimal=3.11.2-6+deb12u3 python3.11-dev=3.11.2-6+deb12u3 build-essential=12.9
 ln -s /usr/bin/python3.11 /usr/bin/python3
 ln -s /usr/bin/python3.11 /usr/bin/python
 
@@ -36,7 +44,7 @@ WORKDIR /home/node
 
 COPY src ./src
 
-# Installiere Abhängigkeiten und baue das Projekt
+# https://docs.docker.com/engine/reference/builder/#run---mounttypebind
 RUN --mount=type=bind,source=package.json,target=package.json \
     --mount=type=bind,source=package-lock.json,target=package-lock.json \
     --mount=type=bind,source=nest-cli.json,target=nest-cli.json \
@@ -58,12 +66,11 @@ RUN <<EOF
 set -eux
 apt-get update
 apt-get upgrade --yes
-
-# Installiere Python und Abhängigkeiten
-apt-get install --no-install-recommends --yes python3.11=3.11.2-6+deb12u4 python3.11-dev=3.11.2-6+deb12u4 python3.11-minimal=3.11.2-6+deb12u4
+# https://packages.debian.org/bookworm/python3.11-minimal
+# https://packages.debian.org/bookworm/python3.11-dev
+apt-get install --no-install-recommends --yes python3.11-minimal=3.11.2-6+deb12u3 python3.11-dev=3.11.2-6+deb12u3 build-essential=12.9
 ln -s /usr/bin/python3.11 /usr/bin/python3
 ln -s /usr/bin/python3.11 /usr/bin/python
-
 npm i -g --no-audit --no-fund npm
 EOF
 
@@ -91,6 +98,9 @@ ENV NODE_ENV=${NODE_ENV} \
     SNYK_TOKEN=${SNYK_TOKEN}
 
 # Anzeige bei "docker inspect ..."
+# https://specs.opencontainers.org/image-spec/annotations
+# https://spdx.org/licenses
+# MAINTAINER ist deprecated https://docs.docker.com/engine/reference/builder/#maintainer-deprecated
 LABEL org.opencontainers.image.title="bankkonto" \
     org.opencontainers.image.description="Appserver Bankkonto mit Basis-Image Debian Bookworm" \
     org.opencontainers.image.version="2024.10.1-bookworm" \
@@ -100,17 +110,14 @@ LABEL org.opencontainers.image.title="bankkonto" \
 RUN <<EOF
 set -eux
 apt-get update
-
-# Installiere dumb-init
+# https://github.com/Yelp/dumb-init
+# https://packages.debian.org/bookworm/dumb-init
 apt-get install --no-install-recommends --yes dumb-init=1.2.5-2
 
-# Bereinige temporäre Dateien und Caches
 apt-get autoremove --yes
 apt-get clean --yes
 rm -rf /var/lib/apt/lists/*
 rm -rf /tmp/*
-# Bereinige npm Cache
-rm -rf /root/.npm
 EOF
 
 WORKDIR /opt/app
@@ -124,5 +131,9 @@ COPY --chown=node:node src/config/resources ./dist/config/resources
 
 EXPOSE 3000
 
-# Setze EntryPoint für den Container
+# Bei CMD statt ENTRYPOINT kann das Kommando bei "docker run ..." ueberschrieben werden
+# "Array Syntax" damit auch <Strg>C funktioniert
+# https://github.com/Yelp/dumb-init:
+# "a simple process supervisor and init system designed to run as PID 1 inside
+# minimal container environments (such as Docker)""
 ENTRYPOINT ["dumb-init", "/usr/local/bin/node", "dist/main.js"]
