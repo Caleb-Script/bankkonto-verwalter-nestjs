@@ -4,12 +4,14 @@ on:
   push:
     branches:
       - main
+      - 60-dockerfile-bugfix # Trigger
     tags:
       - 'v*'  # Nur für Versionstags (z.B. v1.0.0)
   schedule:
-  - cron: "0 2 * * 1-5"
+  - cron: "0 2 * * 1-5" # Set your workflow to run every day of the week from Monday to Friday at 2:00 UTC
 
 # node-version: [20.x, 22.x, 23.x]
+# os: [ubuntu-latest, windows-latest, macOS-latest]
 # runs-on: macos-latest
 
 
@@ -163,32 +165,35 @@ jobs:
           docker tag gruppe-4/bankkonto:2024.10.1 calebscript/bankkonto-verwalter:2024.10.1
           docker push calebscript/bankkonto-verwalter:2024.10.1
 
-  # deploy:
-  #  runs-on: ubuntu-latest
-  #  #needs: docker
-  #  steps:
-  #    - name: Checkout code
-  #      uses: actions/checkout@v4
+  deploy:
+    runs-on: self-hosted
+    steps:
+     - name: Checkout code
+       uses: actions/checkout@v4
 
-  #    - name: Log in to Docker Hub
-  #      uses: docker/login-action@v2
-  #      with:
-  #        username: ${{ secrets.DOCKER_USER }}
-  #        password: ${{ secrets.DOCKER_PASSWORD }}
+     - name: Set up Kubernetes context
+       run: |
+         # Setze den kubectl Kontext auf deinen lokalen Docker Desktop Cluster
+         kubectl config use-context docker-desktop
 
-  #    - name: Set up Kubeconfig
-  #      run: |
-  #        mkdir -p ~/.kube
-  #        cat "${{ secrets.KUBECONFIG }}" > ~/.kube/config
-  #        cat "${{ secrets.KUBERNETES_CA_CERT }}" > ~/.kube/ca.crt
+     - name: Apply Postgres PersistentVolume
+       run: |
+         kubectl apply -f .extras/kubernetes/postgres-pv.yml --namespace=bankkonto-namespace
 
-  #    - name: Deploy to Kubernetes
-  #      run: |
-  #        echo "Starting Kubernetes deployment..."
-  #        cd .extras/kubernetes
-  #        kubectl apply -f . --validate=false
+     - name: Apply PgAdmin PersistentVolume
+       run: |
+         kubectl apply -f .extras/kubernetes/pgadmin-pv.yml --namespace=bankkonto-namespace
 
-  #    - name: Verify deployment status
-  #      run: |
-  #        kubectl rollout status deployment/bankkonto-app -n bankkonto-namespace
-  #        kubectl get pods -n bankkonto-namespace
+     - name: Apply Keycloak PersistentVolume
+       run: |
+         kubectl apply -f .extras/kubernetes/keycloak-pv.yml --namespace=bankkonto-namespace
+
+     - name: Apply Remaining Kubernetes Resources
+       run: |
+         kubectl apply -f .extras/kubernetes/ --namespace=bankkonto-namespace
+
+     - name: Wait for Deployment Rollout
+       run: |
+         # Warte, bis das Deployment erfolgreich ausgerollt ist
+         kubectl rollout status deployment/bankkonto-app -n bankkonto-namespace
+
