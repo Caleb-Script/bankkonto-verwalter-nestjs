@@ -14,7 +14,7 @@ type Query {
 type Mutation {
   create(input: bankkontoInput!): CreatePayload
   update(input: bankkontoUpdateInput!): UpdatePayload
-  makeTransaktion(bankkonto: ID!, input: transaktionInput!): CreatePayload
+  makeTransaktion(input: transaktionInput!): TransaktionPayload
   delete(bankkontoId: ID!): Boolean
 
   # Mutation, wenn z.B. der Login-Zeitpunkt im IDM-System gespeichert wird
@@ -43,6 +43,7 @@ type Bankkonto {
   version: Int!
   saldo: Float!
   transaktionLimit: Int
+  besitztTransaktionLimit: Boolean!
   waehrungen: [String]
   erstelltAm: String!
   aktualisiertAm: String!
@@ -79,6 +80,7 @@ input KundeInput {
 # Eingabedatentypen für Mutationen
 input bankkontoInput {
   transaktionLimit: Int
+  besitztTransaktionLimit: Boolean!
   waehrungen: [String!]!
   kunde: KundeInput!
 }
@@ -91,13 +93,14 @@ input transaktionInput {
 }
 
 type CreatePayload {
-  bankkontoId: Int!
+  bankkontoId: ID!
 }
 
 
 input bankkontoUpdateInput {
   betrag: Float
   transaktionLimit: Float
+  besitztTransaktionLimit: Boolean
   waehrungen: [String]
   bankkontoId: ID!
   version: Int
@@ -105,6 +108,12 @@ input bankkontoUpdateInput {
 
 type UpdatePayload {
   version: Int
+}
+
+type TransaktionPayload {
+  transaktionID: ID!
+  saldo: Float!
+  bankkontoNeueVersion: Int!
 }
 
 type TokenResult {
