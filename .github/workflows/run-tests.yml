@@ -1,6 +1,12 @@
 name: Test Pipeline
 
 on:
+  push:
+    branches:
+      - main
+      - 60-dockerfile-bugfix # Trigger
+    tags:
+      - 'v*'  # Nur für Versionstags (z.B. v1.0.0)
   workflow_dispatch:
 
 jobs:
