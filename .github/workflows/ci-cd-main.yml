@@ -167,6 +167,7 @@ jobs:
 
   deploy:
     runs-on: self-hosted
+    needs: docker
     steps:
      - name: Checkout code
        uses: actions/checkout@v4
