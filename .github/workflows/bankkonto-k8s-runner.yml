@@ -11,7 +11,7 @@ on:
 
 jobs:
   deploy:
-    runs-on: macos-latest  # Oder 'ubuntu-latest', falls du auf Linux arbeitest
+    runs-on: self-hosted  # Oder 'ubuntu-latest', falls du auf Linux arbeitest
 
     steps:
     - name: Checkout Repository
