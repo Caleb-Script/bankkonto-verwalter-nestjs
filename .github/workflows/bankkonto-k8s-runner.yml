@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main  # Trigger bei Push auf den Main-Branch
-      - 60.dockerfile-bugfix # Trigger
+      - 60-dockerfile-bugfix # Trigger
   pull_request:
     branches:
       - main  # Trigger bei Pull Requests auf den Main-Branch
@@ -18,12 +18,12 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v3
 
-    - name: Install kubectl
-      run: |
-        # Installiere kubectl
-        curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/darwin/amd64/kubectl
-        chmod +x ./kubectl
-        sudo mv ./kubectl /usr/local/bin/kubectl
+    # - name: Install kubectl
+    #   run: |
+    #     # Installiere kubectl
+    #     curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/darwin/amd64/kubectl
+    #     chmod +x ./kubectl
+    #     sudo mv ./kubectl /usr/local/bin/kubectl
 
     - name: Set up Kubernetes context
       run: |
