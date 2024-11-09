@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - main  # Trigger bei Push auf den Main-Branch
+  pull_request:
+    branches:
+      - main  # Trigger bei Pull Requests auf den Main-Branch
   workflow_dispatch:  # Manuelles Auslösen des Workflows
 
 jobs:
@@ -13,6 +16,13 @@ jobs:
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v3
+
+    - name: Install kubectl
+      run: |
+        # Installiere kubectl
+        curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/darwin/amd64/kubectl
+        chmod +x ./kubectl
+        sudo mv ./kubectl /usr/local/bin/kubectl
 
     - name: Set up Kubernetes context
       run: |

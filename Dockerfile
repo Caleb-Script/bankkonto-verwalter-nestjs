@@ -31,7 +31,8 @@ apt-get upgrade --yes
 # https://packages.debian.org/bookworm/python3.11-dev
 # Python 3.12: Uebersetzung des Python-Quellcodes erforderlich
 # https://itnixpro.com/how-to-install-python-3-12-on-debian-12debian-11
-apt-get install --no-install-recommends --yes python3.11-minimal=3.11.2-6+deb12u3 python3.11-dev=3.11.2-6+deb12u3 build-essential=12.9
+# apt-get install --no-install-recommends --yes python3.11-minimal=3.11.2-6+deb12u3 python3.11-dev=3.11.2-6+deb12u3 build-essential=12.9
+apt-get install --no-install-recommends --yes python3.11=3.11.2-6+deb12u4 python3.11-dev=3.11.2-6+deb12u4 python3.11-minimal=3.11.2-6+deb12u4
 ln -s /usr/bin/python3.11 /usr/bin/python3
 ln -s /usr/bin/python3.11 /usr/bin/python
 
