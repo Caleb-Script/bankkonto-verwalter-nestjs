@@ -7,6 +7,7 @@ jobs:
   test:
     name: Test (lokal) on node ${{ matrix.node-version }}
     runs-on: self-hosted
+    if: github.actor == 'Caleb-Script'
     strategy:
       matrix:
         node-version: [20.x]

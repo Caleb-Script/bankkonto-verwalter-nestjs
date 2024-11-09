@@ -170,7 +170,7 @@ jobs:
 
   deploy:
     runs-on: self-hosted
-    if: github.actor == 'Gentlecg99'
+    if: github.actor == 'Caleb-Script'
     needs: docker
     strategy:
       matrix:
