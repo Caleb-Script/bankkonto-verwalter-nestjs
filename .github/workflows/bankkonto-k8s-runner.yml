@@ -1,0 +1,44 @@
+name: Continuous Deployment to Local Kubernetes Cluster
+
+on:
+  push:
+    branches:
+      - main  # Trigger bei Push auf den Main-Branch
+  pull_request:
+    branches:
+      - main  # Trigger bei Pull Requests auf den Main-Branch
+  workflow_dispatch:  # Manuelles Auslösen des Workflows
+
+jobs:
+  deploy:
+    runs-on: macos-latest  # Oder 'ubuntu-latest', falls du auf Linux arbeitest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+
+    - name: Set up Kubernetes context
+      run: |
+        # Setze den kubectl Kontext auf deinen lokalen Docker Desktop Cluster
+        kubectl config use-context docker-desktop
+
+    - name: Apply Postgres PersistentVolume
+      run: |
+        kubectl apply -f .extras/kubernetes/postgres-pv.yml --namespace=bankkonto-namespace
+
+    - name: Apply PgAdmin PersistentVolume
+      run: |
+        kubectl apply -f .extras/kubernetes/pgadmin-pv.yml --namespace=bankkonto-namespace
+
+    - name: Apply Keycloak PersistentVolume
+      run: |
+        kubectl apply -f .extras/kubernetes/keycloak-pv.yml --namespace=bankkonto-namespace
+
+    - name: Apply Remaining Kubernetes Resources
+      run: |
+        kubectl apply -f .extras/kubernetes/ --namespace=bankkonto-namespace
+
+    - name: Wait for Deployment Rollout
+      run: |
+        # Warte, bis das Deployment erfolgreich ausgerollt ist
+        kubectl rollout status deployment/bankkonto-app -n bankkonto-namespace

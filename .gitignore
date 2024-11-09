@@ -22,7 +22,7 @@ kubeconfig
 kubeconfig_ORIGINAL
 
 # action-runner
-.github/action-runner/
+.github/actions-runner/
 
 # Sensible Daten (Passwort, Token, private Schluessel)
 .extras/compose/db/mysql/db_root_password.txt
