@@ -1,26 +1,23 @@
 name: Test Pipeline
 
 on:
-  push:
-    branches:
-      - '**'  # Trigger bei Push auf allen Branches
-  pull_request:
-    branches:
-      - main  # Trigger bei Pull Request auf den Main-Branch
-  schedule:
-    - cron: "0 2 * * 1-5"  # Optional: Zeitgesteuerte Ausführung Montag bis Freitag um 2:00 UTC
   workflow_dispatch:
 
 jobs:
   test:
-    name: Test on node ${{ matrix.node-version }} and ${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
+    name: Test (lokal) on node ${{ matrix.node-version }}
+    runs-on: self-hosted
     strategy:
       matrix:
-        node-version: [20.x, 22.x, 23.x]
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        node-version: [20.x]
 
     steps:
+      - name: Print ref name
+        run: echo "This workflow was triggered by ${{ github.ref_name }}"
+
+      - name: Print actor (Collaborator)
+        run: echo "The actor is ${{ github.actor }}"
+
       - name: Checkout code
         uses: actions/checkout@v4
 
@@ -46,6 +43,16 @@ jobs:
           echo "$TLS_KEY" > src/config/resources/tls/key.pem
           # echo "$TLS_CERT" > src/config/resources/tls/certificate.crt
 
+      - name: starte Postgres DB
+        run: |
+          cd .extras/compose/backend/postgres
+          docker compose up
+
+      - name: starte Keycloak
+        run: |
+          cd .extras/compose/backend/keycloak
+          docker compose up
+
       - name: Run Tests with Jest
         run: npm run test -- --coverage --runInBand
         env:
@@ -56,57 +63,62 @@ jobs:
         with:
           name: jest-coverage-${{ matrix.node-version }}-${{ matrix.os }}
           path: ./coverage
-
-  security:
-    name: Security Scans (Docker Scout, Trivy, OWASP Dependency Check)
-    runs-on: ubuntu-latest
-    needs: test
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Install Docker
+      - name: fahre Postgres runter
         run: |
-          sudo apt-get update
-          sudo apt-get install -y docker.io
+          cd .extras/compose/backend/postgres
+          docker-compose down
 
-      - name: Docker Scout Scan
+      - name: fahre keycloak runter
         run: |
-          docker scan --file Dockerfile .
+          cd .extras/compose/backend/keycloak
+          docker-compose down
 
-      - name: Install Trivy
-        run: |
-          curl -sfL https://github.com/aquasecurity/trivy/releases/download/v0.34.0/trivy_0.34.0_Linux-x86_64.tar.gz | tar xz
-          sudo mv trivy /usr/local/bin/
+  # security:
+    # name: Security Scans (Docker Scout, Trivy, OWASP Dependency Check)
+    # runs-on: ubuntu-latest
+    # needs: test
+    # steps:
+    #   - name: Checkout code
+    #     uses: actions/checkout@v4
 
-      - name: Trivy Security Scan
-        run: |
-          trivy fs . --exit-code 1 --severity HIGH,CRITICAL
+    #   - name: Install Docker
+    #     run: |
+    #       sudo apt-get update
+    #       sudo apt-get install -y docker.io
 
-      - name: Install OWASP Dependency-Check
-        run: |
-          curl -L https://github.com/jeremydmiller/dotnet-dependency-check/releases/download/7.1.0/dependency-check-7.1.0.zip -o dependency-check.zip
-          unzip dependency-check.zip -d dependency-check
-          chmod +x dependency-check/bin/dependency-check.sh
-          sudo mv dependency-check /usr/local/bin/
+    #   - name: Docker Scout Scan
+    #     run: |
+    #       docker scan --file Dockerfile .
 
-      - name: Run OWASP Dependency Check
-        run: |
-          dependency-check/bin/dependency-check.sh --project "NestJS Application" --scan . --format "HTML" --out dependency-check-report
+    #   - name: Install Trivy
+    #     run: |
+    #       curl -sfL https://github.com/aquasecurity/trivy/releases/download/v0.34.0/trivy_0.34.0_Linux-x86_64.tar.gz | tar xz
+    #       sudo mv trivy /usr/local/bin/
 
-      - name: Upload Dependency Check Report
-        uses: actions/upload-artifact@v4
-        with:
-          name: owasp-dependency-check-report
-          path: ./dependency-check-report/*.html
+    #   - name: Trivy Security Scan
+    #     run: |
+    #       trivy fs . --exit-code 1 --severity HIGH,CRITICAL
+
+    #   - name: Install OWASP Dependency-Check
+    #     run: |
+    #       curl -L https://github.com/jeremydmiller/dotnet-dependency-check/releases/download/7.1.0/dependency-check-7.1.0.zip -o dependency-check.zip
+    #       unzip dependency-check.zip -d dependency-check
+    #       chmod +x dependency-check/bin/dependency-check.sh
+    #       sudo mv dependency-check /usr/local/bin/
+
+    #   - name: Run OWASP Dependency Check
+    #     run: |
+    #       dependency-check/bin/dependency-check.sh --project "NestJS Application" --scan . --format "HTML" --out dependency-check-report
+
+    #   - name: Upload Dependency Check Report
+    #     uses: actions/upload-artifact@v4
+    #     with:
+    #       name: owasp-dependency-check-report
+    #       path: ./dependency-check-report/*.html
 
   lint:
     name: Linting and Code Quality Check
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
-
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4

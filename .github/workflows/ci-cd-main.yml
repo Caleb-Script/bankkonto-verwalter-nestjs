@@ -17,6 +17,12 @@ jobs:
       matrix:
         node-version: [20.x]
     steps:
+      - name: Print ref name
+        run: echo "This workflow was triggered by ${{ github.ref_name }}"
+
+      - name: Print actor
+        run: echo "The actor is ${{ github.actor }}"
+
       - name: Checkout code
         uses: actions/checkout@v4
 
@@ -139,6 +145,8 @@ jobs:
 
       - name: Build Docker image
         run: |
+          IMAGE_TAG=${{ github.ref_name }}  # für z.B. v1.0.0 Tags
+          echo IMAGE_TAG
           docker build \
             --build-arg NODE_ENV=development \
             --build-arg CLIENT_SECRET=${{ secrets.CLIENT_SECRET }} \
@@ -162,6 +170,7 @@ jobs:
 
   deploy:
     runs-on: self-hosted
+    if: github.actor == 'Gentlecg99'
     needs: docker
     strategy:
       matrix:

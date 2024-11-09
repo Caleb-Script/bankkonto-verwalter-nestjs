@@ -1,7 +1,6 @@
 name: Continuous Deployment to Local Kubernetes Cluster
 
 on:
-  push:
   workflow_dispatch:  # Manuelles Auslösen des Workflows
 
 jobs:
