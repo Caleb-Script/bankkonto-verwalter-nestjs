@@ -93,7 +93,7 @@ input transaktionInput {
 }
 
 type CreatePayload {
-  bankkontoId: ID!
+  bankkontoId: Int!
 }
 
 

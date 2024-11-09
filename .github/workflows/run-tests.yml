@@ -1,0 +1,110 @@
+name: Test Pipeline
+
+on:
+  push:
+    branches:
+      - '**'  # Trigger bei Push auf allen Branches
+  pull_request:
+    branches:
+      - main  # Trigger bei Pull Request auf den Main-Branch
+  schedule:
+    - cron: "0 2 * * 1-5"  # Optional: Zeitgesteuerte Ausführung Montag bis Freitag um 2:00 UTC
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: Test on node ${{ matrix.node-version }} and ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        node-version: [20.x, 22.x, 23.x]
+        os: [ubuntu-latest, macos-latest, windows-latest]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Tests with Jest
+        run: npm run test -- --coverage --runInBand
+        env:
+          CI: true
+
+      - name: Upload Jest Test Coverage
+        uses: actions/upload-artifact@v4
+        with:
+          name: jest-coverage-${{ matrix.node-version }}-${{ matrix.os }}
+          path: ./coverage
+
+  security:
+    name: Security Scans (Docker Scout, Trivy, OWASP Dependency Check)
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Docker
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y docker.io
+
+      - name: Docker Scout Scan
+        run: |
+          docker scan --file Dockerfile .
+
+      - name: Install Trivy
+        run: |
+          curl -sfL https://github.com/aquasecurity/trivy/releases/download/v0.34.0/trivy_0.34.0_Linux-x86_64.tar.gz | tar xz
+          sudo mv trivy /usr/local/bin/
+
+      - name: Trivy Security Scan
+        run: |
+          trivy fs . --exit-code 1 --severity HIGH,CRITICAL
+
+      - name: Install OWASP Dependency-Check
+        run: |
+          curl -L https://github.com/jeremydmiller/dotnet-dependency-check/releases/download/7.1.0/dependency-check-7.1.0.zip -o dependency-check.zip
+          unzip dependency-check.zip -d dependency-check
+          chmod +x dependency-check/bin/dependency-check.sh
+          sudo mv dependency-check /usr/local/bin/
+
+      - name: Run OWASP Dependency Check
+        run: |
+          dependency-check/bin/dependency-check.sh --project "NestJS Application" --scan . --format "HTML" --out dependency-check-report
+
+      - name: Upload Dependency Check Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: owasp-dependency-check-report
+          path: ./dependency-check-report/*.html
+
+  lint:
+    name: Linting and Code Quality Check
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Run ESLint
+        run: npm run lint  # Linting-Befehl, um Code-Qualität zu prüfen
