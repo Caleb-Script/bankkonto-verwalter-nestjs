@@ -3,16 +3,63 @@ name: Test Pipeline
 on:
   push:
     branches:
-      - main
       - 60-dockerfile-bugfix # Trigger
-    tags:
-      - 'v*'  # Nur für Versionstags (z.B. v1.0.0)
   workflow_dispatch:
 
 jobs:
+  cleanup:
+    name: Cleanup Kubernetes Resources
+    runs-on: self-hosted
+    if: github.actor == 'Caleb-Script'
+    # if: success()  # Dieser Job wird nur ausgeführt, wenn der vorherige Job erfolgreich war
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Kubernetes context
+        run: |
+          # Setze den kubectl Kontext auf deinen lokalen Docker Desktop Cluster
+          kubectl config use-context docker-desktop
+
+      - name: Delete Kubernetes Resources
+        run: |
+          cd .extras/kubernetes
+          kubectl delete namespace bankkonto-namespace
+          kubectl delete persistentvolume postgres-pv-data
+          kubectl delete persistentvolume postgres-pv-tablespace
+          kubectl delete persistentvolume postgres-pv-csv
+          kubectl delete persistentvolume postgres-pv-sql
+          kubectl delete persistentvolume postgres-pv-config
+          kubectl delete persistentvolume postgres-certs-pv
+          kubectl delete persistentvolume pgadmin-pv
+          kubectl delete persistentvolume pgadmin4-pv
+          kubectl delete persistentvolume kc-data-pv
+
+  start_postgres:
+    name: Start PostgreSQL
+    if: github.actor == 'Caleb-Script'
+    needs: cleanup
+    runs-on: self-hosted
+    steps:
+      - name: Start PostgreSQL container
+        run: |
+          cd .extras/compose/backend/postgres
+          docker-compose up
+
+  start_keycloak:
+    if: github.actor == 'Caleb-Script'
+    name: Start Keycloak
+    needs: cleanup
+    runs-on: self-hosted
+    steps:
+      - name: Start Keycloak container
+        run: |
+          cd .extras/compose/backend/keycloak
+          docker-compose up
   test:
     name: Test (lokal) on node ${{ matrix.node-version }}
     runs-on: self-hosted
+    needs: cleanup
     if: github.actor == 'Caleb-Script'
     strategy:
       matrix:
@@ -49,16 +96,6 @@ jobs:
         run: |
           echo "$TLS_KEY" > src/config/resources/tls/key.pem
           # echo "$TLS_CERT" > src/config/resources/tls/certificate.crt
-
-      - name: starte Postgres DB
-        run: |
-          cd .extras/compose/backend/postgres
-          docker compose up
-
-      - name: starte Keycloak
-        run: |
-          cd .extras/compose/backend/keycloak
-          docker compose up
 
       - name: Run Tests with Jest
         run: npm run test -- --coverage --runInBand
