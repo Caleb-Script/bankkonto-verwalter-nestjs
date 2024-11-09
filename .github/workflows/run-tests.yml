@@ -33,6 +33,19 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Create log file
+        run: |
+          mkdir -p log
+          touch log/server.log
+
+      - name: Set up TLS files from secrets
+        env:
+          TLS_KEY: ${{ secrets.TLS_KEY }}
+          TLS_CERT: ${{ secrets.TLS_CERT }}
+        run: |
+          echo "$TLS_KEY" > src/config/resources/tls/key.pem
+          # echo "$TLS_CERT" > src/config/resources/tls/certificate.crt
+
       - name: Run Tests with Jest
         run: npm run test -- --coverage --runInBand
         env:
