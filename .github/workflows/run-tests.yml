@@ -54,7 +54,7 @@ jobs:
 
       - name: Start Keycloak container
         run: |
-          cd keycloak
+          cd .extras/compose/backend
           docker-compose up -d
 
   test:
