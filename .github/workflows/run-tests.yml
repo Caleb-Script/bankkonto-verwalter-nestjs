@@ -7,11 +7,10 @@ on:
   workflow_dispatch:
 
 jobs:
-  cleanup:
+  kubernetes_cleanup:
     name: Cleanup Kubernetes Resources
-    runs-on: self-hosted
+    runs-on: [self-hosted,kubernetes]
     if: github.actor == 'Caleb-Script'
-    # if: success()  # Dieser Job wird nur ausgeführt, wenn der vorherige Job erfolgreich war
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -24,21 +23,21 @@ jobs:
       - name: Delete Kubernetes Resources
         run: |
           cd .extras/kubernetes
-          kubectl delete namespace bankkonto-namespace
-          kubectl delete persistentvolume postgres-pv-data
-          kubectl delete persistentvolume postgres-pv-tablespace
-          kubectl delete persistentvolume postgres-pv-csv
-          kubectl delete persistentvolume postgres-pv-sql
-          kubectl delete persistentvolume postgres-pv-config
-          kubectl delete persistentvolume postgres-certs-pv
-          kubectl delete persistentvolume pgadmin-pv
-          kubectl delete persistentvolume pgadmin4-pv
-          kubectl delete persistentvolume kc-data-pv
+          kubectl delete namespace bankkonto-namespace || true
+          kubectl delete persistentvolume postgres-pv-data || true
+          kubectl delete persistentvolume postgres-pv-tablespace || true
+          kubectl delete persistentvolume postgres-pv-csv || true
+          kubectl delete persistentvolume postgres-pv-sql || true
+          kubectl delete persistentvolume postgres-pv-config || true
+          kubectl delete persistentvolume postgres-certs-pv || true
+          kubectl delete persistentvolume pgadmin-pv || true
+          kubectl delete persistentvolume pgadmin4-pv || true
+          kubectl delete persistentvolume kc-data-pv || true
 
   start_postgres:
     name: Start PostgreSQL
     if: github.actor == 'Caleb-Script'
-    needs: cleanup
+    needs: kubernetes_cleanup
     runs-on: [self-hosted,postgres]
     steps:
       - name: Start PostgreSQL container
@@ -49,17 +48,18 @@ jobs:
   start_keycloak:
     if: github.actor == 'Caleb-Script'
     name: Start Keycloak
-    needs: cleanup
+    needs: kubernetes_cleanup
     runs-on: [self-hosted,keycloak]
     steps:
       - name: Start Keycloak container
         run: |
           cd .extras/compose/backend/keycloak
           docker-compose up
+          
   test:
     name: Test (lokal) on node ${{ matrix.node-version }}
-    runs-on: self-hosted
-    needs: cleanup
+    runs-on: [self-hosted,test]
+    needs: kubernetes_cleanup
     if: github.actor == 'Caleb-Script'
     strategy:
       matrix:
