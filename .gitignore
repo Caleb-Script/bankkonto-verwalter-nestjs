@@ -56,7 +56,7 @@ Thumbs.db
 coverage
 .nyc_output
 .clinic
-__tests__/buch/__snapshots__
+# __tests__/bankkonto/__snapshots__
 
 # SonarQube
 .sonar
