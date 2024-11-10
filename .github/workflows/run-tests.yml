@@ -39,7 +39,7 @@ jobs:
     name: Start PostgreSQL
     if: github.actor == 'Caleb-Script'
     needs: cleanup
-    runs-on: self-hosted[postgres]
+    runs-on: [self-hosted,postgres]
     steps:
       - name: Start PostgreSQL container
         run: |
@@ -50,7 +50,7 @@ jobs:
     if: github.actor == 'Caleb-Script'
     name: Start Keycloak
     needs: cleanup
-    runs-on: self-hosted[keycloak]
+    runs-on: [self-hosted,keycloak]
     steps:
       - name: Start Keycloak container
         run: |
