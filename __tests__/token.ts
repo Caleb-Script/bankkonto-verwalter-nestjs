@@ -28,15 +28,15 @@ export const tokenRest = async (
 
 export const tokenGraphQL = async (
     axiosInstance: AxiosInstance,
-    username: string = usernameDefault,
-    password: string = passwordDefault,
+    // username: string = usernameDefault,
+    // password: string = passwordDefault,
 ): Promise<string> => {
     const body: GraphQLQuery = {
         query: `
             mutation {
                 token(
-                    username: "${username}",
-                    password: "${password}"
+                    username: "admin",
+                    password: "p"
                 ) {
                     access_token
                 }
