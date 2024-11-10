@@ -1,6 +1,4 @@
 /* eslint-disable @eslint-community/eslint-comments/disable-enable-pair */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable max-statements */
 /**
  * Das Modul besteht aus der Klasse {@linkcode QueryBuilder}.
  * @packageDocumentation
@@ -9,7 +7,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { typeOrmModuleOptions } from '../../config/typeormOptions.js';
 import { getLogger } from '../../logger/logger.js';
 import { Bankkonto } from '../model/entity/bankkonto.entity.js';
 import { Kunde } from '../model/entity/kunde.entity.js';
@@ -84,8 +81,7 @@ export class QueryBuilder {
      * @param suchkriterien JSON-Objekt mit Suchkriterien
      * @returns QueryBuilder
      */
-    // "rest properties" fuer anfaengliche WHERE-Klausel: ab ES 2018 https://github.com/tc39/proposal-object-rest-spread
-    // eslint-disable-next-line max-lines-per-function, sonarjs/cognitive-complexity
+    // eslint-disable-next-line max-lines-per-function
     build({
         transaktionTyp,
         absender,
@@ -104,114 +100,77 @@ export class QueryBuilder {
             props,
         );
 
-        let queryBuilder = this.#repo.createQueryBuilder(this.#bankkontoAlias);
-        queryBuilder.innerJoinAndSelect(
-            `${this.#bankkontoAlias}.kunde`,
-            'kunde',
-        );
+        const queryBuilder = this.#repo
+            .createQueryBuilder(this.#bankkontoAlias)
+            .innerJoinAndSelect(`${this.#bankkontoAlias}.kunde`, 'kunde')
+            .leftJoinAndSelect(
+                `${this.#bankkontoAlias}.transaktionen`,
+                this.#transaktionAlias,
+            );
 
-        queryBuilder.leftJoinAndSelect(
-            `${this.#bankkontoAlias}.transaktionen`,
-            this.#transaktionAlias,
-        );
+        const ilikeOperator = 'ilike';
 
-        let useWhere = true;
+        const addCondition = (
+            condition: string,
+            parameters: Record<string, any>,
+        ) => {
+            if (queryBuilder.expressionMap.wheres.length === 0) {
+                queryBuilder.where(condition, parameters);
+            } else {
+                queryBuilder.andWhere(condition, parameters);
+            }
+        };
 
-        // Bedingung für transaktionTyp
         if (
-            transaktionTyp !== undefined &&
-            typeof transaktionTyp === 'string'
+            typeof transaktionTyp === 'string' &&
+            transaktionTyp.trim() !== ''
         ) {
-            queryBuilder = queryBuilder.where(
-                `${this.#transaktionAlias}.transaktion_type = :transaktionTyp`,
-                {
-                    transaktionTyp: `${transaktionTyp}`,
-                },
+            addCondition(
+                `${this.#transaktionAlias}.transaktion_typ = :transaktionTyp`,
+                { transaktionTyp },
             );
-            useWhere = false;
         }
 
-        // Bedingung für absender
-        if (absender !== undefined && typeof absender === 'string') {
-            queryBuilder = queryBuilder.where(
-                `${this.#transaktionAlias}.absender = :absender`,
-                {
-                    absender: `${absender}`,
-                },
-            );
-            useWhere = false;
+        if (typeof absender === 'string' && absender.trim() !== '') {
+            addCondition(`${this.#transaktionAlias}.absender = :absender`, {
+                absender,
+            });
         }
 
-        // Bedingung für empfaenger
-        if (empfaenger !== undefined && typeof empfaenger === 'string') {
-            queryBuilder = queryBuilder.where(
-                `${this.#transaktionAlias}.empfaenger = :empfaenger`,
-                {
-                    empfaenger: `${empfaenger}`,
-                },
-            );
-            useWhere = false;
+        if (typeof empfaenger === 'string' && empfaenger.trim() !== '') {
+            addCondition(`${this.#transaktionAlias}.empfaenger = :empfaenger`, {
+                empfaenger,
+            });
+        }
+        if (typeof email === 'string' && email.trim() !== '') {
+            addCondition(`${this.#kundeAlias}.email ${ilikeOperator} :email`, {
+                email: `%${email}%`,
+            });
         }
 
-        // Bedingung für email
-        if (email !== undefined && typeof email === 'string') {
-            const ilike =
-                typeOrmModuleOptions.type === 'postgres' ? 'ilike' : 'like';
-            queryBuilder = queryBuilder.where(
-                `${this.#kundeAlias}.email ${ilike} :email`,
-                { email: `%${email}%` },
-            );
-            useWhere = false;
-        }
-
-        // Bedingung für waehrungen
-        if (waehrungen !== undefined) {
-            const ilike =
-                typeOrmModuleOptions.type === 'postgres' ? 'ILIKE' : 'LIKE';
-
-            // Falls `waehrungen` ein einzelner String ist, konvertiere es in ein Array
+        if (typeof waehrungen === 'string' && waehrungen.trim() !== '') {
             const waehrungenArray = waehrungen.split(',').map((w) => w.trim());
+            const conditions = waehrungenArray
+                .map(
+                    (_, index) =>
+                        `${this.#bankkontoAlias}.waehrungen ${ilikeOperator} :waehrungPattern${index}`,
+                )
+                .join(' AND ');
 
-            // Prepare a list for conditions and a parameters object
-            const conditions: string[] = [];
-            const parameters: any = {};
-
-            // Für jede Währung eine eigene Bedingung hinzufügen
+            const parameters: Record<string, any> = {};
             waehrungenArray.forEach((waehrung, index) => {
-                const waehrungPattern = `%${waehrung}%`;
-                const paramKey = `waehrungPattern${index}`; // Generate a unique key for each parameter
-
-                // Add the condition to the conditions array
-                conditions.push(
-                    `${this.#bankkontoAlias}.waehrungen ${ilike} :${paramKey}`,
-                );
-                // eslint-disable-next-line security/detect-object-injection
-                parameters[paramKey] = waehrungPattern; // Add the parameter to the parameters object
+                parameters[`waehrungPattern${index}`] = `%${waehrung}%`;
             });
 
-            // Apply conditions using OR if useWhere is true, otherwise AND
-            if (useWhere) {
-                queryBuilder.where(conditions.join(' AND '), parameters);
-            } else {
-                queryBuilder.andWhere(conditions.join(' AND '), parameters);
-            }
-
-            useWhere = false; // Nach der ersten Bedingung wird where durch andWhere ersetzt
+            addCondition(conditions, parameters);
         }
 
-        Object.keys(props).forEach((key) => {
-            const param: Record<string, any> = {};
-            param[key] = (props as Record<string, any>)[key]; // eslint-disable-line @typescript-eslint/no-unsafe-assignment, security/detect-object-injection
-            queryBuilder = useWhere
-                ? queryBuilder.where(
-                      `${this.#bankkontoAlias}.${key} = :${key}`,
-                      param,
-                  )
-                : queryBuilder.andWhere(
-                      `${this.#bankkontoAlias}.${key} = :${key}`,
-                      param,
-                  );
-            useWhere = false;
+        Object.entries(props).forEach(([key, value]) => {
+            if (typeof value === 'string' && value.trim() !== '') {
+                addCondition(`${this.#bankkontoAlias}.${key} = :${key}`, {
+                    [key]: value,
+                });
+            }
         });
 
         this.#logger.debug('build: sql=%s', queryBuilder.getSql());

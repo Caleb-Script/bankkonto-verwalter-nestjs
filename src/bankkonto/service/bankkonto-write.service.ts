@@ -224,9 +224,7 @@ export class BankkontoWriteService {
             const heutigeTransaktionsSumme = (bankkonto.transaktionen ?? [])
                 .filter(
                     (transaktion) =>
-                        transaktion.transaktionTyp === transaktionTyp &&
                         (transaktion.transaktionTyp === 'AUSZAHLUNG' ||
-                            // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
                             transaktion.transaktionTyp === 'UEBERWEISUNG') &&
                         transaktion.transaktionDatum &&
                         new Date(transaktion.transaktionDatum).setHours(

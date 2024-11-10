@@ -166,7 +166,7 @@ jobs:
           docker push calebscript/bankkonto-verwalter:2024.10.1
 
   deploy:
-    runs-on: [self-hosted,kubernetes]
+    runs-on: [self-hosted]
     if: github.actor == 'Caleb-Script'
     needs: docker
     strategy:
@@ -199,6 +199,5 @@ jobs:
 
      - name: Wait for Deployment Rollout
        run: |
-         # Warte, bis das Deployment erfolgreich ausgerollt ist
          kubectl rollout status deployment/bankkonto-app -n bankkonto-namespace
 

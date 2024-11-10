@@ -65,7 +65,6 @@ export class BankkontoMutationResolver {
             bankkonto,
             version: versionStr,
         });
-        // TODO BadUserInputError
         this.#logger.debug('updateKonto: versionResult=%d', versionResult);
         const payload: UpdatePayload = { version: versionResult };
         return payload;

@@ -54,23 +54,4 @@ export class BankkontoQueryResolver {
         this.#logger.debug('find: bankkonten=%o', bankkonten);
         return bankkonten;
     }
-
-    // Methode für das ausgeben des Saldos als Geldbetrag
-    // @ResolveField('saldo')
-    // saldo(@Parent() bankkonto: Bankkonto, waehrung: boolean | undefined) {
-    //     if (this.#logger.isLevelEnabled('debug')) {
-    //         this.#logger.debug(
-    //             'saldo: bankkonto=%s, waehrung=%s',
-    //             bankkonto.toString(),
-    //             waehrung,
-    //         );
-    //     }
-
-    //     // Standardwert für den Saldo, falls nicht definiert
-    //     const saldo = bankkonto.saldo ?? 0;
-    //     const unit = waehrung === false ? '' : '€';
-
-    //     // Formatierter Saldo als String mit Währungseinheit, falls angegeben
-    //     return `${saldo.toFixed(2)} ${unit}`.trim();
-    // }
 }

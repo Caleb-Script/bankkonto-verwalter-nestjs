@@ -24,7 +24,7 @@ export class BankkontoDtoOhneReferenz {
     @IsOptional()
     @ArrayUnique()
     @ApiProperty({ example: ['EUR', 'GBP', 'USD', 'JPY', 'CHE'] })
-    readonly waehrungen?: string[] | undefined;
+    readonly waehrungen?: string[];
 }
 export class BankkontoDTO extends BankkontoDtoOhneReferenz {
     @ValidateNested()

@@ -399,7 +399,7 @@
 					"response": []
 				},
 				{
-					"name": "Teilstring \"ta\" des Titels",
+					"name": "Filter",
 					"event": [
 						{
 							"listen": "test",
@@ -424,7 +424,8 @@
 									"    });\r",
 									"});"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -474,796 +475,44 @@
 							}
 						],
 						"url": {
-							"raw": "{{rest_url}}?titel=ta",
+							"raw": "{{rest_url}}?waehrungen=USD,EUR",
 							"host": [
 								"{{rest_url}}"
 							],
 							"query": [
 								{
-									"key": "titel",
-									"value": "ta"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Nicht-vorhandener Teilstring des Titels",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test('Statuscode 404', () => {\r",
-									"    pm.response.to.have.status(404);\r",
-									"});\r",
-									"pm.test('Content-Type application/json', () => {\r",
-									"    const { response } = pm;\r",
-									"    const contentType = response.headers.get('Content-Type');\r",
-									"    pm.expect(contentType).to.match(/^application\\/json(; charset=utf-8)?/u);\r",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Cache-Control",
-								"value": "no-cache",
-								"type": "text"
-							},
-							{
-								"key": "Postman-Token",
-								"value": "<calculated when request is sent>",
-								"type": "text"
-							},
-							{
-								"key": "Host",
-								"value": "<calculated when request is sent>",
-								"type": "text"
-							},
-							{
-								"key": "User-Agent",
-								"value": "PostmanRuntime/7.31.1",
-								"type": "text"
-							},
-							{
-								"key": "Accept",
-								"value": "*/*",
-								"type": "text",
-								"disabled": true
-							},
-							{
-								"key": "Accept-Encoding",
-								"value": "gzip, deflate, br",
-								"type": "text"
-							},
-							{
-								"key": "Connection",
-								"value": "keep-alive",
-								"type": "text"
-							},
-							{
-								"key": "Accept",
-								"value": "application/hal+json",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{rest_url}}?titel=xxx",
-							"host": [
-								"{{rest_url}}"
-							],
-							"query": [
-								{
-									"key": "titel",
-									"value": "xxx"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "ISBN 978-3-897-22583-1",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test('Statuscode 200', () => {\r",
-									"    pm.response.to.have.status(200);\r",
-									"});\r",
-									"pm.test('Content-Type application/hal+json', () => {\r",
-									"    const { response } = pm;\r",
-									"    const contentType = response.headers.get('Content-Type');\r",
-									"    pm.expect(contentType).to.match(/^application\\/hal\\+json(; charset=utf-8)?/u);\r",
-									"});\r",
-									"pm.test('Body: ISBN und Self-Link vorhanden', () => {\r",
-									"    const body = pm.response.json();\r",
-									"    const { buecher } = body._embedded;\r",
-									"    pm.expect(buecher).to.be.an('array').that.has.a.lengthOf(1);\r",
-									"    const { isbn, _links } = buecher[0];\r",
-									"    pm.expect(isbn).to.be.a('string').that.includes('978-3-897-22583-1');\r",
-									"    pm.expect(_links.self.href).to.be.a('string').that.matches(/\\/rest\\/[1-9]\\d*$/u);\r",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Cache-Control",
-								"value": "no-cache",
-								"type": "text"
-							},
-							{
-								"key": "Postman-Token",
-								"value": "<calculated when request is sent>",
-								"type": "text"
-							},
-							{
-								"key": "Host",
-								"value": "<calculated when request is sent>",
-								"type": "text"
-							},
-							{
-								"key": "User-Agent",
-								"value": "PostmanRuntime/7.31.1",
-								"type": "text"
-							},
-							{
-								"key": "Accept",
-								"value": "*/*",
-								"type": "text",
-								"disabled": true
-							},
-							{
-								"key": "Accept-Encoding",
-								"value": "gzip, deflate, br",
-								"type": "text"
-							},
-							{
-								"key": "Connection",
-								"value": "keep-alive",
-								"type": "text"
-							},
-							{
-								"key": "Accept",
-								"value": "application/hal+json",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{rest_url}}?isbn=978-3-897-22583-1",
-							"host": [
-								"{{rest_url}}"
-							],
-							"query": [
-								{
-									"key": "isbn",
-									"value": "978-3-897-22583-1"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Schlagwort JAVASCRIPT",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test('Statuscode 200', () => {\r",
-									"    pm.response.to.have.status(200);\r",
-									"});\r",
-									"pm.test('Content-Type application/hal+json', () => {\r",
-									"    const { response } = pm;\r",
-									"    const contentType = response.headers.get('Content-Type');\r",
-									"    pm.expect(contentType).to.match(/^application\\/hal\\+json(; charset=utf-8)?/u);\r",
-									"});\r",
-									"pm.test('Body: Schlagwort JAVASCRIPT und Self-Link vorhanden', () => {\r",
-									"    const body = pm.response.json();\r",
-									"    const { buecher } = body._embedded;\r",
-									"    pm.expect(buecher).to.be.an('array').that.is.not.empty;\r",
-									"    buecher.forEach(buch => {\r",
-									"        const { schlagwoerter, _links } = buch;\r",
-									"        pm.expect(schlagwoerter).to.be.an('array').that.includes('JAVASCRIPT');\r",
-									"        pm.expect(_links.self.href).to.be.a('string').that.matches(/\\/rest\\/[1-9]\\d*$/u);\r",
-									"    });\r",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Cache-Control",
-								"value": "no-cache",
-								"type": "text"
-							},
-							{
-								"key": "Postman-Token",
-								"value": "<calculated when request is sent>",
-								"type": "text"
-							},
-							{
-								"key": "Host",
-								"value": "<calculated when request is sent>",
-								"type": "text"
-							},
-							{
-								"key": "User-Agent",
-								"value": "PostmanRuntime/7.31.1",
-								"type": "text"
-							},
-							{
-								"key": "Accept",
-								"value": "*/*",
-								"type": "text",
-								"disabled": true
-							},
-							{
-								"key": "Accept-Encoding",
-								"value": "gzip, deflate, br",
-								"type": "text"
-							},
-							{
-								"key": "Connection",
-								"value": "keep-alive",
-								"type": "text"
-							},
-							{
-								"key": "Accept",
-								"value": "application/hal+json",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{rest_url}}?javascript=true",
-							"host": [
-								"{{rest_url}}"
-							],
-							"query": [
-								{
-									"key": "javascript",
-									"value": "true"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Schlagwort TYPESCRIPT",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test('Statuscode 200', () => {\r",
-									"    pm.response.to.have.status(200);\r",
-									"});\r",
-									"pm.test('Content-Type application/hal+json', () => {\r",
-									"    const { response } = pm;\r",
-									"    const contentType = response.headers.get('Content-Type');\r",
-									"    pm.expect(contentType).to.match(/^application\\/hal\\+json(; charset=utf-8)?/u);\r",
-									"});\r",
-									"pm.test('Body: Schlagwort TYPESCRIPT und Self-Link vorhanden', () => {\r",
-									"    const body = pm.response.json();\r",
-									"    const { buecher } = body._embedded;\r",
-									"    pm.expect(buecher).to.be.an('array').that.is.not.empty;\r",
-									"    buecher.forEach(buch => {\r",
-									"        const { schlagwoerter, _links } = buch;\r",
-									"        pm.expect(schlagwoerter).to.be.an('array').that.includes('TYPESCRIPT');\r",
-									"        pm.expect(_links.self.href).to.be.a('string').that.matches(/\\/rest\\/[1-9]\\d*$/u);\r",
-									"    });\r",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Cache-Control",
-								"value": "no-cache",
-								"type": "text"
-							},
-							{
-								"key": "Postman-Token",
-								"value": "<calculated when request is sent>",
-								"type": "text"
-							},
-							{
-								"key": "Host",
-								"value": "<calculated when request is sent>",
-								"type": "text"
-							},
-							{
-								"key": "User-Agent",
-								"value": "PostmanRuntime/7.31.1",
-								"type": "text"
-							},
-							{
-								"key": "Accept",
-								"value": "*/*",
-								"type": "text",
-								"disabled": true
-							},
-							{
-								"key": "Accept-Encoding",
-								"value": "gzip, deflate, br",
-								"type": "text"
-							},
-							{
-								"key": "Connection",
-								"value": "keep-alive",
-								"type": "text"
-							},
-							{
-								"key": "Accept",
-								"value": "application/hal+json",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{rest_url}}?typescript=true",
-							"host": [
-								"{{rest_url}}"
-							],
-							"query": [
-								{
-									"key": "typescript",
-									"value": "true"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Schlagwoerter JAVASCRIPT und TYPESCRIPT",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test('Statuscode 200', () => {\r",
-									"    pm.response.to.have.status(200);\r",
-									"});\r",
-									"pm.test('Content-Type application/hal+json', () => {\r",
-									"    const { response } = pm;\r",
-									"    const contentType = response.headers.get('Content-Type');\r",
-									"    pm.expect(contentType).to.match(/^application\\/hal\\+json(; charset=utf-8)?/u);\r",
-									"});\r",
-									"pm.test('Body: Schlagwoerter JAVASCRIPT und TYPESCRIPT sowie Self-Link vorhanden', () => {\r",
-									"    const body = pm.response.json();\r",
-									"    const { buecher } = body._embedded;\r",
-									"    pm.expect(buecher).to.be.an('array').that.is.not.empty;\r",
-									"    buecher.forEach(buch => {\r",
-									"        const { schlagwoerter, _links } = buch;\r",
-									"        pm.expect(schlagwoerter).to.be.an('array').that.includes.members(['JAVASCRIPT', 'TYPESCRIPT']);\r",
-									"        pm.expect(_links.self.href).to.be.a('string').that.matches(/\\/rest\\/[1-9]\\d*$/u);\r",
-									"    });\r",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Cache-Control",
-								"value": "no-cache",
-								"type": "text"
-							},
-							{
-								"key": "Postman-Token",
-								"value": "<calculated when request is sent>",
-								"type": "text"
-							},
-							{
-								"key": "Host",
-								"value": "<calculated when request is sent>",
-								"type": "text"
-							},
-							{
-								"key": "User-Agent",
-								"value": "PostmanRuntime/7.31.1",
-								"type": "text"
-							},
-							{
-								"key": "Accept",
-								"value": "*/*",
-								"type": "text",
-								"disabled": true
-							},
-							{
-								"key": "Accept-Encoding",
-								"value": "gzip, deflate, br",
-								"type": "text"
-							},
-							{
-								"key": "Connection",
-								"value": "keep-alive",
-								"type": "text"
-							},
-							{
-								"key": "Accept",
-								"value": "application/hal+json",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{rest_url}}?javascript=true&typescript=true",
-							"host": [
-								"{{rest_url}}"
-							],
-							"query": [
-								{
-									"key": "javascript",
-									"value": "true"
+									"key": "email",
+									"value": "123",
+									"disabled": true
 								},
 								{
-									"key": "typescript",
-									"value": "true"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Buchart KINDLE",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test('Statuscode 200', () => {\r",
-									"    pm.response.to.have.status(200);\r",
-									"});\r",
-									"pm.test('Content-Type application/hal+json', () => {\r",
-									"    const { response } = pm;\r",
-									"    const contentType = response.headers.get('Content-Type');\r",
-									"    pm.expect(contentType).to.match(/^application\\/hal\\+json(; charset=utf-8)?/u);\r",
-									"});\r",
-									"pm.test('Body: Schlagwort TYPESCRIPT und Self-Link vorhanden', () => {\r",
-									"    const body = pm.response.json();\r",
-									"    const { buecher } = body._embedded;\r",
-									"    pm.expect(buecher).to.be.an('array').that.is.not.empty;\r",
-									"    buecher.forEach(buch => {\r",
-									"        const { art, _links } = buch;\r",
-									"        pm.expect(art).to.be.equal('KINDLE');\r",
-									"        pm.expect(_links.self.href).to.be.a('string').that.matches(/\\/rest\\/[1-9]\\d*$/u);\r",
-									"    });\r",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Cache-Control",
-								"value": "no-cache",
-								"type": "text"
-							},
-							{
-								"key": "Postman-Token",
-								"value": "<calculated when request is sent>",
-								"type": "text"
-							},
-							{
-								"key": "Host",
-								"value": "<calculated when request is sent>",
-								"type": "text"
-							},
-							{
-								"key": "User-Agent",
-								"value": "PostmanRuntime/7.31.1",
-								"type": "text"
-							},
-							{
-								"key": "Accept",
-								"value": "*/*",
-								"type": "text",
-								"disabled": true
-							},
-							{
-								"key": "Accept-Encoding",
-								"value": "gzip, deflate, br",
-								"type": "text"
-							},
-							{
-								"key": "Connection",
-								"value": "keep-alive",
-								"type": "text"
-							},
-							{
-								"key": "Accept",
-								"value": "application/hal+json",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{rest_url}}?art=KINDLE",
-							"host": [
-								"{{rest_url}}"
-							],
-							"query": [
+									"key": "transaktionTyp",
+									"value": "UEBERWEISUNG",
+									"disabled": true
+								},
 								{
-									"key": "art",
-									"value": "KINDLE"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Rating 1",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test('Statuscode 200', () => {\r",
-									"    pm.response.to.have.status(200);\r",
-									"});\r",
-									"pm.test('Content-Type application/hal+json', () => {\r",
-									"    const { response } = pm;\r",
-									"    const contentType = response.headers.get('Content-Type');\r",
-									"    pm.expect(contentType).to.match(/^application\\/hal\\+json(; charset=utf-8)?/u);\r",
-									"});\r",
-									"pm.test('Body: Schlagwort TYPESCRIPT und Self-Link vorhanden', () => {\r",
-									"    const body = pm.response.json();\r",
-									"    const { buecher } = body._embedded;\r",
-									"    pm.expect(buecher).to.be.an('array').that.is.not.empty;\r",
-									"    buecher.forEach(buch => {\r",
-									"        const { rating, _links } = buch;\r",
-									"        pm.expect(rating).to.be.equal(1);\r",
-									"        pm.expect(_links.self.href).to.be.a('string').that.matches(/\\/rest\\/[1-9]\\d*$/u);\r",
-									"    });\r",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Cache-Control",
-								"value": "no-cache",
-								"type": "text"
-							},
-							{
-								"key": "Postman-Token",
-								"value": "<calculated when request is sent>",
-								"type": "text"
-							},
-							{
-								"key": "Host",
-								"value": "<calculated when request is sent>",
-								"type": "text"
-							},
-							{
-								"key": "User-Agent",
-								"value": "PostmanRuntime/7.31.1",
-								"type": "text"
-							},
-							{
-								"key": "Accept",
-								"value": "*/*",
-								"type": "text",
-								"disabled": true
-							},
-							{
-								"key": "Accept-Encoding",
-								"value": "gzip, deflate, br",
-								"type": "text"
-							},
-							{
-								"key": "Connection",
-								"value": "keep-alive",
-								"type": "text"
-							},
-							{
-								"key": "Accept",
-								"value": "application/hal+json",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{rest_url}}?rating=1",
-							"host": [
-								"{{rest_url}}"
-							],
-							"query": [
+									"key": "waehrungen",
+									"value": "EUR",
+									"disabled": true
+								},
 								{
-									"key": "rating",
-									"value": "1"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Ungültiges Rating 9",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test('Statuscode 404', () => {\r",
-									"    pm.response.to.have.status(404);\r",
-									"});\r",
-									"pm.test('Content-Type application/json', () => {\r",
-									"    const { response } = pm;\r",
-									"    const contentType = response.headers.get('Content-Type');\r",
-									"    pm.expect(contentType).to.match(/^application\\/json(; charset=utf-8)?/u);\r",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Cache-Control",
-								"value": "no-cache",
-								"type": "text"
-							},
-							{
-								"key": "Postman-Token",
-								"value": "<calculated when request is sent>",
-								"type": "text"
-							},
-							{
-								"key": "Host",
-								"value": "<calculated when request is sent>",
-								"type": "text"
-							},
-							{
-								"key": "User-Agent",
-								"value": "PostmanRuntime/7.31.1",
-								"type": "text"
-							},
-							{
-								"key": "Accept",
-								"value": "*/*",
-								"type": "text",
-								"disabled": true
-							},
-							{
-								"key": "Accept-Encoding",
-								"value": "gzip, deflate, br",
-								"type": "text"
-							},
-							{
-								"key": "Connection",
-								"value": "keep-alive",
-								"type": "text"
-							},
-							{
-								"key": "Accept",
-								"value": "application/hal+json",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{rest_url}}?rating=9",
-							"host": [
-								"{{rest_url}}"
-							],
-							"query": [
+									"key": "beitztTransaktionLimit",
+									"value": "true",
+									"disabled": true
+								},
 								{
-									"key": "rating",
-									"value": "9"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Nicht-vorhandene Property",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test('Statuscode 404', () => {\r",
-									"    pm.response.to.have.status(404);\r",
-									"});\r",
-									"pm.test('Content-Type application/json', () => {\r",
-									"    const { response } = pm;\r",
-									"    const contentType = response.headers.get('Content-Type');\r",
-									"    pm.expect(contentType).to.match(/^application\\/json(; charset=utf-8)?/u);\r",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Cache-Control",
-								"value": "no-cache",
-								"type": "text"
-							},
-							{
-								"key": "Postman-Token",
-								"value": "<calculated when request is sent>",
-								"type": "text"
-							},
-							{
-								"key": "Host",
-								"value": "<calculated when request is sent>",
-								"type": "text"
-							},
-							{
-								"key": "User-Agent",
-								"value": "PostmanRuntime/7.31.1",
-								"type": "text"
-							},
-							{
-								"key": "Accept",
-								"value": "*/*",
-								"type": "text",
-								"disabled": true
-							},
-							{
-								"key": "Accept-Encoding",
-								"value": "gzip, deflate, br",
-								"type": "text"
-							},
-							{
-								"key": "Connection",
-								"value": "keep-alive",
-								"type": "text"
-							},
-							{
-								"key": "Accept",
-								"value": "application/hal+json",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{rest_url}}?php=true",
-							"host": [
-								"{{rest_url}}"
-							],
-							"query": [
+									"key": "absender",
+									"value": "1",
+									"disabled": true
+								},
 								{
-									"key": "php",
-									"value": "true"
+									"key": "waehrungen",
+									"value": "USD,EUR"
+								},
+								{
+									"key": "waehrungen",
+									"value": "USD",
+									"disabled": true
 								}
 							]
 						}
@@ -1391,58 +640,6 @@
 					"response": []
 				},
 				{
-					"name": "Neues Buch ohne Token",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test('Statuscode 401', () => {\r",
-									"    pm.response.to.have.status(401);\r",
-									"});\r",
-									"pm.test('Content-Type application/json', () => {\r",
-									"    const { response } = pm;\r",
-									"    const contentType = response.headers.get('Content-Type');\r",
-									"    pm.expect(contentType).to.match(/^application\\/json(; charset=utf-8)?/u);\r",
-									"});"
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "POST",
-						"header": [
-							{
-								"key": "",
-								"value": "",
-								"type": "text",
-								"disabled": true
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n  \"isbn\": \"978-0-007-00644-1\",\r\n  \"rating\": 1,\r\n  \"art\": \"KINDLE\",\r\n  \"preis\": 99.99,\r\n  \"rabatt\": 0.123,\r\n  \"lieferbar\": true,\r\n  \"datum\": \"2022-01-31\",\r\n  \"homepage\": \"https://post.rest\",\r\n  \"schlagwoerter\": [\"JAVASCRIPT\", \"TYPESCRIPT\"],\r\n  \"titel\": {\r\n    \"titel\": \"Titelpost\",\r\n    \"untertitel\": \"untertitelpost\"\r\n  },\r\n  \"abbildungen\": [{\r\n    \"beschriftung\": \"Abb. 1\",\r\n    \"contentType\": \"img/png\"\r\n  }]\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{rest_url}}",
-							"host": [
-								"{{rest_url}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "ÜBERWEISEN",
 					"event": [
 						{
@@ -1511,6 +708,58 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Neues Bankkonto ohne Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Statuscode 401', () => {\r",
+									"    pm.response.to.have.status(401);\r",
+									"});\r",
+									"pm.test('Content-Type application/json', () => {\r",
+									"    const { response } = pm;\r",
+									"    const contentType = response.headers.get('Content-Type');\r",
+									"    pm.expect(contentType).to.match(/^application\\/json(; charset=utf-8)?/u);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"isbn\": \"978-0-007-00644-1\",\r\n  \"rating\": 1,\r\n  \"art\": \"KINDLE\",\r\n  \"preis\": 99.99,\r\n  \"rabatt\": 0.123,\r\n  \"lieferbar\": true,\r\n  \"datum\": \"2022-01-31\",\r\n  \"homepage\": \"https://post.rest\",\r\n  \"schlagwoerter\": [\"JAVASCRIPT\", \"TYPESCRIPT\"],\r\n  \"titel\": {\r\n    \"titel\": \"Titelpost\",\r\n    \"untertitel\": \"untertitelpost\"\r\n  },\r\n  \"abbildungen\": [{\r\n    \"beschriftung\": \"Abb. 1\",\r\n    \"contentType\": \"img/png\"\r\n  }]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{rest_url}}",
+							"host": [
+								"{{rest_url}}"
+							]
+						}
+					},
+					"response": []
 				}
 			],
 			"description": "Über die REST-Schnittstelle neue Bücher anlegen",
@@ -1560,41 +809,11 @@
 					],
 					"request": {
 						"auth": {
-							"type": "oauth2",
-							"oauth2": [
+							"type": "bearer",
+							"bearer": [
 								{
-									"key": "scope",
-									"value": "openid",
-									"type": "string"
-								},
-								{
-									"key": "authUrl",
-									"value": "{{AUTH_URL}}",
-									"type": "string"
-								},
-								{
-									"key": "accessTokenUrl",
-									"value": "{{TOKEN_URL}}",
-									"type": "string"
-								},
-								{
-									"key": "clientSecret",
-									"value": "{{CLIENT_SECRET}}",
-									"type": "string"
-								},
-								{
-									"key": "clientId",
-									"value": "{{CLIENT_ID}}",
-									"type": "string"
-								},
-								{
-									"key": "redirect_uri",
-									"value": "https://oauth.pstmn.io/v1/callback",
-									"type": "string"
-								},
-								{
-									"key": "addTokenTo",
-									"value": "header",
+									"key": "token",
+									"value": "{{TOKEN}}",
 									"type": "string"
 								}
 							]
@@ -1658,7 +877,7 @@
 			]
 		},
 		{
-			"name": "Löschen Copy",
+			"name": "Löschen",
 			"item": [
 				{
 					"name": "Bankkonto 5 löschen",

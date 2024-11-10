@@ -1,6 +1,6 @@
 
 include:
-  - path: [../backend/postgres/compose.yml]
+  - path: [../backend/keycloak/compose.yml]
 
 services:
   sonarqube:

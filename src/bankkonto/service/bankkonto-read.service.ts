@@ -148,7 +148,10 @@ export class BankkontoReadService {
             const isValidKey =
                 this.#bankkontoProps.includes(key) ||
                 key === 'waehrungen' || // Nur die Währungen akzeptieren
-                key === 'email';
+                key === 'email' ||
+                key === 'absender' ||
+                key === 'empfaenger' ||
+                key === 'transaktionTyp';
 
             if (!isValidKey) {
                 this.#logger.debug(

@@ -9,7 +9,7 @@ on:
 jobs:
   kubernetes_cleanup:
     name: Cleanup Kubernetes Resources
-    runs-on: [self-hosted,kubernetes]
+    runs-on: [self-hosted]
     if: github.actor == 'Caleb-Script'
     steps:
       - name: Checkout code
@@ -38,19 +38,28 @@ jobs:
     if: github.actor == 'Caleb-Script'
     name: Start Keycloak
     needs: kubernetes_cleanup
-    runs-on: [self-hosted,backend]
+    runs-on: [self-hosted]
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        
+
+      - name: Set up ENV files from secrets
+        env:
+          KEYCLOAK_ENV: ${{ secrets.KEYCLOAK_ENV }}
+          POSTGRES_ENV: ${{ secrets.POSTGRES_ENV }}
+        run: |
+          cd .extras/compose/backend
+          echo "$KEYCLOAK_ENV" > keycloak/.env
+          echo "$POSTGRES_ENV" > postgres/.env
+
       - name: Start Keycloak container
         run: |
-          cd .extras/compose/backend/keycloak
-          docker compose up
+          cd keycloak
+          docker-compose up -d
 
   test:
     name: Test (lokal) on node ${{ matrix.node-version }}
-    runs-on: [self-hosted,test]
+    runs-on: [self-hosted]
     needs: kubernetes_cleanup
     if: github.actor == 'Caleb-Script'
     strategy:
@@ -66,12 +75,6 @@ jobs:
 
       - name: Checkout code
         uses: actions/checkout@v4
-
-      # - name: Setup Node.js ${{ matrix.node-version }}
-      #   uses: actions/setup-node@v4
-      #   with:
-      #     node-version: ${{ matrix.node-version }}
-      #     cache: 'npm'
 
       - name: Install dependencies
         run: npm ci
@@ -102,7 +105,7 @@ jobs:
       # - name: Upload Jest Test Coverage
       #   uses: actions/upload-artifact@v4
       #   with:
-      #     name: jest-coverage-${{ matrix.node-version }}-${{ matrix.os }}
+      #     name: jest-coverage-${{ matrix.node-version }}
       #     path: ./coverage
 
       - name: fahre keycloak und postgres runter

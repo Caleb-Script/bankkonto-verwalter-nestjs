@@ -34,7 +34,10 @@ import { getLogger } from '../../logger/logger.js';
 import { ResponseTimeInterceptor } from '../../logger/response-time.interceptor.js';
 import { Bankkonto } from '../model/entity/bankkonto.entity.js';
 import { type Kunde } from '../model/entity/kunde.entity.js';
-import { TransaktionTyp } from '../model/entity/transaktion.entity.js';
+import {
+    Transaktion,
+    TransaktionTyp,
+} from '../model/entity/transaktion.entity.js';
 import { BankkontoReadService } from '../service/bankkonto-read.service.js';
 import { type Suchkriterien } from '../service/suchkriterien.js';
 import { getBaseUri } from './getBaseUri.js';
@@ -59,20 +62,18 @@ export type Links = {
     readonly remove?: Link;
 };
 
+export type TransaktionModel = Omit<Transaktion, 'bankkonto'>;
+
 /** Typedefinition für ein Kunde-Objekt ohne Rückwärtsverweis zum Bankkonto */
 export type KundeModel = Omit<Kunde, 'kundeId' | 'bankkonto' | 'bankkontoId'>;
 
 /** Bankkonto-Objekt mit HATEOAS-Links */
 export type BankkontoModel = Omit<
     Bankkonto,
-    | 'kunde'
-    | 'transaktionen'
-    | 'dokumente'
-    | 'bankkontoId'
-    | 'transktionLimit'
-    | 'version'
+    'kunde' | 'dokumente' | 'bankkontoId' | 'transaktionen' | 'version'
 > & {
     kunde: KundeModel;
+    transaktionen: TransaktionModel[];
     // eslint-disable-next-line @typescript-eslint/naming-convention
     _links: Links;
 };
@@ -298,12 +299,26 @@ export class BankkontoGetController {
             bankkonto,
             links,
         );
+
+        // Kunde Model erstellen
         const kundeModel: KundeModel = {
-            // "Optional Chaining" und "Nullish Coalescing" ab ES2020
             name: bankkonto.kunde?.name ?? 'N/A',
             vorname: bankkonto.kunde?.vorname ?? 'N/A',
             email: bankkonto.kunde?.email ?? 'N/A',
         };
+
+        // Transaktionen Model erstellen
+        const transaktionenModel: TransaktionModel[] =
+            bankkonto.transaktionen?.map((transaktion) => ({
+                transaktionId: transaktion.transaktionId,
+                transaktionTyp: transaktion.transaktionTyp,
+                betrag: transaktion.betrag,
+                absender: transaktion.absender,
+                empfaenger: transaktion.empfaenger,
+                transaktionDatum: transaktion.transaktionDatum,
+            })) ?? [];
+
+        // Bankkonto Model mit den Transaktionen
         const bankkontoModel: BankkontoModel = {
             saldo: bankkonto.saldo,
             besitztTransaktionLimit: bankkonto.besitztTransaktionLimit,
@@ -312,6 +327,7 @@ export class BankkontoGetController {
             erstelltAm: bankkonto.erstelltAm,
             aktualisiertAm: bankkonto.aktualisiertAm,
             kunde: kundeModel,
+            transaktionen: transaktionenModel,
             _links: links,
         };
 

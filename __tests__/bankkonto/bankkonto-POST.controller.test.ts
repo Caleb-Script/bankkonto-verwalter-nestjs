@@ -170,29 +170,6 @@ describe('POST /rest', () => {
         expect(messages).toEqual(expect.arrayContaining(expectedMsg));
     });
 
-    // TODO duplicate ERROR implementieren
-    test.todo('Neues Bankkonto, aber der Kunde existiert bereits');
-    // test('Neues Bankkonto, aber der Kunde existiert bereits', async () => {
-    //     // given
-    //     const token = await tokenRest(client);
-    //     headers.Authorization = `Bearer ${token}`;
-
-    //     // when
-    //     const response: AxiosResponse<ErrorResponse> = await client.post(
-    //         '/rest',
-    //         neuesBankkontoKundeExistiert,
-    //         { headers },
-    //     );
-
-    //     // then
-    //     const { data } = response;
-
-    //     const { message, statusCode } = data;
-
-    //     expect(message).toEqual(expect.stringContaining('kunde'));
-    //     expect(statusCode).toBe(HttpStatus.UNPROCESSABLE_ENTITY);
-    // });
-
     test('Neues Bankkonto, aber ohne Token', async () => {
         // when
         const response: AxiosResponse<Record<string, any>> = await client.post(
@@ -354,5 +331,5 @@ describe('POST /rest', () => {
         );
     });
 
-    test.todo('Abgelaufener Token');
+    // test.todo('Abgelaufener Token');
 });

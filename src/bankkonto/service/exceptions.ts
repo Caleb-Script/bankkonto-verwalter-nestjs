@@ -44,7 +44,6 @@ export class VersionOutdatedException extends HttpException {
     }
 }
 
-// TODO bessere StatusCodes
 /**
  * Exception-Klasse für das Erreichen des Transaktionslimits.
  */
