@@ -58,9 +58,7 @@ export class KeycloakService implements KeycloakConnectOptionsFactory {
             return;
         }
 
-        // https://www.keycloak.org/docs-api/23.0.4/rest-api/index.html
-        // https://stackoverflow.com/questions/62683482/keycloak-rest-api-call-to-get-access-token-of-a-user-through-admin-username-and
-        // https://stackoverflow.com/questions/65714161/keycloak-generate-access-token-for-a-user-with-keycloak-admin
+        this.#logger.debug('token: client_secret=%s', secret);
         const body = `username=${username}&password=${password}&grant_type=password&client_id=${clientId}&client_secret=${secret}`;
         let response: AxiosResponse<Record<string, number | string>>;
         try {
