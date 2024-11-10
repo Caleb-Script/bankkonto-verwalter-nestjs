@@ -1,6 +1,6 @@
 
 include:
-  - path: [../db/postgres/compose.yml]
+  - path: [../backend/postgres/compose.yml]
 
 services:
   sonarqube:

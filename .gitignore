@@ -22,6 +22,8 @@ kubeconfig
 kubeconfig_ORIGINAL
 
 # compose
+.extras/compose/backend/postgres/.env
+.extras/compose/backend/keycloak/.env
 
 
 # action-runner
