@@ -3,7 +3,7 @@ name: Test Pipeline
 on:
   push:
     branches:
-      - 60-dockerfile-bugfix # Trigger
+      - main
   workflow_dispatch:
 
 jobs:

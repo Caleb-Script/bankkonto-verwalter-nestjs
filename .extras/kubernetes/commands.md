@@ -9,10 +9,15 @@ kubectl delete persistentvolume pgadmin-pv
 kubectl delete persistentvolume pgadmin4-pv
 kubectl delete persistentvolume kc-data-pv
 
-kubectl apply -f postgres-pv.yml --namespace=bankkonto-namespace
-kubectl apply -f pgadmin-pv.yml --namespace=bankkonto-namespace
-kubectl apply -f keycloak-pv.yml --namespace=bankkonto-namespace
-kubectl apply -f . --namespace=bankkonto-namespace
+kubectl apply -f ./persistent-volumes/ --namespace=bankkonto-namespace
+kubectl apply -f ./namespace.yml --namespace=bankkonto-namespace
+kubectl apply -f ./postgres --namespace=bankkonto-namespace
+kubectl apply -f ./keycloak --namespace=bankkonto-namespace
+kubectl apply -f ./pgadmin --namespace=bankkonto-namespace
+kubectl apply -f ./bankkonto --namespace=bankkonto-namespace
+
+
+kubectl apply - R -f . --namespace=bankkonto-namespace
 
 # Verification: Run the following to check if an external IP has been assigned:
 kubectl get svc -n bankkonto-namespace

@@ -21,6 +21,9 @@ dependencies.svg
 kubeconfig
 kubeconfig_ORIGINAL
 
+# compose
+
+
 # action-runner
 .github/actions-runner/
 .github/postgres-runner/
@@ -47,6 +50,7 @@ lerna-debug.log*
 # Prometheus und Grafana
 .extras/compose/prometheus-grafana/prometheus-data/*
 .extras/compose/prometheus-grafana/grafana.db
+.extras/compose/
 
 # OS
 .DS_Store

@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - 60-dockerfile-bugfix # Trigger
     tags:
       - 'v*'  # Nur für Versionstags (z.B. v1.0.0)
   schedule:
@@ -180,6 +179,9 @@ jobs:
      - name: Pull Docker Image
        run: docker pull calebscript/bankkonto-verwalter:2024.10.1
 
+     - name: Remove unused Docker images
+       run: docker image prune -f
+
      - name: Set up Kubernetes context
        run: |
          # Setze den kubectl Kontext auf deinen lokalen Docker Desktop Cluster
@@ -188,17 +190,8 @@ jobs:
      - name: Apply Postgres PersistentVolume
        run: |
          kubectl apply -f .extras/kubernetes/postgres-pv.yml --namespace=bankkonto-namespace
-
-     - name: Apply PgAdmin PersistentVolume
-       run: |
          kubectl apply -f .extras/kubernetes/pgadmin-pv.yml --namespace=bankkonto-namespace
-
-     - name: Apply Keycloak PersistentVolume
-       run: |
          kubectl apply -f .extras/kubernetes/keycloak-pv.yml --namespace=bankkonto-namespace
-
-     - name: Apply Remaining Kubernetes Resources
-       run: |
          kubectl apply -f .extras/kubernetes/ --namespace=bankkonto-namespace
 
      - name: Wait for Deployment Rollout
