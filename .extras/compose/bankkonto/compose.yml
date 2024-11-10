@@ -1,0 +1,50 @@
+include:
+  - path: ../backend/compose.yml
+
+services:
+  bankkonto:
+    image: calebscript/bankkonto-verwalter:2024.10.1
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - published: 3000
+        target: 3000
+    volumes:
+      - type: bind
+        source: app.yml
+        target: /opt/app/dist/config/resources/app.yml
+        read_only: true
+      - type: bind
+        source: ../../../log
+        target: /opt/app/log
+        read_only: true
+      - type: bind
+        source: ../../../src/config/resources/tls/key.pem
+        target: /opt/app/dist/config/resources/tls/key.pem
+        read_only: true
+      - type: bind
+        source: ../../../src/config/resources/tls/certificate.crt
+        target: /opt/app/dist/config/resources/tls/certificate.crt
+        read_only: true
+      # - type: bind
+      #   source: ../../../src/config/resources/jwt/private-key.pem
+      #   target: /opt/app/dist/config/resources/jwt/private-key.pem
+      #   read_only: true
+      # - type: bind
+      #   source: ../../../src/config/resources/db/sqlite/bankkonto.sqlite
+      #   target: /opt/app/dist/config/resources/db/sqlite/bankkonto.sqlite
+    env_file: .env
+    environment:
+      # https://docs.docker.com/compose/compose-file/compose-file-v3/#variable-substitution
+      - USER_PASSWORD_ENCODED=$$argon2i$$v=19$$m=4096,t=3,p=1$$aaxA2v/9rRSPGkwYN+NQog$$27Huii1XtD3iEd62fog+04G26LRPZMHoYCI6AGKTL8M
+    #hostname: bankkonto
+    cap_drop: [ALL]
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 2G
+        reservations:
+          cpus: '1.0'
+          memory: 1G

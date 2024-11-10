@@ -1,0 +1,41 @@
+
+include:
+  - path: [../db/postgres/compose.yml]
+
+services:
+  sonarqube:
+    image: sonarqube:10.6.0-community
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      # Port fuer HTTP
+      - published: 9000
+        target: 9000
+      # Port fuer H2
+      - published: 9092
+        target: 9092
+    volumes:
+      - type: bind
+        source: /Users/gentlebookpro/Projekte/UNI/SWE/zimmermann/volumes/sonarqube/data
+        target: /opt/sonarqube/data
+      - type: bind
+        source: /Users/gentlebookpro/Projekte/UNI/SWE/zimmermann/volumes/sonarqube/logs
+        target: /opt/sonarqube/logs
+      - type: bind
+        source: /Users/gentlebookpro/Projekte/UNI/SWE/zimmermann/volumes/sonarqube/extensions
+        target: /opt/sonarqube/lib/extensions
+        read_only: true
+    env_file: .env
+    hostname: sonarqube
+    container_name: sonarqube
+    cap_drop: [ALL]
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 4096M
+        reservations:
+          cpus: '2.0'
+          memory: 2048M

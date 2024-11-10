@@ -34,22 +34,11 @@ jobs:
           kubectl delete persistentvolume pgadmin4-pv || true
           kubectl delete persistentvolume kc-data-pv || true
 
-  start_postgres:
-    name: Start PostgreSQL
-    if: github.actor == 'Caleb-Script'
-    needs: kubernetes_cleanup
-    runs-on: [self-hosted,postgres]
-    steps:
-      - name: Start PostgreSQL container
-        run: |
-          cd .extras/compose/backend/postgres
-          docker compose up
-
-  start_keycloak:
+  start_keycloak_and_postgres:
     if: github.actor == 'Caleb-Script'
     name: Start Keycloak
     needs: kubernetes_cleanup
-    runs-on: [self-hosted,keycloak]
+    runs-on: [self-hosted,backend]
     steps:
       - name: Start Keycloak container
         run: |
@@ -113,12 +102,7 @@ jobs:
       #     name: jest-coverage-${{ matrix.node-version }}-${{ matrix.os }}
       #     path: ./coverage
 
-      - name: fahre Postgres runter
-        run: |
-          cd .extras/compose/backend/postgres
-          docker-compose down
-
-      - name: fahre keycloak runter
+      - name: fahre keycloak und postgres runter
         run: |
           cd .extras/compose/backend/keycloak
           docker-compose down

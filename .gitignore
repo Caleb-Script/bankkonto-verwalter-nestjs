@@ -26,8 +26,8 @@ kubeconfig_ORIGINAL
 
 # action-runner
 .github/actions-runner/
-.github/postgres-runner/
-.github/keycloak-runner/
+.github/backend-runner/
+
 
 # Sensible Daten (Passwort, Token, private Schluessel)
 .extras/compose/db/mysql/db_root_password.txt
@@ -50,7 +50,6 @@ lerna-debug.log*
 # Prometheus und Grafana
 .extras/compose/prometheus-grafana/prometheus-data/*
 .extras/compose/prometheus-grafana/grafana.db
-.extras/compose/
 
 # OS
 .DS_Store

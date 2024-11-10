@@ -18,19 +18,12 @@ jobs:
 
     - name: Apply Postgres PersistentVolume
       run: |
-        kubectl apply -f .extras/kubernetes/postgres-pv.yml --namespace=bankkonto-namespace
-
-    - name: Apply PgAdmin PersistentVolume
-      run: |
-        kubectl apply -f .extras/kubernetes/pgadmin-pv.yml --namespace=bankkonto-namespace
-
-    - name: Apply Keycloak PersistentVolume
-      run: |
-        kubectl apply -f .extras/kubernetes/keycloak-pv.yml --namespace=bankkonto-namespace
-
-    - name: Apply Remaining Kubernetes Resources
-      run: |
-        kubectl apply -f .extras/kubernetes/ --namespace=bankkonto-namespace
+        kubectl apply -f ./persistent-volumes/ --namespace=bankkonto-namespace
+        kubectl apply -f ./namespace.yml --namespace=bankkonto-namespace
+        kubectl apply -f ./postgres --namespace=bankkonto-namespace
+        kubectl apply -f ./keycloak --namespace=bankkonto-namespace
+        kubectl apply -f ./pgadmin --namespace=bankkonto-namespace
+        kubectl apply -f ./bankkonto --namespace=bankkonto-namespace
 
     - name: Wait for Deployment Rollout
       run: |
