@@ -34,7 +34,7 @@ kubeconfig_ORIGINAL
 # Sensible Daten (Passwort, Token, private Schluessel)
 .extras/compose/db/mysql/db_root_password.txt
 .extras/compose/db/postgres/db_password.txt
-.extras/postman
+
 src/config/resources/tls/key.pem
 sonar-project.properties
 

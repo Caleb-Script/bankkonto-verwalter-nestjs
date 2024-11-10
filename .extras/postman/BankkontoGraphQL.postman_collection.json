@@ -1,0 +1,511 @@
+{
+	"info": {
+		"_postman_id": "84cbfb15-76c3-4681-8fe3-7f7bd4f3e1b9",
+		"name": "BankkontoGraphQL",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30276082",
+		"_collection_link": "https://gentle-team.postman.co/workspace/BUCH~35515a77-1f0a-40c6-a5d5-2c0695e5229c/collection/30276082-84cbfb15-76c3-4681-8fe3-7f7bd4f3e1b9?action=share&source=collection_link&creator=30276082"
+	},
+	"item": [
+		{
+			"name": "Suche Bankkonto mit  der ID 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query Bankkonten {\r\n    bankkonten(suchkriterien: { email: \"123\" }) {\r\n        bankkontoId\r\n        version\r\n        saldo\r\n        transaktionLimit\r\n        besitztTransaktionLimit\r\n        waehrungen\r\n        erstelltAm\r\n        aktualisiertAm\r\n    }\r\n}\r\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "{{graphql_url}}",
+					"host": [
+						"{{graphql_url}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Bankkonto öffnen Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.sendRequest({",
+							"    url: 'https://localhost:3000/graphql',",
+							"    method: 'POST',",
+							"    header: {",
+							"        'Content-Type': 'application/json',",
+							"    },",
+							"    body: JSON.stringify({",
+							"        query: `",
+							"            mutation Token {",
+							"                token(username: \"admin\", password: \"p\") {",
+							"                    access_token",
+							"                }",
+							"            }",
+							"        `",
+							"    })",
+							"}, (err, res) => {",
+							"    pm.environment.set('TOKEN', res.json().data.token.access_token);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation Create {\r\n    create(\r\n        input: {\r\n            transaktionLimit: null\r\n            besitztTransaktionLimit: false\r\n            waehrungen: [\"EUR\"]\r\n            kunde: { name: \"Caleb\", vorname: \"Gyamfi\", email: \"kp@ok.de\" }\r\n        }\r\n    ) {\r\n        bankkontoId\r\n    }\r\n}\r\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "{{graphql_url}}",
+					"host": [
+						"{{graphql_url}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Suche Bankkonto mit  Filter",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query Bankkonto {\r\n    bankkonto(bankkontoId: \"1\") {\r\n        bankkontoId\r\n        version\r\n        saldo\r\n        transaktionLimit\r\n        besitztTransaktionLimit\r\n        waehrungen\r\n        erstelltAm\r\n        aktualisiertAm\r\n    }\r\n}\r\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "{{graphql_url}}",
+					"host": [
+						"{{graphql_url}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Überweisen",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.sendRequest({",
+							"    url: 'https://localhost:3000/graphql',",
+							"    method: 'POST',",
+							"    header: {",
+							"        'Content-Type': 'application/json',",
+							"    },",
+							"    body: JSON.stringify({",
+							"        query: `",
+							"            mutation Token {",
+							"                token(username: \"admin\", password: \"p\") {",
+							"                    access_token",
+							"                }",
+							"            }",
+							"        `",
+							"    })",
+							"}, (err, res) => {",
+							"    pm.environment.set('TOKEN', res.json().data.token.access_token);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation MakeTransaktion {\r\n    makeTransaktion(\r\n        input: { betrag: 120, absender: 1, empfaenger: 2, transaktionTyp: UEBERWEISUNG }\r\n    ) {\r\n        transaktionID\r\n        saldo\r\n        bankkontoNeueVersion\r\n    }\r\n}\r\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "{{graphql_url}}",
+					"host": [
+						"{{graphql_url}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Bankkonto ändern",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.sendRequest({",
+							"    url: 'https://localhost:3000/graphql',",
+							"    method: 'POST',",
+							"    header: {",
+							"        'Content-Type': 'application/json',",
+							"    },",
+							"    body: JSON.stringify({",
+							"        query: `",
+							"            mutation Token {",
+							"                token(username: \"admin\", password: \"p\") {",
+							"                    access_token",
+							"                }",
+							"            }",
+							"        `",
+							"    })",
+							"}, (err, res) => {",
+							"    pm.environment.set('TOKEN', res.json().data.token.access_token);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation MakeTransaktion {\r\n    makeTransaktion(\r\n        input: { betrag: 120, absender: 1, empfaenger: 2, transaktionTyp: UEBERWEISUNG }\r\n    ) {\r\n        transaktionID\r\n        saldo\r\n        bankkontoNeueVersion\r\n    }\r\n}\r\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "{{graphql_url}}",
+					"host": [
+						"{{graphql_url}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Bankkonto löschen",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.sendRequest({",
+							"    url: 'https://localhost:3000/graphql',",
+							"    method: 'POST',",
+							"    header: {",
+							"        'Content-Type': 'application/json',",
+							"    },",
+							"    body: JSON.stringify({",
+							"        query: `",
+							"            mutation Token {",
+							"                token(username: \"admin\", password: \"p\") {",
+							"                    access_token",
+							"                }",
+							"            }",
+							"        `",
+							"    })",
+							"}, (err, res) => {",
+							"    pm.environment.set('TOKEN', res.json().data.token.access_token);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation Delete {\r\n    delete(bankkontoId: \"1\")\r\n}\r\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "{{graphql_url}}",
+					"host": [
+						"{{graphql_url}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set('TOKEN', pm.response.data.token.access_token);\r",
+							"console.log(pm.environment.get('TOKEN'));"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.sendRequest({",
+							"    url: 'https://localhost:3000/graphql',",
+							"    method: 'POST',",
+							"    header: {",
+							"        'Content-Type': 'application/json',",
+							"    },",
+							"    body: JSON.stringify({",
+							"        query: `",
+							"            mutation Token {",
+							"                token(username: \"admin\", password: \"p\") {",
+							"                    access_token",
+							"                }",
+							"            }",
+							"        `",
+							"    })",
+							"}, (err, res) => {",
+							"    pm.environment.set('TOKEN', res.json().data.token.access_token);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation Token {\r\n    token(username: \"admin\", password: \"p\") {\r\n        access_token\r\n        expires_in\r\n        refresh_token\r\n        refresh_expires_in\r\n    }\r\n}\r\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "{{graphql_url}}",
+					"host": [
+						"{{graphql_url}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "graphql_url",
+			"value": "{{base_url}}/graphql",
+			"type": "string"
+		}
+	]
+}
