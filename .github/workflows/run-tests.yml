@@ -96,7 +96,7 @@ jobs:
       - name: Upload Jest Test Coverage
         uses: actions/upload-artifact@v4
         with:
-          name: jest-coverage-${{ matrix.node-version }}
+          name: jest-coverage_node-${{ matrix.node-version }}
           path: ./coverage
 
       - name: fahre keycloak und postgres runter
@@ -104,48 +104,53 @@ jobs:
           cd .extras/compose/backend/keycloak
           docker-compose down
 
-  # security:
-    # name: Security Scans (Docker Scout, Trivy, OWASP Dependency Check)
-    # runs-on: ubuntu-latest
-    # needs: test
-    # steps:
-    #   - name: Checkout code
-    #     uses: actions/checkout@v4
 
-    #   - name: Install Docker
-    #     run: |
-    #       sudo apt-get update
-    #       sudo apt-get install -y docker.io
+  security:
+    name: Security Scans (Docker Scout, Trivy, OWASP Dependency Check, SonarQube, Snyk)
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    #   - name: Docker Scout Scan
-    #     run: |
-    #       docker scan --file Dockerfile .
+      - name: Install dependencies (Caching)
+        run: npm ci
 
-    #   - name: Install Trivy
-    #     run: |
-    #       curl -sfL https://github.com/aquasecurity/trivy/releases/download/v0.34.0/trivy_0.34.0_Linux-x86_64.tar.gz | tar xz
-    #       sudo mv trivy /usr/local/bin/
+      - name: Install OWASP Dependency-Check
+        run: |
+          curl -L https://github.com/jeremydmiller/dotnet-dependency-check/releases/download/7.1.0/dependency-check-7.1.0.zip -o dependency-check.zip
+          unzip dependency-check.zip -d dependency-check
+          chmod +x dependency-check/bin/dependency-check.sh
+          sudo mv dependency-check /usr/local/bin/
 
-    #   - name: Trivy Security Scan
-    #     run: |
-    #       trivy fs . --exit-code 1 --severity HIGH,CRITICAL
+      - name: Run OWASP Dependency Check
+        run: |
+          dependency-check/bin/dependency-check.sh --project "NestJS Application" --scan . --format "HTML" --out dependency-check-report
 
-    #   - name: Install OWASP Dependency-Check
-    #     run: |
-    #       curl -L https://github.com/jeremydmiller/dotnet-dependency-check/releases/download/7.1.0/dependency-check-7.1.0.zip -o dependency-check.zip
-    #       unzip dependency-check.zip -d dependency-check
-    #       chmod +x dependency-check/bin/dependency-check.sh
-    #       sudo mv dependency-check /usr/local/bin/
+      - name: Upload Dependency Check Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: owasp-dependency-check-report
+          path: ./dependency-check-report/*.html
 
-    #   - name: Run OWASP Dependency Check
-    #     run: |
-    #       dependency-check/bin/dependency-check.sh --project "NestJS Application" --scan . --format "HTML" --out dependency-check-report
+      - name: Set up SonarQube
+        uses: sonarsource/sonarcloud-github-action@v1
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
-    #   - name: Upload Dependency Check Report
-    #     uses: actions/upload-artifact@v4
-    #     with:
-    #       name: owasp-dependency-check-report
-    #       path: ./dependency-check-report/*.html
+
+      - name: Run SonarQube Scan
+        run: |
+          sonar-scanner -Dsonar.projectKey=your_project_key -Dsonar.organization=your_organization
+
+      - name: Authenticate with Snyk
+        run: |
+          snyk auth ${{ secrets.SNYK_TOKEN }}
+
+      - name: Run Snyk Test
+        run: |
+          snyk test --all-projects
+
 
   lint:
     name: Linting and Code Quality Check
