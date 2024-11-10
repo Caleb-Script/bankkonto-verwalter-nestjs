@@ -118,19 +118,17 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Install dependencies
+        run: npm ci
+
       - name: Download dist folder
         uses: actions/download-artifact@v4
         with:
           name: dist-package-${{ matrix.node-version }}
           path: ./
-      - name: unzip node_modules
-        run: unzip dist.zip -d ./dist
 
-      - name: Download node_modules folder
-        uses: actions/download-artifact@v4
-        with:
-          name: node_modules-${{ matrix.node-version }}
-          path: ./
+      - name: unzip dist folder
+        run: unzip dist.zip -d ./dist
 
       - name: unzip node_modules
         run: unzip nm.zip -d ./node_modules
