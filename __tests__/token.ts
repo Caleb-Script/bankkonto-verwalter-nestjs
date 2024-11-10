@@ -44,6 +44,11 @@ export const tokenGraphQL = async (
         `,
     };
 
+    console.debug(
+        'username and password: user=%s, pass=%s',
+        username,
+        password,
+    );
     const response = await axiosInstance.post('graphql', body, { httpsAgent });
     console.debug('response: res=%o', response.data);
     return response.data.data.token.access_token; // eslint-disable-line @typescript-eslint/no-unsafe-return
