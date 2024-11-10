@@ -101,17 +101,17 @@ jobs:
         run: echo "${{ secrets.JEST_CONFIG }}" > .jest.config.js
 
 
-      # - name: Run Integration Tests with Jest
-      #   run: npm t
+      - name: Run Integration Tests with Jest
+        run: npm t
 
-      # - name: Run Coverage Tests with Istanbul
-      #   run: npm run test:istanbul
+      - name: Run Coverage Tests with Istanbul
+        run: npm run test:istanbul
 
-      # - name: Upload Jest Test Coverage
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: jest-coverage-${{ matrix.node-version }}-${{ matrix.os }}
-      #     path: ./coverage
+      - name: Upload Jest Test Coverage
+        uses: actions/upload-artifact@v4
+        with:
+          name: jest-coverage-${{ matrix.node-version }}-${{ matrix.os }}
+          path: ./coverage
 
       - name: fahre Postgres runter
         run: |
