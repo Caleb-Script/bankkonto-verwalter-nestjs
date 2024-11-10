@@ -189,6 +189,7 @@ jobs:
 
      - name: Apply Postgres PersistentVolume
        run: |
+         cd .extras/kubernetes
          kubectl apply -f ./persistent-volumes --namespace=bankkonto-namespace
          kubectl apply -f ./namespace.yml --namespace=bankkonto-namespace
          kubectl apply -f ./postgres --namespace=bankkonto-namespace
