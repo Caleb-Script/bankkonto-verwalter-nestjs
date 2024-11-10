@@ -4,7 +4,7 @@ CREATE SCHEMA IF NOT EXISTS AUTHORIZATION bankkonto;
 ALTER ROLE bankkonto SET search_path = 'bankkonto';
 
 -- Enum für Transaktionstypen erstellen
-CREATE TYPE transaktion_typ AS ENUM ('EINZAHLUNG', 'AUSZAHLUNG', 'ÜBERWEISUNG', 'EINKOMMEN', 'ZAHLUNG');
+CREATE TYPE transaktion_typ AS ENUM ('EINZAHLUNG', 'AUSZAHLUNG', 'UEBERWEISUNG', 'EINKOMMEN', 'ZAHLUNG');
 CREATE TYPE dokument_typ AS ENUM ('VERTRAG', 'RECHNUNG');
 
 -- Tabelle für Bankkonto

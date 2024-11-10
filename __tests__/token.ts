@@ -1,6 +1,5 @@
 import { type AxiosInstance, type AxiosResponse } from 'axios';
 import { type GraphQLQuery } from './bankkonto/bankkonto-mutation.resolver.test.js';
-import { type GraphQLResponseBody } from './bankkonto/bankkonto-query.resolver.test.js';
 import { httpsAgent, tokenPath } from './testserver.js';
 
 type TokenResult = {
@@ -45,9 +44,12 @@ export const tokenGraphQL = async (
         `,
     };
 
-    const response: AxiosResponse<GraphQLResponseBody> =
-        await axiosInstance.post('graphql', body, { httpsAgent });
-
-    const data = response.data.data!;
-    return data.token.access_token; // eslint-disable-line @typescript-eslint/no-unsafe-return
+    console.debug(
+        'username and password: user=%s, pass=%s',
+        username,
+        password,
+    );
+    const response = await axiosInstance.post('graphql', body, { httpsAgent });
+    console.debug('response: res=%o', response.data);
+    return response.data.data.token.access_token; // eslint-disable-line @typescript-eslint/no-unsafe-return
 };

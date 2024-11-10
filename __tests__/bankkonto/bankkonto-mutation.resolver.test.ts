@@ -51,17 +51,17 @@ describe('GraphQL Mutations', () => {
         const authorization = { Authorization: `Bearer ${token}` }; // eslint-disable-line @typescript-eslint/naming-convention
         const body: GraphQLQuery = {
             query: `
-                mutation {
-                    create(
-                          input: {
-                          transaktionLimit: 300
-                          waehrungen: ["EUR"]
-                          kunde: { name: "mumann", vorname: "alicia", email: "123@acme.de" }
-                        }
-                    ) {
-                         bankkontoId
-                     }
+                mutation Create {
+                create(
+                    input: {
+                        besitztTransaktionLimit: false
+                        waehrungen: ["EUR"]
+                        kunde: { name: "Gyamfi", vorname: "Caleb", email: "kp@ok.de" }
+                    }
+                ) {
+                    bankkontoId
                 }
+            }
             `,
         };
 

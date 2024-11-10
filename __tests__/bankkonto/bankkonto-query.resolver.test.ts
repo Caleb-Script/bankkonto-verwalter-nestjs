@@ -34,7 +34,7 @@ const bankkontoIdVorhanden = '1';
 
 const emailVorhanden = 'max@example.com';
 const teilEmailVorhanden = 'a';
-const teilEmailNichtVorhanden = '123';
+const teilEmailNichtVorhanden = 'ZZZ';
 
 // -----------------------------------------------------------------------------
 // T e s t s
@@ -68,7 +68,6 @@ describe('GraphQL Queries', () => {
             query: `
                 {
                     bankkonto(bankkontoId: "${bankkontoIdVorhanden}") {
-                    bankkontoId
                     version
                     saldo
                     transaktionLimit
@@ -99,14 +98,14 @@ describe('GraphQL Queries', () => {
         const { bankkonto } = data.data!;
         const result: BankkontoDTO = bankkonto;
 
-        expect(result.kunde?.kundeId).toMatch(/^\w/u);
+        expect(result.kunde?.name).toMatch(/^\w/u);
         expect(result.version).toBeGreaterThan(-1);
         expect(result.bankkontoId).toBeUndefined();
     });
 
     test('Bankkonto zu nicht-vorhandener ID', async () => {
         // given
-        const bankkontoId = '999999';
+        const bankkontoId = '999';
         const body: GraphQLRequest = {
             query: `
                 {
@@ -145,7 +144,9 @@ describe('GraphQL Queries', () => {
         const [error] = errors!;
         const { message, path, extensions } = error;
 
-        expect(message).toBe(`Es gibt kein Bankkonto mit der  ${bankkontoId}.`);
+        expect(message).toBe(
+            `Es gibt kein Bankkonto mit der ID ${bankkontoId}.`,
+        );
         expect(path).toBeDefined();
         expect(path![0]).toBe('bankkonto');
         expect(extensions).toBeDefined();
@@ -197,7 +198,7 @@ describe('GraphQL Queries', () => {
 
         const [bankkonto] = bankkontenArray;
 
-        expect(bankkonto!.kunde?.kundeId).toBe(emailVorhanden);
+        expect(bankkonto!.kunde?.email).toBe(emailVorhanden);
     });
 
     test('Bankkonto zu vorhandenem Teil-Email', async () => {
@@ -242,7 +243,7 @@ describe('GraphQL Queries', () => {
         bankkontenArray
             .map((bankkonto) => bankkonto.kunde)
             .forEach((kunde) =>
-                expect(kunde?.kundeId).toEqual(
+                expect(kunde?.email).toEqual(
                     expect.stringContaining(teilEmailVorhanden.toLowerCase()),
                 ),
             );

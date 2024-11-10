@@ -14,7 +14,7 @@ import {
     startServer,
 } from '../testserver.js';
 import { tokenRest } from '../token.js';
-const ÜBERWEISUNG = 'ÜBERWEISUNG';
+const UEBERWEISUNG = 'UEBERWEISUNG';
 // -----------------------------------------------------------------------------
 // T e s t d a t e n
 // -----------------------------------------------------------------------------
@@ -59,19 +59,19 @@ const neueAuszahlung: TransaktionDTO = {
     empfaenger: 2,
 };
 const neueÜberweisung: TransaktionDTO = {
-    transaktionTyp: ÜBERWEISUNG,
+    transaktionTyp: UEBERWEISUNG,
     betrag: 300,
     absender: 1,
     empfaenger: 2,
 };
 const neueÜberweisungNichtGenügendSaldo: TransaktionDTO = {
-    transaktionTyp: ÜBERWEISUNG,
+    transaktionTyp: UEBERWEISUNG,
     betrag: 1000,
     absender: 1,
     empfaenger: 2,
 };
 const neueÜberweisungÜberLimit: TransaktionDTO = {
-    transaktionTyp: ÜBERWEISUNG,
+    transaktionTyp: UEBERWEISUNG,
     betrag: 600,
     absender: 1,
     empfaenger: 2,

@@ -27,7 +27,10 @@ const jestConfig = {
 
     //  testRegex: String.raw`__tests__\.*\\.*test\.m?ts$`,
     testRegex: String.raw`__tests__/.*/.*\.test\.m?ts$`,
-    //  roots: ['<rootDir>/__tests__'],
+    roots: ['<rootDir>/__tests__', '<rootDir>/src'],
+    // roots: [
+    //     '<rootDir>/.github/actions-runner/_work/bankkonto-verwalter-nestjs/bankkonto-verwalter-nestjs/__tests__',
+    // ],
     collectCoverageFrom: ['<rootDir>/src/**/*.*ts'],
     // coverageDirectory: 'coverage',
     testEnvironment: 'node',

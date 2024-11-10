@@ -23,6 +23,8 @@ kubeconfig_ORIGINAL
 
 # action-runner
 .github/actions-runner/
+.github/postgres-runner/
+.github/keycloak-runner/
 
 # Sensible Daten (Passwort, Token, private Schluessel)
 .extras/compose/db/mysql/db_root_password.txt
@@ -54,7 +56,7 @@ Thumbs.db
 coverage
 .nyc_output
 .clinic
-__tests__/buch/__snapshots__
+# __tests__/bankkonto/__snapshots__
 
 # SonarQube
 .sonar

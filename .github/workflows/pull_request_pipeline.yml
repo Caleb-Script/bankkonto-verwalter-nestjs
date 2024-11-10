@@ -1,17 +1,24 @@
 name: Pull Request Pipeline
 
-#TODO tests auch!
 on:
+  push:
+    branches:
+      - '**'  # Trigger bei Push auf allen Branches
   pull_request:
     branches:
-      - main
+      - main  # Trigger bei Pull Request auf den Main-Branch
+  schedule:
+    - cron: "0 2 * * 1-5"  # Optional: Zeitgesteuerte Ausführung Montag bis Freitag um 2:00 UTC
+  workflow_dispatch:
 
 jobs:
   lint-and-audit:
-    runs-on: ubuntu-latest
+    name: Code Analyse auf node ${{ matrix.node-version }} and ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         node-version: [20.x, 22.x, 23.x]
+        os: [ubuntu-latest, macos-latest]
     steps:
       - name: Checkout code
         uses: actions/checkout@v4

@@ -5,6 +5,7 @@ import { getLogger } from '../../logger/logger.js';
 import { ResponseTimeInterceptor } from '../../logger/response-time.interceptor.js';
 import { BankkontoUpdateDTO } from '../model/dto/bankkonto-update.dto.js';
 import { BankkontoDTO } from '../model/dto/bankkonto.dto.js';
+import { TransaktionDTO } from '../model/dto/transaktion.dto.js';
 import { type Bankkonto } from '../model/entity/bankkonto.entity.js';
 import { type Kunde } from '../model/entity/kunde.entity.js';
 import { BankkontoWriteService } from '../service/bankkonto-write.service.js';
@@ -17,6 +18,12 @@ export type CreatePayload = {
 
 export type UpdatePayload = {
     readonly version: number;
+};
+
+export type TransaktionPayload = {
+    transaktionID: number | undefined;
+    saldo: number | undefined;
+    bankkontoNeueVersion: number | undefined;
 };
 
 @Resolver('Bankkonto')
@@ -61,6 +68,30 @@ export class BankkontoMutationResolver {
         // TODO BadUserInputError
         this.#logger.debug('updateKonto: versionResult=%d', versionResult);
         const payload: UpdatePayload = { version: versionResult };
+        return payload;
+    }
+
+    @Mutation()
+    @Roles({ roles: ['admin', 'user'] })
+    async makeTransaktion(@Args('input') transaktionDTO: TransaktionDTO) {
+        this.#logger.debug('makeTransaction: input=%o', transaktionDTO);
+        const {
+            transaktionID,
+            saldo,
+            bankkontoNeueVersion,
+        }: TransaktionPayload =
+            await this.#service.createTransaktion(transaktionDTO);
+        this.#logger.debug(
+            'makeTransaction: transaktionId=%s, neuerSaldo=%s, bankkontoNeueVersion=%s',
+            transaktionID,
+            saldo,
+            bankkontoNeueVersion,
+        );
+        const payload: TransaktionPayload = {
+            transaktionID,
+            saldo,
+            bankkontoNeueVersion,
+        };
         return payload;
     }
 

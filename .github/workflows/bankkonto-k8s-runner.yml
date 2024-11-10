@@ -1,14 +1,11 @@
 name: Continuous Deployment to Local Kubernetes Cluster
 
 on:
-  push:
-    branches:
-      - main  # Trigger bei Push auf den Main-Branch
   workflow_dispatch:  # Manuelles Auslösen des Workflows
 
 jobs:
   deploy:
-    runs-on: macos-latest  # Oder 'ubuntu-latest', falls du auf Linux arbeitest
+    runs-on: self-hosted  # Oder 'ubuntu-latest', falls du auf Linux arbeitest
 
     steps:
     - name: Checkout Repository

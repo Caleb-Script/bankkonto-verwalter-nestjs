@@ -1,0 +1,32 @@
+name: Cleanup Kubernetes Resources
+
+on:
+  workflow_dispatch:
+
+jobs:
+  kubernetes_cleanup:
+    name: Cleanup Kubernetes Resources
+    runs-on: [self-hosted,kubernetes]
+    if: github.actor == 'Caleb-Script'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Kubernetes context
+        run: |
+          # Setze den kubectl Kontext auf deinen lokalen Docker Desktop Cluster
+          kubectl config use-context docker-desktop
+
+      - name: Delete Kubernetes Resources
+        run: |
+          cd .extras/kubernetes
+          kubectl delete namespace bankkonto-namespace || true
+          kubectl delete persistentvolume postgres-pv-data || true
+          kubectl delete persistentvolume postgres-pv-tablespace || true
+          kubectl delete persistentvolume postgres-pv-csv || true
+          kubectl delete persistentvolume postgres-pv-sql || true
+          kubectl delete persistentvolume postgres-pv-config || true
+          kubectl delete persistentvolume postgres-certs-pv || true
+          kubectl delete persistentvolume pgadmin-pv || true
+          kubectl delete persistentvolume pgadmin4-pv || true
+          kubectl delete persistentvolume kc-data-pv || true
