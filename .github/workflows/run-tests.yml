@@ -40,6 +40,9 @@ jobs:
     needs: kubernetes_cleanup
     runs-on: [self-hosted,backend]
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
       - name: Start Keycloak container
         run: |
           cd .extras/compose/backend/keycloak
