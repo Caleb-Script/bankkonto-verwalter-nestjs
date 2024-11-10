@@ -26,8 +26,8 @@ const jestConfig = {
     },
 
     //  testRegex: String.raw`__tests__\.*\\.*test\.m?ts$`,
-    testRegex: String.raw`<rootDir>/__tests__/.*/.*\.test\.m?ts$`,
-    // roots: ['__tests__', '<rootDir>/src'],
+    testRegex: String.raw`__tests__/.*/.*\.test\.m?ts$`,
+    roots: ['<rootDir>/__tests__', '<rootDir>/src'],
     collectCoverageFrom: ['<rootDir>/src/**/*.*ts'],
     // coverageDirectory: 'coverage',
     testEnvironment: 'node',
