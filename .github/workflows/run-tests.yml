@@ -34,29 +34,6 @@ jobs:
           kubectl delete persistentvolume pgadmin4-pv || true
           kubectl delete persistentvolume kc-data-pv || true
 
-  start_keycloak_and_postgres:
-    if: github.actor == 'Caleb-Script'
-    name: Start Keycloak
-    needs: kubernetes_cleanup
-    runs-on: [self-hosted]
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up ENV files from secrets
-        env:
-          KEYCLOAK_ENV: ${{ secrets.KEYCLOAK_ENV }}
-          POSTGRES_ENV: ${{ secrets.POSTGRES_ENV }}
-        run: |
-          cd .extras/compose/backend
-          echo "$KEYCLOAK_ENV" > keycloak/.env
-          echo "$POSTGRES_ENV" > postgres/.env
-
-      - name: Start Keycloak container
-        run: |
-          cd .extras/compose/backend
-          docker-compose up -d
-
   test:
     name: Test (lokal) on node ${{ matrix.node-version }}
     runs-on: [self-hosted]
@@ -92,6 +69,20 @@ jobs:
           echo "$TLS_KEY" > src/config/resources/tls/key.pem
           # echo "$TLS_CERT" > src/config/resources/tls/certificate.crt
 
+      - name: Set up ENV files from secrets
+        env:
+          KEYCLOAK_ENV: ${{ secrets.KEYCLOAK_ENV }}
+          POSTGRES_ENV: ${{ secrets.POSTGRES_ENV }}
+        run: |
+          cd .extras/compose/backend
+          echo "$KEYCLOAK_ENV" > keycloak/.env
+          echo "$POSTGRES_ENV" > postgres/.env
+
+      - name: Start Keycloak container
+        run: |
+          cd .extras/compose/backend
+          docker-compose up -d
+
       - name: Jest Config aus Secret setzen
         run: echo "${{ secrets.JEST_CONFIG }}" > .jest.config.js
 
@@ -102,11 +93,11 @@ jobs:
       - name: Run Coverage Tests with Istanbul
         run: npm run test:istanbul || true
 
-      # - name: Upload Jest Test Coverage
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: jest-coverage-${{ matrix.node-version }}
-      #     path: ./coverage
+      - name: Upload Jest Test Coverage
+        uses: actions/upload-artifact@v4
+        with:
+          name: jest-coverage-${{ matrix.node-version }}
+          path: ./coverage
 
       - name: fahre keycloak und postgres runter
         run: |
