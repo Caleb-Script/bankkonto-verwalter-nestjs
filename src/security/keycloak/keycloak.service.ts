@@ -58,7 +58,6 @@ export class KeycloakService implements KeycloakConnectOptionsFactory {
             return;
         }
 
-        this.#logger.debug('token: client_secret=%s', secret);
         const body = `username=${username}&password=${password}&grant_type=password&client_id=${clientId}&client_secret=${secret}`;
         let response: AxiosResponse<Record<string, number | string>>;
         try {

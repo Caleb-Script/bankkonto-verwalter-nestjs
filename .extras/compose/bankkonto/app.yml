@@ -31,7 +31,7 @@ db:
 # ==============================================================================
 # Client-ID muss durch die Umgebungsvariable CLIENT_ID gesetzt werden
 keycloak:
-  authServerUrl: http://keycloak:8080
+  authServerUrl: https://keycloak:443
   #authServerUrl: http://localhost:8880
   realm: nest
   # siehe Keycloak Menuepunkt "Clients" > Tab "Clients list" > Spalte "Client ID"
