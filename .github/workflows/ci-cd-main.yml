@@ -130,9 +130,6 @@ jobs:
       - name: unzip dist folder
         run: unzip dist.zip -d ./dist
 
-      - name: unzip node_modules
-        run: unzip nm.zip -d ./node_modules
-
       - name: Create .env file
         run: |
           echo "NODE_ENV=development" >> .env

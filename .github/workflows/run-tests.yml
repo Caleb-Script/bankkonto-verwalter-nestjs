@@ -116,12 +116,11 @@ jobs:
         run: |
           curl -L https://github.com/jeremylong/DependencyCheck/releases/download/v11.1.0/dependency-check-11.1.0-release.zip -o dependency-check-11.1.0-release.zip
           unzip dependency-check-11.1.0-release.zip -d dependency-check
-          chmod +x dependency-check/dependency-check.sh
-          sudo mv dependency-check /usr/local/bin/
+          chmod +x dependency-check/dependency-check
 
       - name: Run OWASP Dependency Check
         run: |
-          dependency-check/bin/dependency-check.sh --project "Bankkonto" --scan . --nvd-api-key b7a34389-9698-4691-972c-3b333871a7a6 --format "HTML" --out dependency-check-report
+          dependency-check/dependency-check/bin/dependency-check.sh --project "Bankkonto" --scan . --nvdApiKey b7a34389-9698-4691-972c-3b333871a7a6 --format "HTML" --out dependency-check-report
 
       - name: Upload Dependency Check Report
         uses: actions/upload-artifact@v4
