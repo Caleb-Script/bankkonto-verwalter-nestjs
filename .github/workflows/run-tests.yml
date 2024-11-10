@@ -43,7 +43,7 @@ jobs:
       - name: Start PostgreSQL container
         run: |
           cd .extras/compose/backend/postgres
-          docker-compose up
+          docker compose up
 
   start_keycloak:
     if: github.actor == 'Caleb-Script'
@@ -54,7 +54,7 @@ jobs:
       - name: Start Keycloak container
         run: |
           cd .extras/compose/backend/keycloak
-          docker-compose up
+          docker compose up
 
   test:
     name: Test (lokal) on node ${{ matrix.node-version }}

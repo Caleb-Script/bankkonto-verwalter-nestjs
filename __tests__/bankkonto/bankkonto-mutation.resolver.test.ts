@@ -301,38 +301,38 @@ describe('GraphQL Mutations', () => {
     });
 
     // -------------------------------------------------------------------------
-    // test('Bankkonto loeschen als "user"', async () => {
-    //     // given
-    //     const token = await tokenGraphQL(client, 'user', 'p');
-    //     const authorization = { Authorization: `Bearer ${token}` }; // eslint-disable-line @typescript-eslint/naming-convention
-    //     const body: GraphQLQuery = {
-    //         query: `
-    //             mutation {
-    //                 delete(bankkontoId: "60")
-    //             }
-    //         `,
-    //     };
+    test('Bankkonto loeschen als "user"', async () => {
+        // given
+        const token = await tokenGraphQL(client, 'user', 'p');
+        const authorization = { Authorization: `Bearer ${token}` }; // eslint-disable-line @typescript-eslint/naming-convention
+        const body: GraphQLQuery = {
+            query: `
+                mutation {
+                    delete(bankkontoId: "60")
+                }
+            `,
+        };
 
-    //     // when
-    //     const {
-    //         status,
-    //         headers,
-    //         data,
-    //     }: AxiosResponse<Record<'errors' | 'data', any>> = await client.post(
-    //         graphqlPath,
-    //         body,
-    //         { headers: authorization },
-    //     );
+        // when
+        const {
+            status,
+            headers,
+            data,
+        }: AxiosResponse<Record<'errors' | 'data', any>> = await client.post(
+            graphqlPath,
+            body,
+            { headers: authorization },
+        );
 
-    //     // then
-    //     expect(status).toBe(HttpStatus.OK);
-    //     expect(headers['content-type']).toMatch(/json/iu);
+        // then
+        expect(status).toBe(HttpStatus.OK);
+        expect(headers['content-type']).toMatch(/json/iu);
 
-    //     const { errors } = data;
+        const { errors } = data;
 
-    //     expect(errors[0].message).toBe('Forbidden resource');
-    //     expect(errors[0].extensions.code).toBe('BAD_USER_INPUT');
-    //     expect(data.data.delete).toBeNull();
-    // });
+        expect(errors[0].message).toBe('Forbidden resource');
+        expect(errors[0].extensions.code).toBe('BAD_USER_INPUT');
+        expect(data.data.delete).toBeNull();
+    });
 });
 /* eslint-enable max-lines, @typescript-eslint/no-unsafe-assignment */

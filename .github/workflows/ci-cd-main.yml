@@ -145,8 +145,6 @@ jobs:
 
       - name: Build Docker image
         run: |
-          IMAGE_TAG=${{ github.ref_name }}  # für z.B. v1.0.0 Tags
-          echo IMAGE_TAG
           docker build \
             --build-arg NODE_ENV=development \
             --build-arg CLIENT_SECRET=${{ secrets.CLIENT_SECRET }} \
@@ -169,7 +167,7 @@ jobs:
           docker push calebscript/bankkonto-verwalter:2024.10.1
 
   deploy:
-    runs-on: self-hosted
+    runs-on: [self-hosted,kubernetes]
     if: github.actor == 'Caleb-Script'
     needs: docker
     strategy:
@@ -178,6 +176,9 @@ jobs:
     steps:
      - name: Checkout code
        uses: actions/checkout@v4
+
+     - name: Pull Docker Image
+       run: docker pull calebscript/bankkonto-verwalter:2024.10.1
 
      - name: Set up Kubernetes context
        run: |
