@@ -81,9 +81,6 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
 
-      - name: kp
-        run: pwd
-
       - name: Install dependencies
         run: npm ci
 
@@ -100,23 +97,22 @@ jobs:
           echo "$TLS_KEY" > src/config/resources/tls/key.pem
           # echo "$TLS_CERT" > src/config/resources/tls/certificate.crt
 
-      # - name: Run Tests with Jest (Integrationstests)
-      #   run: |
-      #     cd .github/actions-runner/_work/bankkonto-verwalter-nestjs/bankkonto-verwalter-nestjs
-      #     npm t
-      #   working-directory: .github/actions-runner/_work/bankkonto-verwalter-nestjs/bankkonto-verwalter-nestjs
+      - name: Jest Config aus Secret setzen
+        run: echo "${{ secrets.JEST_CONFIG }}" > .jest.config.js
 
-      # - name: Run Tests npm run test:istanbul (Testabdeckung)
-      #   run: |
-      #     cd .github/actions-runner/_work/bankkonto-verwalter-nestjs/bankkonto-verwalter-nestjs
-      #     npm run test:istanbul
-      #   working-directory: .github/actions-runner/_work/bankkonto-verwalter-nestjs/bankkonto-verwalter-nestjs
 
-      # - name: Upload Jest Test Coverage
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: jest-coverage-${{ matrix.node-version }}-${{ matrix.os }}
-      #     path: ./coverage
+      - name: Run Integration Tests with Jest
+        run: npm t
+
+      - name: Run Coverage Tests with Istanbul
+        run: npm run test:istanbul
+
+      - name: Upload Jest Test Coverage
+        uses: actions/upload-artifact@v4
+        with:
+          name: jest-coverage-${{ matrix.node-version }}-${{ matrix.os }}
+          path: ./coverage
+
       - name: fahre Postgres runter
         run: |
           cd .extras/compose/backend/postgres
