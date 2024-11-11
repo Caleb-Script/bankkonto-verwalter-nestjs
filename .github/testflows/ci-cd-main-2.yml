@@ -7,21 +7,37 @@ on:
     tags:
       - 'v*'  # Nur für Versionstags (z.B. v1.0.0)
   schedule:
-  - cron: "0 2 * * 1-5"
+    - cron: "0 2 * * 1-5"
 
 jobs:
+  install-dependencies:
+    runs-on: ubuntu-latest
+    outputs:
+      node-modules-path: ${{ steps.cache.outputs.cache-hit }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Cache node_modules
+        uses: actions/cache@v3
+        with:
+          path: |
+            node_modules
+            ~/.npm
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Install dependencies
+        run: npm ci
+
   build:
     runs-on: ubuntu-latest
+    needs: install-dependencies
+    outputs:
+      dist-path: ${{ steps.cache.outputs.cache-hit }}
     strategy:
       matrix:
         node-version: [20.x]
     steps:
-      - name: Print ref name
-        run: echo "This workflow was triggered by ${{ github.ref_name }}"
-
-      - name: Print actor
-        run: echo "The actor is ${{ github.actor }}"
-
       - name: Checkout code
         uses: actions/checkout@v4
 
@@ -29,31 +45,21 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'npm'
 
-      - name: Install dependencies
-        run: npm ci
+      - name: Restore node_modules from cache
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ needs.install-dependencies.outputs.node-modules-path }}
 
       - name: Build project
         run: npm run build
 
-      - name: Compile TypeScript
-        run: npx tsc
-
-      - name: Upload dist folder
-        uses: actions/upload-artifact@v4
+      - name: Cache dist folder
+        uses: actions/cache@v3
         with:
-          name: dist-${{ matrix.node-version }}
           path: dist
-
-      - name: zip node_modules
-        run: zip -r nm.zip node_modules
-
-      - name: Upload node_modules folder
-        uses: actions/upload-artifact@v4
-        with:
-          name: node_modules-${{ matrix.node-version }}
-          path: nm.zip
+          key: ${{ runner.os }}-dist-${{ hashFiles('**/package-lock.json') }}
 
   analyze:
     runs-on: ubuntu-latest
@@ -69,10 +75,12 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'npm'
 
-      - name: Install dependencies
-        run: npm ci
+      - name: Restore node_modules from cache
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ needs.build.outputs.dist-path }}
 
       - name: Lint code
         run: npm run eslint
@@ -93,11 +101,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Download dist folder
-        uses: actions/download-artifact@v4
+      - name: Restore dist from cache
+        uses: actions/cache@v3
         with:
-          name: dist-${{ matrix.node-version }}
           path: dist
+          key: ${{ needs.install-dependencies.outputs.node-modules-path }}
 
       - name: Package distribution
         run: zip -r dist.zip dist
@@ -122,10 +130,12 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'npm'
 
-      - name: Install dependencies
-        run: npm ci
+      - name: Restore node_modules from cache
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ needs.install-dependencies.outputs.node-modules-path }}
 
       - name: Download dist folder
         uses: actions/download-artifact@v4
@@ -133,7 +143,7 @@ jobs:
           name: dist-package-${{ matrix.node-version }}
           path: ./
 
-      - name: unzip dist folder
+      - name: Unzip dist folder
         run: unzip dist.zip -d ./dist
 
       - name: Create .env file
@@ -164,7 +174,7 @@ jobs:
       - name: Push Docker image to registry
         run: |
           docker tag gruppe-4/bankkonto:2024.10.1 calebscript/bankkonto-verwalter:2024.10.1
-          docker push calebscript/bankkonto-verwalter:2024.10.1
+          docker push calebscript/bankkonto-verwalter:2024.10.1 || exit 1
 
   deploy:
     runs-on: [self-hosted]
@@ -174,31 +184,30 @@ jobs:
       matrix:
         node-version: [20.x]
     steps:
-     - name: Checkout code
-       uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-     - name: Pull Docker Image
-       run: docker pull calebscript/bankkonto-verwalter:2024.10.1
+      - name: Pull Docker Image
+        run: docker pull calebscript/bankkonto-verwalter:2024.10.1
 
-     - name: Remove unused Docker images
-       run: docker image prune -f
+      - name: Remove unused Docker images
+        run: docker image prune -f
 
-     - name: Set up Kubernetes context
-       run: |
-         # Setze den kubectl Kontext auf deinen lokalen Docker Desktop Cluster
-         kubectl config use-context docker-desktop
+      - name: Set up Kubernetes context
+        run: |
+          # Setze den kubectl Kontext auf deinen lokalen Docker Desktop Cluster
+          kubectl config use-context docker-desktop
 
-     - name: Apply Postgres PersistentVolume
-       run: |
-         cd .extras/kubernetes
-         kubectl apply -f ./persistent-volumes --namespace=bankkonto-namespace
-         kubectl apply -f ./namespace.yml --namespace=bankkonto-namespace
-         kubectl apply -f ./postgres --namespace=bankkonto-namespace
-         kubectl apply -f ./keycloak --namespace=bankkonto-namespace
-         kubectl apply -f ./pgadmin --namespace=bankkonto-namespace
-         kubectl apply -f ./bankkonto --namespace=bankkonto-namespace
+      - name: Apply Postgres PersistentVolume
+        run: |
+          cd .extras/kubernetes
+          kubectl apply -f ./persistent-volumes --namespace=bankkonto-namespace
+          kubectl apply -f ./namespace.yml --namespace=bankkonto-namespace
+          kubectl apply -f ./postgres --namespace=bankkonto-namespace
+          kubectl apply -f ./keycloak --namespace=bankkonto-namespace
+          kubectl apply -f ./pgadmin --namespace=bankkonto-namespace
+          kubectl apply -f ./bankkonto --namespace=bankkonto-namespace
 
-     - name: Wait for Deployment Rollout
-       run: |
-         kubectl rollout status deployment/bankkonto-app -n bankkonto-namespace
-
+      - name: Wait for Deployment Rollout
+        run: |
+          kubectl rollout status deployment/bankkonto-app -n bankkonto-namespace
