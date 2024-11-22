@@ -48,7 +48,7 @@ jobs:
 
       - name: path
         run: ls -al
-        
+
       - name: Print ref name
         run: echo "This workflow was triggered by ${{ github.ref_name }}"
 
@@ -86,7 +86,7 @@ jobs:
       - name: Start Keycloak container
         run: |
           cd .extras/compose/backend
-          docker-compose up -d
+          docker compose up -d
 
       - name: Jest Config aus Secret setzen
         run: echo "${{ secrets.JEST_CONFIG }}" > .jest.config.js
@@ -107,7 +107,7 @@ jobs:
       - name: fahre keycloak und postgres runter
         run: |
           cd .extras/compose/backend/keycloak
-          docker-compose down
+          docker compose down
 
 
   security:
